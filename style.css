@@ -1,6 +1,7 @@
 #input{
     border:black 3px solid;
-    width:20%;
+    width:300px;
+    height: auto;
     text-align:center;
     font-family:arial;
     padding:20px;

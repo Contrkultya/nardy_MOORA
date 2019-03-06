@@ -9,14 +9,13 @@
 </head>
 <body>
     <form name="input" id="input">
-    Расположение файла: <input type="file" id="fileLocation"> <p>
-            <input type="button" onclick="" value="Вывести из файла"> <P>
-    Вставьте ссылку на ваш JSON: <input type="text" id="siteURL"> <P>
-    <input type="button" onclick="" value="Вывести из ссылки">
+        <label>Расположение файла: <input type="file" id="fileLocation" onchange="file_or_exile_Checker(1)"></label>
+        <p><label>Или вставьте ссылку на ваш JSON: <input type="text" id="siteURL" onchange="file_or_exile_Checker(2)"></label></p>
+        <p><input type="button" onclick="file_or_exile()" value="Вывести"></p>
     </form>
 
 
-    <div id="output">
+    <div id="out">
 
 
     </div>

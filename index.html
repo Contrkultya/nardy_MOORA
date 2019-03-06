@@ -4,16 +4,19 @@
     <meta charset="utf-8">
     <title>Exercise 1</title>
     <link rel="stylesheet"  href="style.css">
-    <script src="chekMother.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="chekMother.js"></script>
 </head>
 <body>
-    <form name="input">
+    <form name="input" id="input">
     Расположение файла: <input type="file" id="fileLocation"> <p>
+            <input type="button" onclick="" value="Вывести из файла"> <P>
     Вставьте ссылку на ваш JSON: <input type="text" id="siteURL"> <P>
-    <input type="button" onclick="" value="Вывести">
+    <input type="button" onclick="" value="Вывести из ссылки">
     </form>
-    <div class="output">
+
+
+    <div id="output">
 
 
     </div>

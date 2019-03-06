@@ -1,5 +1,5 @@
 // install slim version of 
-adress = document.GetElementById("Timofey, input ID HERE").value;
+adress = document.GetElementById("fileLocation").value;
 
 jQuery.getJSON( adress, gotit(data){
 	// input your output function here

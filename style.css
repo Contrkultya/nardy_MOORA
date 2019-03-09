@@ -11,8 +11,10 @@
 }
 #out{
     height:500px;
-    margin-left:40%;
-    margin-top:-40%;
     font-family:arial;
     
+}
+#json_area{
+    height: 100px;
+    width: 300px;
 }

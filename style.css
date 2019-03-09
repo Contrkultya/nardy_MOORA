@@ -12,7 +12,9 @@
 #out{
     height:500px;
     font-family:arial;
-    
+    width:400px;
+    margin-left:400px;
+    margin-top:-210px;
 }
 #json_area{
     height: 100px;

@@ -17,4 +17,5 @@
 #json_area{
     height: 100px;
     width: 300px;
+    resize: none;
 }

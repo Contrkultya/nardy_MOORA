@@ -11,6 +11,7 @@ function checkMother() {
     var html = '<ul>';
     for (var k in dat) {
         html = html + '<li>' + dat[k].name + '</li>';
+        modelBuilder(dat[k].name, dat[k].children);
 
         if (dat[k].children != null) {
             html = html + "<ul>";
@@ -30,6 +31,28 @@ function checkMother() {
         html = html + '</li>';
     }
     html = html + '</ul>';
-
     document.getElementById('out').innerHTML = html;
+}
+
+/*
+Сделать крутое пояснение функции
+*/
+function modelBuilder(keys, values){
+    this.keys = keys;
+    this.values = values;
+    
+    this.delete = function (obj){
+        obj.removed = true;
+    }
+    this.update = function (updObj){
+        this.keys = updObj.keys;
+        this.values = updObj.values;
+    }
+    this.read = function () {
+        
+    }
+    this.read = function (key) {
+        
+    }
+    console.log(keys, values);
 }

@@ -7,17 +7,21 @@
     padding:20px;
     margin-top:20%;
     border-radius:20px;
-
 }
 #out{
     height:500px;
     font-family:arial;
     width:400px;
     margin-left:400px;
-    margin-top:-210px;
+    margin-top:-210px;   
+    border:blue 3px solid;
+    border-radius:20px;
+    display: none;
 }
-#json_area{
+#jsonArea{
     height: 100px;
     width: 300px;
     resize: none;
+    border:red 3px solid;
+    border-radius:20px;
 }

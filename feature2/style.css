@@ -1,0 +1,21 @@
+body{
+    font-family:arial;
+}
+.createObj{
+    border:2px black solid;
+    width:300px;
+    border-radius:10px;
+    padding:20px;
+    text-align: center;
+}
+#createdObjects{
+    border:2px black solid;
+    width:300px;
+    border-radius:10px;
+    padding:20px;
+    text-align: center;
+    margin-top:30px;
+}
+#removeButton{
+    margin-left:120px;
+}

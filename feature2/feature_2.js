@@ -1,5 +1,6 @@
 var number = 0;
 var object = [];
+var check;
 var obj = {
     removed: false,
     name: "",
@@ -39,21 +40,23 @@ function objBuilder() {
 
 function printObj() {
     var output = "";
-    for (i = 0; i < object.length; i++) {
+    for (var i = 0; i < object.length; i++) {
         if (object[i].removed == false) output += ('<input type="checkbox" name="chck">' + object[i].name + " <p></p>\n");
     }
     document.getElementById('createdObjects').innerHTML = output;
+    check=document.getElementsByName("chck");
+    console.log(check);
 }
 
 function removeKebab() {
-    for (i = 0; i < chck.length; i++) {
-        if (document.chck[i].checked == true) object[i].removed = true;
+    for (var i = 0; i < check.length; i++) {
+        if (document.check[i].checked) object[i].removed = true;
     }
 }
 function read() {
     var sel;
-    for (i = 0; i < object.length; i++) {
-        if (document.chck[i].checked == true) sel = i; break;
+    for (var i = 0; i < object.length; i++) {
+        if (document.check[i].checked) sel = i; break;
     }
     switch (document.getElementsByName("key").value) {
         case ("name"): object[sel].readkey(name);
@@ -63,8 +66,8 @@ function read() {
 }
 function upd() {
     var sel;
-    for (i = 0; i < object.length; i++) {
-        if (document.chck[i].checked == true) sel = i; break;
+    for (var i = 0; i < object.length; i++) {
+        if (document.check[i].checked == true) sel = i; break;
     }
     switch (document.getElementsByName(change_key).value) {
         case ("name"): object[sel].update(name);

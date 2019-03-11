@@ -8,13 +8,23 @@
 </head>
 <body>
     <div class="createObj">
-        Name:<input type="text" id="name"> <p>
-        Value: <input type="text" id="value"> <p>
+        Name:<input type="text" id="name"> <p></p>
+        Value: <input type="text" id="value"> <p></p>
         <input type="button" value="Создать объект" onclick="objBuilder()">
     </div>
     <div id="createdObjects">
 
     </div> 
-    <input type="button" value="Удалить объект" onclick="removeKebab()">
+    <input type="button" value="Удалить объект" onclick="removeKebab()" id="removeButton">
+
+    <div class="info">
+        <select name="key">
+            <option value="name">Get name</option>
+            <option value="value">Get value</option>
+            <option value="everything">Read everything</option>
+        </select> <p></p>
+        <input type="text" readonly id="outInfo"> <p></p>
+        <input type="button" value="Get info" onclick="read()">
+    </div>
 </body>
 </html>

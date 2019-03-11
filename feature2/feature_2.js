@@ -47,5 +47,5 @@ function printObj (){
 
 function removeKebab(){
     for(i=0; i<object.length;i++){
-    if(document.getElementById(chck[i]).checked==true) object[i].removed=true;}
+    if(document.getElementById('chck'+"i").checked==true) object[i].removed=true;}
 }

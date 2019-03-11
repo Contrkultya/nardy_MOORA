@@ -1,6 +1,8 @@
+var amount=0;
+var object;
 var obj = {
     removed : false,
-    name:"Tima",
+    name:"",
     value:"",
     delete:function(){
         this.removed=true;
@@ -21,6 +23,9 @@ var obj = {
 
 
 }
-function cock(){
-console.log(obj.name);
+function objBuilder(){
+    object[amount] = new obj;
+    object[amount].name=document.getElementById('name').value;
+    object[amount].value= document.getElementById('value').value;
+    amount++;
 }

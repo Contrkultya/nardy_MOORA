@@ -8,16 +8,18 @@ var obj = {
         this.removed=true;
     },
     read:function(){
-        console.log(this.name);
-        console.log(this.value);
-        console.log(this.removed);
+        var outism;
+        outism+=(this.name) + " ";
+        outism+=(this.value)+ " ";
+        outism+=(this.removed)+ " ";
+        document.getElementById('outInfo').value=outism;
 
     },
     readkey:function(key){
-        console.log(this.key);
+        document.getElementById('outInfo').value=(this.key);
     },
     update:function(updObj){
-        console.log ("Введите новое значение для " +updObj);
+        document.getElementById('outInfo').value= ("Введите новое значение для " +updObj);
         updObj=document.getElementById('smth_will_be_here_later').value;
     }
 

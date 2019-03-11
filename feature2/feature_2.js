@@ -29,19 +29,20 @@ function objBuilder(){
     object[number] = Object.create(obj);
     var setname = document.getElementById('name').value;
     var setvalue = document.getElementById('value').value;
+    object[number].removed=false;
     object[number].name=setname;
-    object[number].value= setvalue;
+    object[number].value=setvalue;
     number++;
     printObj();
 }
 
 function printObj (){ 
-    var output;
-    for (i=0; i<object.lentgh;i++)
-    {
-        if(object[i].removed!=true)
-        output+=('<input type="checkbox">'+object[i].name+ "\n");
+    var output="";
+    for (i=0; i<object.length;i++)
+    {   
+        if(object[i].removed==false) output+=('<input type="checkbox">'+ object[i].name + "\n");
     }
     document.getElementById('createdObjects').innerHTML=output;
 }
+
 

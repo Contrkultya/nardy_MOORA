@@ -19,3 +19,12 @@ body{
 #removeButton{
     margin-left:120px;
 }
+.info{
+    border:2px black solid;
+    width:300px;
+    border-radius:10px;
+    text-align:center;
+    padding:10px;
+    margin-left:400px;
+    margin-top:-235px;
+}

@@ -41,7 +41,7 @@ function printObj (){
     var output="";
     for (i=0; i<object.length;i++)
     {   
-        if(object[i].removed==false) output+=('<input type="checkbox" id="chck'+i+'">'+object[i].name+ "\n");
+        if(object[i].removed==false) output+=('<input type="checkbox" id="chck'+i+'">'+object[i].name+ " <p></p>\n");
     }
     document.getElementById('createdObjects').innerHTML=output;
 }

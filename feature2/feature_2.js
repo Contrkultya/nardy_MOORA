@@ -1,5 +1,5 @@
-var amount=0;
-var object;
+var number=0;
+var object=[];
 var obj = {
     removed : false,
     name:"",
@@ -23,9 +23,25 @@ var obj = {
 
 
 }
+
+
 function objBuilder(){
-    object[amount] = new obj;
-    object[amount].name=document.getElementById('name').value;
-    object[amount].value= document.getElementById('value').value;
-    amount++;
+    object[number] = Object.create(obj);
+    var setname = document.getElementById('name').value;
+    var setvalue = document.getElementById('value').value;
+    object[number].name=setname;
+    object[number].value= setvalue;
+    number++;
+    printObj();
 }
+
+function printObj (){ 
+    var output;
+    for (i=0; i<object.lentgh;i++)
+    {
+        if(object[i].removed!=true)
+        output+=('<input type="checkbox">'+object[i].name+ "\n");
+    }
+    document.getElementById('createdObjects').innerHTML=output;
+}
+

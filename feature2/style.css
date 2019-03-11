@@ -28,3 +28,12 @@ body{
     margin-left:400px;
     margin-top:-235px;
 }
+.change{
+        border:2px black solid;
+    width:300px;
+    border-radius:10px;
+    text-align:center;
+    padding:10px;
+    margin-left:400px;
+    margin-top:20px;
+}

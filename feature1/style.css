@@ -1,26 +1,36 @@
 #input{
+    position:relative;
     border:black 3px solid;
+    background-color: cadetblue;
     width:300px;
     height: auto;
     text-align:center;
     font-family:arial;
+    color: aliceblue;
     padding:20px;
-    margin-top:20%;
+    margin: 0 auto;
+    margin-top:15%;
     border-radius:20px;
 }
 #out{
+    background-color: cadetblue;
+    position: relative;
     font-family:arial;
     width:400px;
     margin-left:400px;
-    margin-top:-210px;   
-    border:blue 3px solid;
+    padding-left:70px;
+    color: aliceblue;
+    top: 20px;  
+    margin:0 auto;
+    border:black 3px solid;
     border-radius:20px;
     display: none;
 }
 #jsonArea{
     height: 100px;
-    width: 300px;
+    width: 280px;
     resize: none;
+    padding-left: 20px;
     border:red 3px solid;
     border-radius:20px;
 }

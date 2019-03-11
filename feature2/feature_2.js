@@ -47,5 +47,17 @@ function printObj (){
 
 function removeKebab(){
     for(i=0; i<object.length;i++){
-    if(document.getElementById('chck'+"i").checked==true) object[i].removed=true;}
+    if(document.getElementById(chck+"i").checked==true) object[i].removed=true;}
+}
+function read(){
+    var sel;
+    for(i=0; i<object.length;i++)
+    {
+    if(document.getElementById(chck+"i").checked==true) sel=i;
+    }
+    switch(document.getElementsByName("key").value){
+        case("name"): object[sel].readkey(name);
+        case("value"): object[sel].readkey(value);
+        case("everything"): object[sel].read();
+    }
 }

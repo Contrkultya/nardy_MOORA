@@ -18,9 +18,8 @@ var obj = {
     readkey:function(key){
         document.getElementById('outInfo').value=(this.key);
     },
-    update:function(updObj){
-        document.getElementById('outInfo').value= ("Введите новое значение для " +updObj);
-        updObj=document.getElementById('smth_will_be_here_later').value;
+    update:function(key){
+        updObj=document.getElementById('chng_val').value;
     }
 
 
@@ -55,11 +54,23 @@ function read(){
     var sel;
     for(i=0; i<object.length;i++)
     {
-    if(document.getElementById(chck+"i").checked==true) sel=i;
+    if(document.getElementById(chck+"i").checked==true) sel=i; break;
     }
     switch(document.getElementsByName("key").value){
         case("name"): object[sel].readkey(name);
         case("value"): object[sel].readkey(value);
         case("everything"): object[sel].read();
     }
+}
+function upd(){
+    var sel;
+    for(i=0; i<object.length;i++)
+    {
+    if(document.getElementById(chck+"i").checked==true) sel=i; break;
+    }
+    switch(document.getElementsByName(change_key).value){
+        case("name"): object[sel].update(name);
+        case("value"): object[sel].update(value);
+    }
+
 }

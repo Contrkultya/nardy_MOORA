@@ -1,5 +1,5 @@
 /*
-    * Функция, обрабатывающая JSON 
+    * Функция, обрабатывающая JSON.
   * Проверяет, из «index.html», textarea (12 строка) на наличие ввода и обрабатывает полученный JSON;
   * @param {bool} inputArea — передаёт был ли ввод в textarea;
   * @param {string} data — хранит в себе исходный текст, потом в итоге спарсированный JSON;
@@ -15,9 +15,9 @@ function checkMother() {
   data = JSON.parse(data);
   var html = "";
   /*
-      * Рекурсивная функция
+      * Рекурсивная функция.
     * Получает спарсированный JSON;
-    * Возвращает {string} html;
+    * @return {string} Строка содержащая HTML разметку;
   */
   function rec(data) {
     html += "<ul>";

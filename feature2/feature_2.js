@@ -1,77 +1,76 @@
-var number = 0;
-var object = [];
-var check;
-var obj = {
-    removed: false,
-    name: "",
-    value: "",
-    delete: function () {
-        this.removed = true;
-    },
-    read: function () {
+ class obj {
+    constructor(name, value){
+    this.removed=false;
+    this.name=name;
+    this.value=value;}
+    read() {
         var outism;
+        alert("cock");
         outism += (this.name) + " ";
         outism += (this.value) + " ";
         outism += (this.removed) + " ";
         document.getElementById('outInfo').value = outism;
 
-    },
-    readkey: function (key) {
+    };
+    readkey(key) {
         document.getElementById('outInfo').value = (this.key);
-    },
-    update: function (key) {
+    };
+    update(key) {
         updObj = document.getElementById('chng_val').value;
     }
 
 
 }
+var number = 0; //amount of elements
+var object=[];
 
 
 function objBuilder() {
-    object[number] = Object.create(obj);
     var setname = document.getElementById('name').value;
     var setvalue = document.getElementById('value').value;
-    object[number].removed = false;
-    object[number].name = setname;
-    object[number].value = setvalue;
+    object[number] = new obj(setname, setvalue);
     number++;
     printObj();
 }
 
 function printObj() {
     var output = "";
-    for (var i = 0; i < object.length; i++) {
-        if (object[i].removed == false) output += ('<input type="checkbox" name="chck">' + object[i].name + " <p></p>\n");
+    for (i = 0; i < object.length; i++) {
+        if (object[i].removed == false) output += ('№:'+(i+1)+": " + object[i].name + " <p></p>\n");
     }
     document.getElementById('createdObjects').innerHTML = output;
-    check=document.getElementsByName("chck");
-    console.log(check);
 }
 
 function removeKebab() {
-    for (var i = 0; i < check.length; i++) {
-        if (document.check[i].checked) object[i].removed = true;
+    var num = (document.getElementById('del_number').value-1);
+    try{
+        object[num].removed=true;
     }
+    catch(e){
+        alert("Outta range");
+    }
+    printObj();
 }
 function read() {
-    var sel;
-    for (var i = 0; i < object.length; i++) {
-        if (document.check[i].checked) sel = i; break;
-    }
-    switch (document.getElementsByName("key").value) {
-        case ("name"): object[sel].readkey(name);
-        case ("value"): object[sel].readkey(value);
-        case ("everything"): object[sel].read();
-    }
+    var num = (document.getElementById('info_number').value-1);
+    console.log(object[num]);
+        switch (document.getElementsByName("key").value) {
+            case ("name"): {object[num].readkey(name);break;}
+            case ("value"):{object[num].readkey(value);break;}
+            case ("everything"): {object[num].read(); break;}
+        } 
+    
+
+    
 }
 function upd() {
-    var sel;
-    for (var i = 0; i < object.length; i++) {
-        if (document.check[i].checked == true) sel = i; break;
+    var num = (document.getElementById('change_number').value-1);
+    
+        switch (document.getElementsByName(change_key).value) {
+        case ("name"): {object[num].update(name); break}
+        case ("value"): {object[num].update(value); break;}
     }
-    switch (document.getElementsByName(change_key).value) {
-        case ("name"): object[sel].update(name);
-        case ("value"): object[sel].update(value);
-    }
+    
 
+    printObj();
 }

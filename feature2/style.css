@@ -2,6 +2,7 @@ body{
     font-family:arial;
 }
 .createObj{
+    position:absolute;
     border:2px black solid;
     width:300px;
     border-radius:10px;
@@ -9,31 +10,44 @@ body{
     text-align: center;
 }
 #createdObjects{
+    position:absolute;
     border:2px black solid;
     width:300px;
     border-radius:10px;
     padding:20px;
     text-align: center;
-    margin-top:30px;
-}
-#removeButton{
-    margin-left:120px;
+    margin-top:150px;
 }
 .info{
+    position:absolute;
     border:2px black solid;
     width:300px;
     border-radius:10px;
     text-align:center;
     padding:10px;
     margin-left:400px;
-    margin-top:-235px;
+    margin-top:px;
 }
 .change{
-        border:2px black solid;
+    border:2px black solid;
+    position:absolute;
     width:300px;
     border-radius:10px;
     text-align:center;
     padding:10px;
     margin-left:400px;
-    margin-top:20px;
+    margin-top:130px;
+}
+input[type=number]{
+    width:30px;
+}
+.delete{
+    position:absolute;
+    border:2px black solid;
+    width:300px;
+    border-radius:10px;
+    text-align:center;
+    padding:10px;
+    margin-top:255px;
+    margin-left:400px;
 }

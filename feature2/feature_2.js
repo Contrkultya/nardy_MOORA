@@ -1,11 +1,8 @@
 class obj {
-    constructor(name, value, id) {
+    constructor(name, value) {
         this.removed = false;
         this.name = name;
         this.value = value;
-        this.id = id;
-        this.parent;
-        this.hasChildren;
     }
     read() {
         var outism="";
@@ -21,17 +18,11 @@ class obj {
     readValue(){
         document.getElementById('outInfo').value = this.value;
     }
-    readID(){
-        document.getElementById('outinfo').value = this.id;
-    }
     updateName() {
         this.name = document.getElementById('chng_val').value;
     }
     updateValue(){
         this.value = document.getElementById('chng_val').value;
-    }
-    updateID(){
-        this.id = document.getElementById('chng_val').value;
     }
 
 
@@ -74,7 +65,6 @@ function read() {
         case ("name"): { object[num].readName(); break; }
         case ("value"): { object[num].readValue(); break; }
         case ("everything"): { object[num].read(); break; }
-        case("ID"): {object[num].readID();break}
     }}
     catch(e){
         alert("Outta range");
@@ -89,7 +79,6 @@ function upd() {
     switch (document.objs.change_key.value) {
         case ("name"): { object[num].updateName(); break }
         case ("value"): { object[num].updateValue(); break; }
-        case ("ID"): {object[num].updateValue();break;}
     }}
     catch(e){
         alert("Outta range");

@@ -8,31 +8,31 @@ class obj {
         this.hasChildren;
     }
     read() {
-        var outism="";
+        var outism = "";
         outism += (this.name) + " ";
         outism += (this.value) + " ";
-        outism += (this.removed) + " ";
+        outism += (this.id) + " ";
         document.getElementById('outInfo').value = outism;
 
     };
     readName() {
         document.getElementById('outInfo').value = this.name;
     };
-    readValue(){
+    readValue() {
         document.getElementById('outInfo').value = this.value;
-    }
-    readID(){
-        document.getElementById('outinfo').value = this.id;
-    }
+    };
+    readID() {
+        document.getElementById('outInfo').value = this.id;
+    };
     updateName() {
         this.name = document.getElementById('chng_val').value;
-    }
-    updateValue(){
+    };
+    updateValue() {
         this.value = document.getElementById('chng_val').value;
-    }
-    updateID(){
+    };
+    updateID() {
         this.id = document.getElementById('chng_val').value;
-    }
+    };
 
 
 }
@@ -69,15 +69,16 @@ function removeKebab() {
 }
 function read() {
     var num = (document.getElementById('info_number').value - 1);
-    console.log(object[num]);
-    try{
-    switch (document.objs.key.value) {
-        case ("name"): { object[num].readName(); break; }
-        case ("value"): { object[num].readValue(); break; }
-        case ("everything"): { object[num].read(); break; }
-        case("ID"): {object[num].readID();break}
-    }}
-    catch(e){
+    try {
+        switch (document.objs.key.value) {
+            case ("name"): { object[num].readName(); break; }
+            case ("value"): { object[num].readValue(); break; }       
+            case ("id"): { object[num].readID(); break; }
+            case ("everything"): { object[num].read(); break; }
+
+        }
+    }
+    catch (e) {
         alert("Outta range");
     }
 
@@ -86,13 +87,14 @@ function read() {
 }
 function upd() {
     var num = (document.getElementById('change_number').value - 1);
-    try{
-    switch (document.objs.change_key.value) {
-        case ("name"): { object[num].updateName(); break }
-        case ("value"): { object[num].updateValue(); break; }
-        case ("ID"): {object[num].updateValue();break;}
-    }}
-    catch(e){
+    try {
+        switch (document.objs.change_key.value) {
+            case ("name"): { object[num].updateName(); break; }
+            case ("value"): { object[num].updateValue(); break; }
+            case ("id"): { object[num].updateID(); break; }
+        }
+    }
+    catch (e) {
         alert("Outta range");
     }
 

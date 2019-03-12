@@ -60,10 +60,14 @@ function removeKebab() {
 function read() {
     var num = (document.getElementById('info_number').value - 1);
     console.log(object[num]);
+    try{
     switch (document.objs.key.value) {
         case ("name"): { object[num].readName(); break; }
         case ("value"): { object[num].readValue(); break; }
         case ("everything"): { object[num].read(); break; }
+    }}
+    catch(e){
+        alert("Outta range");
     }
 
 
@@ -71,10 +75,13 @@ function read() {
 }
 function upd() {
     var num = (document.getElementById('change_number').value - 1);
-
+    try{
     switch (document.objs.change_key.value) {
         case ("name"): { object[num].updateName(); break }
         case ("value"): { object[num].updateValue(); break; }
+    }}
+    catch(e){
+        alert("Outta range");
     }
 
 

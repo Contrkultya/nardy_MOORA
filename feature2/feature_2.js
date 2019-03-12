@@ -43,7 +43,8 @@ var object = []; // array of objects
 function objBuilder() {
     var setname = document.getElementById('name').value;
     var setvalue = document.getElementById('value').value;
-    object[number] = new obj(setname, setvalue);
+    var setid = document.getElementById('ID').value;
+    object[number] = new obj(setname, setvalue, setid);
     number++;
     printObj();
 }

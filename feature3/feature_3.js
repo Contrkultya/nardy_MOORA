@@ -76,4 +76,9 @@ clickOnDoska() {
 mockFunck(idDoski, callbackfunction) {
 
 }
-clickZadacha(idZadacha, callbackfunction)*/
+clickZadacha(idZadacha, callbackfunction){
+}
+
+render(){
+           var output="";
+}

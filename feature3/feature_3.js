@@ -81,4 +81,4 @@ clickZadacha(idZadacha, callbackfunction){
 
 render(){
            var output="";
-}
+}*/

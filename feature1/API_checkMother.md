@@ -17,7 +17,7 @@ function rec(data) {
     return html;
 }
 ```
-Где `children` — это имя вложенного объекта в текущий элемент рекурсии.
+* Где `children` — это имя вложенного объекта в текущий элемент рекурсии.
 ## Дополнительные материалы
 - [Формат JSON](https://learn.javascript.ru/json)
 - [Рекурсия, стек](https://learn.javascript.ru/recursion)

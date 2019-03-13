@@ -118,23 +118,23 @@ function printObj_file() {
     var output = 'nothing';
     for (let i = 0; i < object.length; i++) {
         if (object[i].removed == false) {
-            if (object[i].parent == false && object[i].id == 1)
+            if (object[i].parent == false && object[i].id == 1) // Вход первого элемента без родителей
                 output += '<ul><li>';
-            else if (object[i].parent == false)
+            else if (object[i].parent == false) // Вход элемента, без родителей, если в центре списка
                 output += '</li><ul><li>';
-            else if (object[i].parent == false && hasChildren == false)
+            else if (object[i].parent == false && hasChildren == false) //Вход если он последний
                 output += '</li><li>' + '#' + (i+1) + ':' + object[i].name + '</li></ul>';
-            else if (object[i].hasChildren == true) {
-                if (earlierHaveChild) {
+            else if (object[i].hasChildren == true) { //Вход элемента с родителем и детьми
+                if (earlierHaveChild) { //Я уже раньше имел детей (чтобы отследить после первого вхождения с детьми, и закрыть их открытые теги)
                     earlierHaveChild = false;
                     output += '</ul></li><ul><li>' + '#' + (i+1) + ':' + object[i].name;
                 }
-                else {
-                    earlierHaveChild = true;
+                else { // А я не имел, это моё первое вхождение, понаоткрываю вам многа тегов
+                    earlierHaveChild = true; 
                     output += '<ul><li>' + '#' + (i+1) + ':' + object[i].name + '<ul>';
                 } 
             }
-            else output += '<li>#' + (i+1) + ':' + object[i].name + '</li>';
+            else output += '<li>#' + (i+1) + ':' + object[i].name + '</li>'; // А я child
                     
         }
     }

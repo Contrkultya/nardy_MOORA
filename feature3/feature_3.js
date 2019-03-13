@@ -24,57 +24,31 @@ class obj {
             this.removed = false;
         else this.removed = true;
     }
-    /*
-            * Метод, производящий чтение этого файла.
-        * @param {string} outism — хранит в себе информацию о ключах файла: name; value; id;
-        * Причём, не считывает остальные методы;
-        * Выводит информацию о всех 3 ключах в «index.html» (33 строка);
-    */
     read() {
         var outism = "";
         outism += (this.name) + " ";
         outism += (this.value) + " ";
         outism += (this.id) + " ";
-        document.getElementById('outInfo').value = outism;
+        return outism;
 
     };
-    // 3 метода ниже выводят информацию в «index.html» (33 строка);
-    /*
-        * Метод, отдельно выводящий имя;
-    */
     readName() {
-        document.getElementById('outInfo').value = this.name;
+        return this.name;
     };
-    /*
-        * Метод, отдельно выводящий значение;
-    */
     readValue() {
-        document.getElementById('outInfo').value = this.value;
+        return this.value;
     };
-    /*
-        * Метод, отдельно выводящий идентификатор;
-    */
     readID() {
-        document.getElementById('outInfo').value = this.id;
+        return this.id;
     };
-    // Методы ниже считывают из поля <input type="text"> информацию по нажатию кнопки в «index.html» (43,45 строки);
-    /*
-        * Метод обновляющий @param {string} name;
-    */
-    updateName() {
-        this.name = document.getElementById('chng_val').value;
+    updateName(name) {
+        this.name = name;
     };
-    /*
-        * Метод обновляющий @param {string} value;
-    */
-    updateValue() {
-        this.value = document.getElementById('chng_val').value;
+    updateValue(value) {
+        this.value = value;
     };
-    /*
-        * Метод обновляющий @param {string} id;
-    */
-    updateID() {
-        this.id = document.getElementById('chng_val').value;
+    updateID(id) {
+        this.id = id;
     };
 }
 

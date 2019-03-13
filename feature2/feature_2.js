@@ -10,13 +10,19 @@
     * @param {bool} removed — ключ-признак удаления данного элемента;
 */
 class obj {
-    constructor(name, value, id) {
-        this.name = name;
-        this.value = value;
+    constructor(id, parent, name, hasChildren, removed) {
+        //this.value = value;
         this.id = id;
-        this.parent;
-        this.hasChildren;
-        this.removed = false;
+        if (parent === undefined)
+            this.parent = false;
+        else this.parent = parent;
+        this.name = name;
+        if (hasChildren === undefined)
+            this.hasChildren = false;
+        else this.hasChildren = true;
+        if (removed === undefined)
+            this.removed = false;
+        else this.removed = true;
     }
     /*
             * Метод, производящий чтение этого файла.
@@ -76,13 +82,64 @@ class obj {
     @global {number} number — число элементов;
     @global {array} object — массив объектов;
 */
-var number = 4;
+var number = 0;
 var object = [];
 
-object[0] = new obj("Timoxa", "228", 1);
-object[1] = new obj("Velikiy lider", "666", 2);
-object[2] = new obj("Iiiiiiigor" , "1337", 3);
-object[3] = new obj("GitLer", "1488", 4);
+/*
+object[0] = new obj(-3, false, "Timoxa");
+object[1] = new obj(-2, false, "Velikiy lider");
+object[2] = new obj(-1, false, "Iiiiiiigor");
+object[3] = new obj(0, false, "GitLer");
+*/
+function hi() {
+    var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true},{ "id": 3,"parent": 2,"name": "Задача 1.1.1" },{ "id": 4,"parent": 2,"name": "Задача 1.1.2" },{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" },{ "id": 7,"parent": 5,"name": "Задача 1.2.2" },{"id": 8,"parent": 1,"name": "Список задач 1.3"},{"id": 9,"name": "Доска 2"}]';
+    data = JSON.parse(data);
+    console.log(data);
+    console.log(data.length);
+    objBuilder_file(data);
+    console.log(object[0].id)
+}
+function objBuilder_file(data) {
+    for (let i = 0; i < data.length; i++) {
+        let setid = data[i].id;
+        let setparent = data[i].parent;
+        let setname = data[i].name;
+        let hasChildren = data[i].hasChildren;
+        let setremoved = data[i].removed;
+        object[number] = new obj(setid, setparent, setname, hasChildren, setremoved);
+        console.log(object[number]);
+        number++;
+        printObj_file();
+    }
+}
+
+var earlierHaveChild = false;
+function printObj_file() {
+    var output = 'nothing';
+    for (let i = 0; i < object.length; i++) {
+        if (object[i].removed == false) {
+            if (object[i].parent == false && object[i].id == 1)
+                output += '<ul><li>';
+            else if (object[i].parent == false)
+                output += '</li><ul><li>';
+            else if (object[i].parent == false && hasChildren == false)
+                output += '</li><li>' + '#' + (i+1) + ':' + object[i].name + '</li></ul>';
+            else if (object[i].hasChildren == true) {
+                if (earlierHaveChild) {
+                    earlierHaveChild = false;
+                    output += '</ul></li><ul><li>' + '#' + (i+1) + ':' + object[i].name;
+                }
+                else {
+                    earlierHaveChild = true;
+                    output += '<ul><li>' + '#' + (i+1) + ':' + object[i].name + '<ul>';
+                } 
+            }
+            else output += '<li>#' + (i+1) + ':' + object[i].name + '</li>';
+                    
+        }
+    }
+    document.getElementById('cO_file').innerHTML = output;
+}
 
 
 /*

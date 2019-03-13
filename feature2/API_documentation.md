@@ -1,11 +1,13 @@
 # API
+
 ## obj Class
+
 ### Определение
 Создаёт объекты со своими методами из вводимых элементов
 ### Конструктор
 |||
 |-|-|
-| constructor(name, value, id) | инициализирует новый объект класса obj, передавая ему ключи: имя, значение, идентификатор элемента. |
+| constructor(name, value, id) | инициализирует новый объект [класса](https://learn.javascript.ru/es-class) obj, передавая ему ключи: имя, значение, идентификатор элемента. |
 ### Методы
 |Методы| Описание|
 |-|-|
@@ -16,10 +18,13 @@
 | updateName() | Заменяет ключ-имя объекта. |
 | updateValue() | Заменяет ключ-значение объекта. |
 | updateID() | Заменяет ключ-идентификатор. |
+
 ## *Глобальные переменные*
 * `number` - порядковый номер объекта, переменная-счётчик. Считает количество объектов в API.
 * `object` - массив объектов.
+
 ## Функции API
+
 ### **printObj()**
 Вовзращает обновлённый список объектов в виде строки.
 > [Замечание]
@@ -34,10 +39,11 @@ function printObj() {
 ```
 * `output` — строковая переменная, вывод списка объектов.
 ### **objBuilder()**
-Строит объект из полученных ключей.
+Создаёт объект из полученных ключей и добавляет его в массив объектов.
 ```javascript
 function objBuilder(setname, setvalue, setid) {
     object[number] = new obj(setname, setvalue, setid);
+    number++;
 }
 ```
 * `setname` - ключ-имя объекта.
@@ -59,7 +65,8 @@ function removeKebab(number) {
 *Также, подразумевается выбор возможности для считывания пользователем.*
 #### Пример кода
 ```javascript
-function read(number) {
+function read() {
+    let number = (document.getElementById('info_number').value - 1);
     try {
         switch (document.objs.key.value) {
             case ("name"): { object[number].readName(); break; }
@@ -75,23 +82,24 @@ function read(number) {
 ```
 #####  Пример разметки
 ```html
-<div class="info">
+<form name="objs">
     <select name="key">
-        <option value="name">Get name</option>
-        <option value="value">Get value</option>
-        <option value="id">Get ID</option>
-        <option value="everything">Read everything</option>
+        <option value="name">Получить имя</option>
+        <option value="value">Получить значение</option>
+        <option value="id">Получить идентификатор</option>
+        <option value="everything">Прочитать всё</option>
     </select> 
     <input type="number" id="info_number" min="1"><p></p>
     <input type="text" readonly id="outInfo"><p></p>
-    <input type="button" value="Get info" onclick="read()">
-</div>
+    <input type="button" value="Получить информацию" onclick="read()">
+</form>
 ```
 ### **upd()**
-Обновляет данные объекта. *Также может отработать исключение, если переданный порядковый номер от пользователя выходит за количество существующих объектов. И аналогично подразумевается, что пользователь выбирает какой именно объект обновить.*
+Обновляет данные объекта. Также может отработать исключение, если переданный порядковый номер от пользователя выходит за количество существующих объектов. И, аналогично, подразумевается, что пользователь выбирает какой именно объект обновить.
 #### Пример кода
 ```javascript
-function upd(number) {
+function upd() {
+    let number = (document.getElementById('change_number').value - 1);
     try {
         switch (document.objs.change_key.value) {
             case ("name"): { object[number].updateName(); break; }
@@ -106,17 +114,17 @@ function upd(number) {
 ```
 ##### Пример разметки
 ```html
-<div class="change">  
-    Change the key value
+<form name="objs">  
+    Изменить значение:
     <select name="change_key">
-        <option value="name">Name</option>
-        <option value="value">Value</option>
-        <option value="id">ID</option>
+        <option value="name">Ключа-имени</option>
+        <option value="value">Ключа-значения</option>
+        <option value="id">Ключа-идентификатора</option>
     </select><p></p>
     <input type="text" id="chng_val"><p></p>
     <input type="number" id="change_number" min="1">
-    <input type="button" onclick="upd()" value="Change">
-    </div>
+    <input type="button" onclick="upd()" value="Изменить">
+</form>
 ```
 ## Дополнительные материалы
 * [Классы](https://learn.javascript.ru/es-class)

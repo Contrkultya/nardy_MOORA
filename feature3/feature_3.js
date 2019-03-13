@@ -9,40 +9,43 @@
     * @param {bool} hasChildren — ключ-признак наличия дочерних элементов;
     * @param {bool} removed — ключ-признак удаления данного элемента;
 */
+var keys = [ 'id', 'parent', 'name', 'hasChildren', 'remove'];
 class obj {
-    constructor(id, parent, name, hasChildren, removed) {
+    constructor(id, parent, name, hasChildren) {
         this.id = id;
         this.parent = parent;
         this.name = name;
         this.hasChildren = hasChildren;
-        this.removed = removed;
+        this.removed = false;
     }
     read() {
         var outism = "";
-        outism += (this.name) + " ";
-        outism += (this.value) + " ";
-        outism += (this.id) + " ";
-        return outism;
+        if (this.removed == true)
+            return undefined;
+        else 
+            return outism += this.name + ' ' + this.parent + ' ' + this.id + ' ' + this.hasChildren;
 
-    };
-    readName() {
-        return this.name;
-    };
-    readValue() {
-        return this.value;
-    };
-    readID() {
-        return this.id;
-    };
-    updateName(name) {
-        this.name = name;
-    };
-    updateValue(value) {
-        this.value = value;
-    };
-    updateID(id) {
-        this.id = id;
-    };
+    }
+    read(key) {
+        for (let i = 0; i < keys.length; i++) {
+            if (key == keys[i]) {
+                if (this.keys[i] === undefined || this.keys[i] == ' ') {
+                    return null;
+                }
+                else {
+                    return this.keys[i];
+                }
+            }
+        }
+    }
+    update(updObj){
+        for (let i = 0; i < 5; i++) {
+            this.keys[i] = updObj.keys[i];
+        }
+    }
+    delete() {
+        this.removed = true;
+    }
 }
 
 var number = 0;

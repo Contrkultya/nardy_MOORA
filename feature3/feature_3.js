@@ -81,7 +81,5 @@ clickZadacha(idZadacha, callbackfunction){
 
 render(){
            var output="";
-           for (i=0; i<object.length; i++){
-               output += ('<div class="table" onclick = "show()">' + object[i].name +"<P></P>");
            }  
 }*/

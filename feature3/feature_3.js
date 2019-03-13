@@ -81,17 +81,17 @@ class obj {
 var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true},{ "id": 3,"parent": 2,"name": "Задача 1.1.1" },{ "id": 4,"parent": 2,"name": "Задача 1.1.2" },{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" },{ "id": 7,"parent": 5,"name": "Задача 1.2.2" },{"id": 8,"parent": 1,"name": "Список задач 1.3"},{"id": 9,"name": "Доска 2"}]';
 
 //onLoad
-function asyncDoska(null, collbackfunction) {
+function asyncDoska(null, callbackfunction) {
     
 }
-collbackfunction(Massiveobjects) {
+callbackfunction(Massiveobjects) {
     render()
     result -> html
 }
 clickOnDoska() {
 
 }
-mockFunck(idDoski, collbackfunction) {
+mockFunck(idDoski, callbackfunction) {
 
 }
-clickZadacha(idZadacha, collbackfunction)
+clickZadacha(idZadacha, callbackfunction)

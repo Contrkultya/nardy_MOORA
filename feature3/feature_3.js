@@ -81,8 +81,9 @@ mockFunck(idDoski, callbackfunction) {
 }
 clickZadacha(idZadacha, callbackfunction){
 }
+*/
+function render() {
+    let html = '';
+    return html;
+}  
 
-render(){
-           var output="";
-           }  
-}*/

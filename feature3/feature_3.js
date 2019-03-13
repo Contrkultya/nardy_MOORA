@@ -11,18 +11,11 @@
 */
 class obj {
     constructor(id, parent, name, hasChildren, removed) {
-        //this.value = value;
         this.id = id;
-        if (parent === undefined)
-            this.parent = false;
-        else this.parent = parent;
+        this.parent = parent;
         this.name = name;
-        if (hasChildren === undefined)
-            this.hasChildren = false;
-        else this.hasChildren = true;
-        if (removed === undefined)
-            this.removed = false;
-        else this.removed = true;
+        this.hasChildren = hasChildren;
+        this.removed = removed;
     }
     read() {
         var outism = "";
@@ -63,13 +56,12 @@ function objBuilder_file(data) {
         let setremoved = data[i].removed;
         object[number] = new obj(setid, setparent, setname, hasChildren, setremoved);
         number++;
-        printObj_file();
     }
 }
 
 var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true},{ "id": 3,"parent": 2,"name": "Задача 1.1.1" },{ "id": 4,"parent": 2,"name": "Задача 1.1.2" },{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" },{ "id": 7,"parent": 5,"name": "Задача 1.2.2" },{"id": 8,"parent": 1,"name": "Список задач 1.3"},{"id": 9,"name": "Доска 2"}]';
 
-//onLoad
+/*onLoad
 function asyncDoska(null, callbackfunction) {
     
 }
@@ -83,4 +75,4 @@ clickOnDoska() {
 mockFunck(idDoski, callbackfunction) {
 
 }
-clickZadacha(idZadacha, callbackfunction)
+clickZadacha(idZadacha, callbackfunction)*/

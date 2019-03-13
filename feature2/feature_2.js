@@ -76,8 +76,15 @@ class obj {
     @global {number} number — число элементов;
     @global {array} object — массив объектов;
 */
-var number = 0;
+var number = 4;
 var object = [];
+
+object[0] = new obj("Timoxa", "228", 1);
+object[1] = new obj("Velikiy lider", "666", 2);
+object[2] = new obj("Iiiiiiigor" , "1337", 3);
+object[3] = new obj("GitLer", "1488", 4);
+
+
 /*
         * Функция, которая выводит полученные объекты. Также, используется для обновления списка объектов.
     * @param {string} output — хранит в себе итоговый вывод;
@@ -177,3 +184,4 @@ function upd() {
     // Обновление списка объектов.
     printObj();
 }
+

@@ -64,26 +64,76 @@ function objBuilder_file(data) {
 
 var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true},{ "id": 3,"parent": 2,"name": "Задача 1.1.1" },{ "id": 4,"parent": 2,"name": "Задача 1.1.2" },{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" },{ "id": 7,"parent": 5,"name": "Задача 1.2.2" },{"id": 8,"parent": 1,"name": "Список задач 1.3"},{"id": 9,"name": "Доска 2"}]';
 data = JSON.parse(data);
-
-/*onLoad
-function asyncDoska(null, callbackfunction) {
+var end="";
+function getChildren(callback)
+{
+    setTimeout(function(){
+        callback(id);   
+    for(i = 0; i<mas.length;i++)
+    { 
+        document.getElementById(id).innerHTML+="<li id='"+(mas[i].id+"li")+"'>"+mas[i].name+" <button onClick=render('"+mas[i].id+"li"+"')>render</button>"+"</li>";
+        if(mas[i].hasChildren == true)
+        {
+            
+                document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>load</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
+        }
+    }
+    },1000);
     
 }
-callbackfunction(Massiveobjects) {
-    render()
-    result -> html
+function loadChildren(id, callback)
+{
+    for(i=id;i<data.length;i++)
+    {
+        if(data[i].hasChildren==true)
+        {
+            modelBuilder(data[i].id);
+        }
+    }
 }
-clickOnDoska() {
-
+function modelBuilder(id)
+{
+    mas=[];
+    j=0;
+    for(i = id; i<data.length;i++)
+    {
+        if(data[i].parent == id)
+        {
+            mas[j]=data[i];
+            j++;
+        }
+    }
 }
-mockFunck(idDoski, callbackfunction) {
-
+function load()
+{
+    document.getElementById("result").innerHTML +="<ul>";
+    for(i=0;i<data.length; i++)
+    {
+        if(data[i].parent == undefined)
+        {
+            document.getElementById("result").innerHTML +="<li id='"+(data[i].id+"li")+"'>"+data[i].name+" <button onClick=render('"+(data[i].id+"li")+"')>render</button></li>";
+        
+            if(data[i].hasChildren==true)
+            {
+                document.getElementById("result").innerHTML+="<button onClick=res("+i+")>load</button><ul><div id='"+i+"'></ul>";
+            }
+        }
+    }
 }
-clickZadacha(idZadacha, callbackfunction){
-}
-*/
-function render() {
-    let html = '';
-    return html;
-}  
-
+ function res(m)
+ {
+     if(document.getElementById(m).innerHTML=="")
+     {
+     id=m;
+    getChildren(loadChildren);
+     }
+     else if(document.getElementById(m).innerHTML!="")
+     {
+        document.getElementById(m).innerHTML="";
+     }
+ }
+ function render(x)
+ {
+     stl=prompt("Вводите стиль:");
+document.getElementById(x).style=end+stl;
+ }

@@ -1,1 +1,13 @@
-
+#result
+{
+    width: 350px;
+    background-color:rgb(170, 199, 161);
+    height: 400px;
+    font-size: 16pt;
+    border: 2px solid;
+    border-radius: 5px;
+    padding-left:50px;
+}
+div{
+margin-bottom: 10px;
+}

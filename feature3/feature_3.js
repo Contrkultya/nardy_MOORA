@@ -89,15 +89,46 @@ function objBuilder_file(data) {
 var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true},{ "id": 3,"parent": 2,"name": "Задача 1.1.1" },{ "id": 4,"parent": 2,"name": "Задача 1.1.2" },{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" },{ "id": 7,"parent": 5,"name": "Задача 1.2.2" },{"id": 8,"parent": 1,"name": "Список задач 1.3"},{"id": 9,"name": "Доска 2"}]';
 data = JSON.parse(data);
 /*
-        * Функция-коллбек 
+        * «Функция-сразу» — выполняется, как только завершилась загрузка HTML-страницы.
+    * Данная функция строит маркированный список из глобальной переменной data, добавляя кнопки удовлетворяющие различным условиям элементов;
+    * Нажатия кнопок вызывают функции-цепочки, которые получают дальнейшие дочерние элементы, если они имеются;
+*/
+function load() {
+    document.getElementById("result").innerHTML += "<ul>";
+    for (i = 0; i < data.length; i++)
+    {
+        if (data[i].parent == undefined) {
+            document.getElementById("result").innerHTML += "<li id='" + (data[i].id+"li") + "'>" + data[i].name + " <button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></li>";
+            if (data[i].hasChildren == true) {
+                document.getElementById("result").innerHTML += "<button onClick=res("+i+")>Открыть</button><ul><div id='"+i+"'></ul>";
+            }
+        }
+    }
+}
+/*
+        * Функция-рендер — выгружает результаты в html.
+    @param {number} m — переменная 
+*/
+ function res(m) {
+    if(document.getElementById(m).innerHTML == "") {
+        document.getElementById(m).innerHTML = "Загрузка...";
+        id = m;
+        getChildren(loadChildren);
+    }
+    else if(document.getElementById(m).innerHTML != "") {
+        document.getElementById(m).innerHTML = "";
+    }
+}
+/*
+        * Функция-коллбек — получает дочерние элементы 
 */
 function getChildren(callback) {
     setTimeout(function(){
         callback(id);   
-        document.getElementById(id).innerHTML="";
-        for(i = 0; i<mas.length;i++)
+        document.getElementById(id).innerHTML = "";
+        for(i = 0; i < mas.length; i++)
         { 
-            document.getElementById(id).innerHTML+="<li id='"+(mas[i].id+"li")+"'>"+mas[i].name+" <button onClick=render('"+mas[i].id+"li"+"')>Изменить стиль</button>"+"</li>";
+            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
             if(mas[i].hasChildren == true)
             {
                 document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
@@ -107,7 +138,7 @@ function getChildren(callback) {
     
 }
 function loadChildren(id, callback) {
-    for (i = id; i<data.length; i++) {
+    for (i = id; i < data.length; i++) {
         if (data[i].hasChildren == true) {
             modelBuilder(data[i].id);
         }
@@ -116,34 +147,11 @@ function loadChildren(id, callback) {
 function modelBuilder(id) {
     mas=[];
     j=0;
-    for (i = id; i<data.length;i++) {
+    for (i = id; i < data.length; i++) {
         if (data[i].parent == id) {
             mas[j] = data[i];
             j++;
         }
-    }
-}
-function load() {
-    document.getElementById("result").innerHTML +="<ul>";
-    for (i=0;i<data.length; i++)
-    {
-        if (data[i].parent == undefined) {
-            document.getElementById("result").innerHTML +="<li id='"+(data[i].id+"li")+"'>"+data[i].name+" <button onClick=render('"+(data[i].id+"li")+"')>Изменить стиль</button></li>";
-            if (data[i].hasChildren==true) {
-                document.getElementById("result").innerHTML+="<button onClick=res("+i+")>Открыть</button><ul><div id='"+i+"'></ul>";
-            }
-        }
-    }
-}
- function res(m) {
-    if(document.getElementById(m).innerHTML=="")
-    {
-        document.getElementById(m).innerHTML="Loading...";
-        id=m;
-        getChildren(loadChildren);
-    }
-    else if(document.getElementById(m).innerHTML != "") {
-        document.getElementById(m).innerHTML = "";
     }
 }
 /*

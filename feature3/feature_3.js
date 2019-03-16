@@ -75,6 +75,7 @@ var end="";
 function getChildren(callback) {
     setTimeout(function(){
         callback(id);   
+        document.getElementById(id).innerHTML="";
         for(i = 0; i<mas.length;i++)
         { 
             document.getElementById(id).innerHTML+="<li id='"+(mas[i].id+"li")+"'>"+mas[i].name+" <button onClick=render('"+mas[i].id+"li"+"')>render</button>"+"</li>";
@@ -124,6 +125,7 @@ function load() {
  function res(m) {
     if(document.getElementById(m).innerHTML=="")
     {
+        document.getElementById(m).innerHTML="Loading...";
         id=m;
         getChildren(loadChildren);
     }

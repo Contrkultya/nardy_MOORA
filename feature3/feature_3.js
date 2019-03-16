@@ -135,9 +135,6 @@ function load() {
         }
     }
 }
-function res(m) {
-    if(document.getElementById(m).innerHTML == "") {
-        id = m;
  function res(m) {
     if(document.getElementById(m).innerHTML=="")
     {

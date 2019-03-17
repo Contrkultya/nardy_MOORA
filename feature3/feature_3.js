@@ -17,7 +17,7 @@ class obj {
         this.removed = false;
     }
     /*
-            * Метод, производящий чтение этого элемента.
+            * Метод, производящий чтение элемента.
         * @param {string} outism — получает в себя ключи элемента, если он не удалён;
     */
     read() {
@@ -47,7 +47,7 @@ class obj {
             this.keys[i] = updObj.keys[i];
         }
     }
-    // * Метод, который «удаляет» этот элемент.
+    // * Метод, который помечает на удаление(ниже будет использоваться — «удаляет») элемент.
     delete() {
         this.removed = true;
     }
@@ -107,20 +107,26 @@ function load() {
 }
 /*
         * Функция-рендер — выгружает результаты в html.
-    @param {number} m — переменная 
+    * @param {number} m — хранит в себе идентификатор элемента, у которого была вызвана эта функция; 
+    * Вызывается в функции load();
+    * Начинает вызывать цепочку колбеков-загрузчиков дочерних элементов;
 */
  function res(m) {
+    //Возможность разворачивания списка;
     if(document.getElementById(m).innerHTML == "") {
         document.getElementById(m).innerHTML = "Загрузка...";
         id = m;
         getChildren(loadChildren);
     }
+    //Возможность сворачивания списка;
     else if(document.getElementById(m).innerHTML != "") {
         document.getElementById(m).innerHTML = "";
     }
 }
 /*
-        * Функция-коллбек — получает дочерние элементы 
+        * Функция-колбек — осуществляет подгрузку с «сервера» дальнейшего списка элементов;
+    * С задержкой в секунду, ответ от сервера, получает в цикле дочерние элементы;
+    * Также, есть возможность с помощью функции render() изменять стиль элемента;
 */
 function getChildren(callback) {
     setTimeout(function(){
@@ -137,6 +143,9 @@ function getChildren(callback) {
     }, 1000);
     
 }
+/*
+    * Функция-колбек — если элемент имеет дочерние элементы, то вызывает функцию modelBuilder(), передавая в неё идентификатор текущего элемента в цикле;
+*/
 function loadChildren(id, callback) {
     for (i = id; i < data.length; i++) {
         if (data[i].hasChildren == true) {
@@ -144,6 +153,11 @@ function loadChildren(id, callback) {
         }
     }
 }
+/*
+        * Функция-строитель — получает идентификатор и выводит детей.
+    * @param {array} mas — массив элементов;
+    * @param {number} j — переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
+*/
 function modelBuilder(id) {
     mas=[];
     j=0;

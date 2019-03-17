@@ -9,12 +9,12 @@
         * @param {bool} removed — ключ-признак удаления элемента;
 */
 class obj {
-    constructor(id, parent, name, hasChildren) {
+    constructor(id, parent, name, hasChildren, removed) {
         this.id = id;
         this.parent = parent;
         this.name = name;
         this.hasChildren = hasChildren;
-        this.removed = false;
+        this.removed = removed;
     }
     /*
             * Метод, производящий чтение элемента.
@@ -47,7 +47,7 @@ class obj {
             this.keys[i] = updObj.keys[i];
         }
     }
-    // * Метод, который помечает на удаление(ниже будет использоваться — «удаляет») элемент.
+    // * Метод, который помечает на удаление(ниже будет использоваться — «удаляет») элемент. Выводиться в списках не будет.
     delete() {
         this.removed = true;
     }
@@ -159,8 +159,8 @@ function loadChildren(id, callback) {
     * @param {number} j — переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
 */
 function modelBuilder(id) {
-    mas=[];
-    j=0;
+    mas = [];
+    j = 0;
     for (i = id; i < data.length; i++) {
         if (data[i].parent == id) {
             mas[j] = data[i];

@@ -52,11 +52,11 @@ class obj {
         this.removed = true;
     }
 }
-/*
+/**
         * Глобальные переменные для вывода.
     * @global {number} number — число элементов;
     * @global {array} object — массив объектов;
-    * @global [array] keys — массив ключей;
+    * @global {array} keys — массив ключей;
 */
 var number = 0;
 var object = [];

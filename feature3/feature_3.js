@@ -173,6 +173,6 @@ function modelBuilder(id) {
     * @param {string} stl — переменная изменяющая стиль;
 */
 function render(x) {
-    stl = prompt("Вводите стиль:");
+    stl = prompt("Введите стиль:");
     document.getElementById(x).style = stl;
 }

@@ -26,16 +26,16 @@ class obj {
     }
     /*
             * Метод, производящий чтение этого файла.
-        * @param {string} outism — хранит в себе информацию о ключах файла: name; value; id;
+        * @param {string} outstr — хранит в себе информацию о ключах файла: name; value; id;
         * Причём, не считывает остальные методы;
         * Выводит информацию о всех 3 ключах в «index.html» (33 строка);
     */
     read() {
-        var outism = "";
-        outism += (this.name) + " ";
-        outism += (this.value) + " ";
-        outism += (this.id) + " ";
-        document.getElementById('outInfo').value = outism;
+        var outstr = "";
+        outstr += (this.name) + " ";
+        outstr += (this.value) + " ";
+        outstr += (this.id) + " ";
+        document.getElementById('outInfo').value = outstr;
 
     };
     // 3 метода ниже выводят информацию в «index.html» (33 строка);

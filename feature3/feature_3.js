@@ -2,9 +2,13 @@
  * @class
  * @name obj
  * @description Класс obj — основная база для взаимодействия с объектами. Присутствует конструктор, методы чтения, обновления, удаления.
- * @property
+ * @property {get read()} read
+ * @property {method} read
+ * @property {method} update 
+ * @property {method} delete
  * @extends
  * @author narDy_MOORA
+ * @public
 */
 class obj {
     /**
@@ -29,6 +33,8 @@ class obj {
      * @memberof obj
      * @name read
      * @description Производит чтение всех свойств элемента.
+     * @returns {undefined | string} — если объект помечен на удаление | строку, содержащую в себе ключи элемента;
+     * FIXME: plz;
     */
     get read() {
         if (this.removed == true)
@@ -38,8 +44,13 @@ class obj {
 
     }
     /**
-     * @description Произвдит чтение конкретно переданного ключа элемента.
+     * @method 
+     * @memberof obj
+     * @name read
+     * @description Производит чтение конкретно переданного ключа элемента.
      * @param {string} key — содержит в себе имя ключа;
+     * @returns {null | string} если ключа не существует | найденный ключ;
+     * FIXME: plz;
      */
     read(key) {
         for (let i = 0; i < keys.length; i++) {
@@ -53,36 +64,49 @@ class obj {
             }
         }
     }
-    // * Метод, который получает обновлённый объект и изменяет ключи на ключи полученного объекта.
+    /**
+     * @method 
+     * @memberof obj
+     * @name update
+     * @description Получает обновлённый объект и изменяет ключи на ключи полученного объекта.
+     */
     set update(updObj){
         for (let i = 0; i < 5; i++) {
             [this.keys[i]] = updObj.keys[i];
         }
     }
-    // * Метод, который помечает на удаление(ниже будет использоваться — «удаляет») элемент. Выводиться в списках не будет.
+    /**
+     * @method 
+     * @memberof obj
+     * @name delete
+     * @description Помечает объект на удаление, выводиться в списках не будет
+     */
     delete() {
         this.removed = true;
     }
 }
 /**
-* @description Глобальные переменные для вывода.
-* @param {number} number — число элементов;
-* @param {array} object — массив объектов;
-* @param {array} keys — массив ключей;
-*/
+ * @description Глобальные переменные для вывода.
+ * @param {number} number — число элементов;
+ * @param {array} object — массив объектов;
+ * @param {array} keys — массив ключей;
+ * @public
+ */
 var number = 0;
 var object = [];
 var keys = [ 'id', 'parent', 'name', 'hasChildren', 'remove' ];
-/*
-        * Функция, строящая объект.
-    * @param {json} data — передаваемый в функцию JSON; 
-    * @param {number|string} setid — хранит в себе введённый идентификатор;
-    * @param {number|string} setparent — хранит в себе введённое значение;
-    * @param {string} setname — хранит в себе введённое имя;
-    * @param {bool} hasChildren — хранит в себе информацию о наличии дочерних элементов;
-    * @param {bool} setremoved — хранит в себе информацию о наличии «удаления»;
-    * @global {number} number — переменная-счётчик количества объектов;
-*/
+/**
+ * @function
+ * @name objBuilder_file
+ * @description Строит объект из полученного JSON'а.
+ * @param {json} data — передаваемый в функцию JSON; 
+ * @param {number|string} setid — хранит в себе введённый идентификатор;
+ * @param {number|string} setparent — хранит в себе введённое значение;
+ * @param {string} setname — хранит в себе введённое имя;
+ * @param {bool} hasChildren — хранит в себе информацию о наличии дочерних элементов;
+ * @param {bool} setremoved — хранит в себе информацию о наличии «удаления»;
+ * @public
+ */
 function objBuilder_file(data) {
     for (let i = 0; i < data.length; i++) {
         let setid = data[i].id;
@@ -94,51 +118,62 @@ function objBuilder_file(data) {
         number++;
     }
 }
-/*
-        * Демо-данные
-    * @global {string} -> {json} data — хранение данных;
-*/
+/**
+ * Демо-данные
+ * @param {string} -> {json} data — хранение данных;
+ */
 var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true},{ "id": 3,"parent": 2,"name": "Задача 1.1.1" },{ "id": 4,"parent": 2,"name": "Задача 1.1.2" },{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" },{ "id": 7,"parent": 5,"name": "Задача 1.2.2" },{"id": 8,"parent": 1,"name": "Список задач 1.3"},{"id": 9,"name": "Доска 2"}]';
 data = JSON.parse(data);
-/*
-        * «Функция-сразу» — выполняется, как только завершилась загрузка HTML-страницы.
-    * Данная функция строит маркированный список из глобальной переменной data, добавляя кнопки удовлетворяющие различным условиям элементов;
-    * Нажатия кнопок вызывают функции-цепочки, которые получают дальнейшие дочерние элементы, если они имеются;
-*/
+/**
+ * @function
+ * @name load
+ * @description «Функция-сразу» — выполняется, как только завершилась загрузка HTML-страницы. 
+ * Данная функция строит маркированный список из глобальной переменной data, добавляя кнопки удовлетворяющие различным условиям элементов;
+ * Нажатия кнопок вызывают функции-цепочки, которые получают дальнейшие дочерние элементы, если они имеются;
+ */
 function load() {
     document.getElementById("result").innerHTML += "<ul>";
     for (i = 0; i < data.length; i++)
     {
+        /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
+            /** Добавляет кнопку изменения стиля */
             document.getElementById("result").innerHTML += "<li id='" + (data[i].id+"li") + "'>" + data[i].name + " <button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></li>";
+            /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (data[i].hasChildren == true) {
                 document.getElementById("result").innerHTML += "<button onClick=res("+i+")>Открыть</button><ul><div id='"+i+"'></ul>";
             }
         }
     }
 }
-/*
-        * Функция-рендер — выгружает результаты в html.
-    * @param {number} m — хранит в себе идентификатор элемента, у которого была вызвана эта функция; 
-    * Вызывается в функции load();
-    * Начинает вызывать цепочку колбеков-загрузчиков дочерних элементов;
-*/
+/**
+ * @function 
+ * @name res
+ * @description Функция-рендер — выгружает результаты в html.
+ * Вызывается в функции load(); Начинает вызывать цепочку колбеков-загрузчиков дочерних элементов;
+ * @param {number} m — хранит в себе идентификатор элемента, у которого была вызвана эта функция; 
+ */
  function res(m) {
-    //Возможность разворачивания списка;
+    /** Возможность разворачивания списка; */
     if(document.getElementById(m).innerHTML == "") {
         document.getElementById(m).innerHTML = "Загрузка...";
         id = m;
         getChildren(loadChildren);
     }
-    //Возможность сворачивания списка;
+    /** Возможность сворачивания списка; */
     else if(document.getElementById(m).innerHTML != "") {
         document.getElementById(m).innerHTML = "";
     }
 }
+/**
+ * @function
+ * @name getChildren
+ * @description Функция-колбек — осуществляет подгрузку с «сервера» дальнейшего списка элементов;
+ * С задержкой в секунду, ответ от сервера, получает в цикле дочерние элементы;
+ * Также, есть возможность с помощью функции render() изменять стиль элемента;
+ * @param {*} callback — встроенная функция колбек;
+ */
 /*
-        * Функция-колбек — осуществляет подгрузку с «сервера» дальнейшего списка элементов;
-    * С задержкой в секунду, ответ от сервера, получает в цикле дочерние элементы;
-    * Также, есть возможность с помощью функции render() изменять стиль элемента;
 */
 function getChildren(callback) {
     setTimeout(function(){
@@ -155,9 +190,13 @@ function getChildren(callback) {
     }, 1000);
     
 }
-/*
-    * Функция-колбек — если элемент имеет дочерние элементы, то вызывает функцию modelBuilder(), передавая в неё идентификатор текущего элемента в цикле;
-*/
+/**
+ * @function
+ * @name loadChildren
+ * @description Функция-колбек — если элемент имеет дочерние элементы, то вызывает функцию modelBuilder(), передавая в неё идентификатор текущего элемента в цикле;
+ * @param {*} id — идентификатор объекта;
+ * @param {*} callback 
+ */
 function loadChildren(id, callback) {
     for (i = id; i < data.length; i++) {
         if (data[i].hasChildren == true) {
@@ -165,11 +204,14 @@ function loadChildren(id, callback) {
         }
     }
 }
-/*
-        * Функция-строитель — получает идентификатор и выводит детей.
-    * @param {array} mas — массив элементов;
-    * @param {number} j — переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
-*/
+/**
+ * @function
+ * @name modelBuilder
+ * @description Функция-строитель — получает идентификатор и выводит детей (погулять;).
+ * @param {number} id — полученный идентификатор объекта; 
+ * @param {array} mas — массив элементов;
+ * @param {number} j — переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
+ */
 function modelBuilder(id) {
     mas = [];
     j = 0;
@@ -180,10 +222,13 @@ function modelBuilder(id) {
         }
     }
 }
-/*
-        * Функция-управлятор — благодаря ей, пользователь может изменять стили определённого элемента в списке.
-    * @param {string} stl — переменная изменяющая стиль;
-*/
+/**
+ * @function
+ * @name render
+ * @description Функция-управлятор — благодаря ей, пользователь может изменять стили определённого элемента в списке.
+ * @param {number} x — идентификатор элемента;
+ * @param {string} stl — переменная изменяющая стиль;
+ */
 function render(x) {
     stl = prompt("Введите стиль:");
     document.getElementById(x).style = stl;

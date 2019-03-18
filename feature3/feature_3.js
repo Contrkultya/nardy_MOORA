@@ -1,14 +1,22 @@
-/*
-        * Класс obj — основная база для взаимодействия с объектами. Присутствует конструктор, методы чтения, обновления, удаления.
-    * @constructor:
-    * Создаёт объект из полученных данных:
-        * @param {string|number} id — ключ-идентификатор элемента;
-        * @param {string|number} parent — ключ-идентификатор родителя; 
-        * @param {string} name — ключ-имя элемента;
-        * @param {bool} hasChildren — ключ-признак на наличие дочерних элементов;
-        * @param {bool} removed — ключ-признак удаления элемента;
+/**
+ * @class
+ * @name obj
+ * @description Класс obj — основная база для взаимодействия с объектами. Присутствует конструктор, методы чтения, обновления, удаления.
+ * @property
+ * @extends
+ * @author narDy_MOORA
 */
 class obj {
+    /**
+     * @constructor
+     * @name constructor
+     * @description Создаёт объект из полученных данных.
+     * @param {number} id — ключ-идентификатор элемента;
+     * @param {number} parent — ключ-идентификатор родителя; 
+     * @param {string} name — ключ-имя элемента;
+     * @param {bool} hasChildren — ключ-признак на наличие дочерних элементов;
+     * @param {bool} removed — ключ-признак удаления элемента;
+     */
     constructor(id, parent, name, hasChildren, removed) {
         this.id = id;
         this.parent = parent;
@@ -16,23 +24,27 @@ class obj {
         this.hasChildren = hasChildren;
         this.removed = removed;
     }
-    /*
-            * Метод, производящий чтение элемента.
-        * @param {string} outism — получает в себя ключи элемента, если он не удалён;
+    /** 
+     * @method 
+     * @memberof obj
+     * @name read
+     * @description Производит чтение всех свойств элемента.
     */
-    read() {
-        var outism = "";
+    get read() {
         if (this.removed == true)
             return undefined;
         else 
-            return outism += this.name + ' ' + this.parent + ' ' + this.id + ' ' + this.hasChildren;
+            return `${this.name}; ${this.parent}; ${this.id}; ${this.hasChildren};`;
 
     }
-    // * Метод, производящий чтение конкретно переданного ключа элемента.
+    /**
+     * @description Произвдит чтение конкретно переданного ключа элемента.
+     * @param {string} key — содержит в себе имя ключа;
+     */
     read(key) {
         for (let i = 0; i < keys.length; i++) {
             if (key == keys[i]) {
-                if (this.keys[i] === undefined || this.keys[i] == ' ') {
+                if (this.keys[i] == undefined || this.keys[i] == ' ') {
                     return null;
                 }
                 else {
@@ -42,9 +54,9 @@ class obj {
         }
     }
     // * Метод, который получает обновлённый объект и изменяет ключи на ключи полученного объекта.
-    update(updObj){
+    set update(updObj){
         for (let i = 0; i < 5; i++) {
-            this.keys[i] = updObj.keys[i];
+            [this.keys[i]] = updObj.keys[i];
         }
     }
     // * Метод, который помечает на удаление(ниже будет использоваться — «удаляет») элемент. Выводиться в списках не будет.
@@ -53,10 +65,10 @@ class obj {
     }
 }
 /**
-        * Глобальные переменные для вывода.
-    * @global {number} number — число элементов;
-    * @global {array} object — массив объектов;
-    * @global {array} keys — массив ключей;
+* @description Глобальные переменные для вывода.
+* @param {number} number — число элементов;
+* @param {array} object — массив объектов;
+* @param {array} keys — массив ключей;
 */
 var number = 0;
 var object = [];

@@ -233,3 +233,34 @@ function render(x) {
     stl = prompt("Введите стиль:");
     document.getElementById(x).style = stl;
 }
+
+
+/*
+function timeout(delay) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(resolve, delay);
+});
+    
+function getChildren(callback) {
+    timeout(1000).then(function(){
+        callback(id);   
+        document.getElementById(id).innerHTML = "";
+        for(i = 0; i < mas.length; i++)
+        { 
+            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
+            if(mas[i].hasChildren == true)
+            {
+                document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
+            }
+        }
+    });
+    
+}
+function loadChildren(id, callback) {
+    for (i = id; i < data.length; i++) {
+        if (data[i].hasChildren == true) {
+            modelBuilder(data[i].id);
+        }
+    }
+}
+*/

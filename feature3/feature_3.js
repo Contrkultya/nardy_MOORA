@@ -98,8 +98,8 @@ var keys = [ 'id', 'parent', 'name', 'hasChildren', 'remove' ];
  * @name objBuilder_file
  * @description Строит объект из полученного JSON'а.
  * @param {json} data — передаваемый в функцию JSON; 
- * @param {number|string} setid — хранит в себе введённый идентификатор;
- * @param {number|string} setparent — хранит в себе введённое значение;
+ * @param {number} setid — хранит в себе введённый идентификатор;
+ * @param {number} setparent — хранит в себе введённое значение;
  * @param {string} setname — хранит в себе введённое имя;
  * @param {bool} hasChildren — хранит в себе информацию о наличии дочерних элементов;
  * @param {bool} setremoved — хранит в себе информацию о наличии «удаления»;
@@ -144,6 +144,8 @@ function load() {
         }
     }
 }
+//Закомменчено, тк "реализованы" promis'ы, но мы не показывали вам callback'и.
+
 /**
  * @function 
  * @name res
@@ -169,7 +171,6 @@ function load() {
  * @description Функция-колбек — осуществляет подгрузку с «сервера» дальнейшего списка элементов;
  * С задержкой в секунду, ответ от сервера, получает в цикле дочерние элементы;
  * Также, есть возможность с помощью функции render() изменять стиль элемента;
- * @param {*} callback — встроенная функция колбек;
  *
 function getChildren(callback) {
     setTimeout(function(){
@@ -192,7 +193,7 @@ function getChildren(callback) {
  * @description Функция-колбек — если элемент имеет дочерние элементы, то вызывает функцию modelBuilder(), передавая в неё идентификатор текущего элемента в цикле;
  * @param {*} id — идентификатор объекта;
  *
-function loadChildren(id, callback) {
+function loadChildren(id) {
     for (i = id; i < data.length; i++) {
         if (data[i].hasChildren == true) {
             modelBuilder(data[i].id);
@@ -233,24 +234,27 @@ function res(m) {
     if(document.getElementById(m).innerHTML == "") {
         document.getElementById(m).innerHTML = "Загрузка...";
         id = m;
-        loadChildren(id).then(getChildren);
+        loadChildren(id).then(serverCall);
     }
     else if(document.getElementById(m).innerHTML != "") {
         document.getElementById(m).innerHTML = "";
     }
 }
+/**
+ * Документация в процессе
+ */
+function serverCall() {
+    setTimeout(getChildren(), 1000);
+        //Псевдо-связь с сервером
+}
 function getChildren() {
-    setTimeout(function(){
-        document.getElementById(id).innerHTML = "";
-        for(i = 0; i < mas.length; i++)
-        { 
-            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
-            if(mas[i].hasChildren == true)
-            {
+    document.getElementById(id).innerHTML = "";
+    for(i = 0; i < mas.length; i++) { 
+        document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
+        if(mas[i].hasChildren == true) {
                 document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
-            }
         }
-    }, 1000);
+    }
     
 }
 function loadChildren(id) {

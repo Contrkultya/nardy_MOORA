@@ -150,15 +150,15 @@ function load() {
  * @description Функция-рендер — выгружает результаты в html.
  * Вызывается в функции load(); Начинает вызывать цепочку колбеков-загрузчиков дочерних элементов;
  * @param {number} m — хранит в себе идентификатор элемента, у которого была вызвана эта функция; 
- */
+ *
  function res(m) {
-    /** Возможность разворачивания списка; */
+    /** Возможность разворачивания списка; *
     if(document.getElementById(m).innerHTML == "") {
         document.getElementById(m).innerHTML = "Загрузка...";
         id = m;
         getChildren(loadChildren);
     }
-    /** Возможность сворачивания списка; */
+    /** Возможность сворачивания списка; *
     else if(document.getElementById(m).innerHTML != "") {
         document.getElementById(m).innerHTML = "";
     }
@@ -170,9 +170,7 @@ function load() {
  * С задержкой в секунду, ответ от сервера, получает в цикле дочерние элементы;
  * Также, есть возможность с помощью функции render() изменять стиль элемента;
  * @param {*} callback — встроенная функция колбек;
- */
-/*
-*/
+ *
 function getChildren(callback) {
     setTimeout(function(){
         callback(id);   
@@ -193,8 +191,7 @@ function getChildren(callback) {
  * @name loadChildren
  * @description Функция-колбек — если элемент имеет дочерние элементы, то вызывает функцию modelBuilder(), передавая в неё идентификатор текущего элемента в цикле;
  * @param {*} id — идентификатор объекта;
- * @param {*} callback 
- */
+ *
 function loadChildren(id, callback) {
     for (i = id; i < data.length; i++) {
         if (data[i].hasChildren == true) {
@@ -232,16 +229,18 @@ function render(x) {
     document.getElementById(x).style = stl;
 }
 
-
-/*
-function timeout(delay) {
-    return new Promise(function(resolve, reject) {
-        setTimeout(resolve, delay);
-});
-    
-function getChildren(callback) {
-    timeout(1000).then(function(){
-        callback(id);   
+function res(m) {
+    if(document.getElementById(m).innerHTML == "") {
+        document.getElementById(m).innerHTML = "Загрузка...";
+        id = m;
+        loadChildren(id).then(getChildren);
+    }
+    else if(document.getElementById(m).innerHTML != "") {
+        document.getElementById(m).innerHTML = "";
+    }
+}
+function getChildren() {
+    setTimeout(function(){
         document.getElementById(id).innerHTML = "";
         for(i = 0; i < mas.length; i++)
         { 
@@ -251,14 +250,15 @@ function getChildren(callback) {
                 document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
             }
         }
-    });
+    }, 1000);
     
 }
-function loadChildren(id, callback) {
-    for (i = id; i < data.length; i++) {
-        if (data[i].hasChildren == true) {
-            modelBuilder(data[i].id);
+function loadChildren(id) {
+    return new Promise(function(resolve, reject){
+        for (i = id; i < data.length; i++) {
+            if (data[i].hasChildren == true) {
+                resolve(modelBuilder(data[i].id));
+            }
         }
-    }
+    })
 }
-*/

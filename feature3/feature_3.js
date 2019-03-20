@@ -32,36 +32,35 @@ class obj {
      * @method 
      * @memberof obj
      * @name read
-     * @description Производит чтение всех свойств элемента.
-     * @returns {undefined | string} — если объект помечен на удаление | строку, содержащую в себе ключи элемента;
-     * FIXME: plz;
+     * @description Производит чтение всех свойств элемента, если передан ключ, производит чтение определённого свойства объекта.
+     * @param {undefined | string} key — не содержит|содержит в себе имя ключа;
+     * @returns {undefined | null | string} undefined — если объект помечен на удаление;
+     * Если переданного ключа не существует, то возвращает null;
+     * Если, передан без ключа, то строку, содержащую в себе ключи элемента;
     */
-    get read: function() {
+    read(key) {
         if (this.removed == true)
             return undefined;
-        else 
-            return `${this.name}; ${this.parent}; ${this.id}; ${this.hasChildren};`;
-
-    }
-    /**
-     * @method 
-     * @memberof obj
-     * @name read
-     * @description Производит чтение конкретно переданного ключа элемента.
-     * @param {string} key — содержит в себе имя ключа;
-     * @returns {null | string} если ключа не существует | найденный ключ;
-     * FIXME: plz;
-     */
-    read: function(key) {
-        for (let i = 0; i < keys.length; i++) {
-            if (key == keys[i]) {
-                if (this.keys[i] == undefined || this.keys[i] == ' ') {
-                    return null;
-                }
-                else {
-                    return this.keys[i];
-                }
+        else {
+            if (key === undefined) {
+                return `${this.name}; ${this.parent}; ${this.id}; ${this.hasChildren};`;
             }
+            else if (key == 'id') {
+                return this.id;
+            }
+            else if (key == 'parent') {
+                return this.parent;
+            }
+            else if (key == 'name') {
+                return this.name;
+            }
+            else if (key == 'hasChildren') {
+                return this.hasChildren;
+            }
+            else if(key == 'removed') {
+                return this.removed;
+            }
+            else return null;
         }
     }
     /**
@@ -70,9 +69,9 @@ class obj {
      * @name update
      * @description Получает обновлённый объект и изменяет ключи на ключи полученного объекта.
      */
-    update: function(updObj){
+    update(updObj) {
         for (let i = 0; i < 5; i++) {
-            [this.keys[i]] = updObj.keys[i];
+            this.keys[i] = updObj.keys[i];
         }
     }
     /**
@@ -81,7 +80,7 @@ class obj {
      * @name delete
      * @description Помечает объект на удаление, выводиться в списках не будет
      */
-    delete: function() {
+    delete() {
         this.removed = true;
     }
 }

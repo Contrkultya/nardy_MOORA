@@ -36,7 +36,7 @@ class obj {
      * @returns {undefined | string} — если объект помечен на удаление | строку, содержащую в себе ключи элемента;
      * FIXME: plz;
     */
-    get read() {
+    get read: function() {
         if (this.removed == true)
             return undefined;
         else 
@@ -52,7 +52,7 @@ class obj {
      * @returns {null | string} если ключа не существует | найденный ключ;
      * FIXME: plz;
      */
-    read(key) {
+    read: function(key) {
         for (let i = 0; i < keys.length; i++) {
             if (key == keys[i]) {
                 if (this.keys[i] == undefined || this.keys[i] == ' ') {
@@ -70,7 +70,7 @@ class obj {
      * @name update
      * @description Получает обновлённый объект и изменяет ключи на ключи полученного объекта.
      */
-    set update(updObj){
+    update: function(updObj){
         for (let i = 0; i < 5; i++) {
             [this.keys[i]] = updObj.keys[i];
         }
@@ -81,7 +81,7 @@ class obj {
      * @name delete
      * @description Помечает объект на удаление, выводиться в списках не будет
      */
-    delete() {
+    delete: function() {
         this.removed = true;
     }
 }

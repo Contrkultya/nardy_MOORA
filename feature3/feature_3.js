@@ -234,27 +234,24 @@ function res(m) {
     if(document.getElementById(m).innerHTML == "") {
         document.getElementById(m).innerHTML = "Загрузка...";
         id = m;
-        loadChildren(id).then(serverCall);
+        loadChildren(id).then(getChildren);
     }
     else if(document.getElementById(m).innerHTML != "") {
         document.getElementById(m).innerHTML = "";
     }
 }
-/**
- * Документация в процессе
- */
-function serverCall() {
-    setTimeout(getChildren(), 1000);
-        //Псевдо-связь с сервером
-}
 function getChildren() {
-    document.getElementById(id).innerHTML = "";
-    for(i = 0; i < mas.length; i++) { 
-        document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
-        if(mas[i].hasChildren == true) {
+    setTimeout(function(){
+        document.getElementById(id).innerHTML = "";
+        for(i = 0; i < mas.length; i++)
+        { 
+            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
+            if(mas[i].hasChildren == true)
+            {
                 document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
+            }
         }
-    }
+    }, 1000);
     
 }
 function loadChildren(id) {

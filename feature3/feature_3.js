@@ -230,6 +230,10 @@ function render(x) {
     document.getElementById(x).style = stl;
 }
 
+/**
+ * Документация скоро будет~
+ */
+
 function res(m) {
     if(document.getElementById(m).innerHTML == "") {
         document.getElementById(m).innerHTML = "Загрузка...";

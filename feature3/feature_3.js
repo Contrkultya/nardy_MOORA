@@ -68,17 +68,16 @@ class obj {
      * @memberof obj
      * @name update
      * @description Получает обновлённый объект и изменяет ключи на ключи полученного объекта.
+     * @param {object} updObj — обновлённый объект;
      */
     update(updObj) {
-        for (let i = 0; i < 5; i++) {
-            this.keys[i] = updObj.keys[i];
-        }
+        Object.assign(this, updObj);
     }
     /**
      * @method 
      * @memberof obj
      * @name delete
-     * @description Помечает объект на удаление, выводиться в списках не будет
+     * @description Помечает объект на удаление, после этого он выводиться в списках не будет
      */
     delete() {
         this.removed = true;

@@ -85,14 +85,25 @@ class obj {
 }
 /**
  * @description Глобальные переменные для вывода.
- * @param {number} number — число элементов;
  * @param {array} object — массив объектов;
  * @param {array} keys — массив ключей;
  * @public
  */
-var number = 0;
 var object = [];
 var keys = [ 'id', 'parent', 'name', 'hasChildren', 'remove' ];
+/**
+ * @function
+ * @name numberObjects
+ * @description Замыкнутая функция, считает количество объектов;
+ * @param {number} counter — счётчик объектов;
+ * @public
+ */
+function numberObjects() {
+    var counter = 0;
+    return function() {
+        return ++counter;
+    }
+}
 /**
  * @function
  * @name objBuilder_file
@@ -106,14 +117,15 @@ var keys = [ 'id', 'parent', 'name', 'hasChildren', 'remove' ];
  * @public
  */
 function objBuilder_file(data) {
-    for (let i = 0; i < data.length; i++) {
+    let i = 0, numberObjects = numberObjects();
+    for (;i < data.length; i++) {
         let setid = data[i].id;
         let setparent = data[i].parent;
         let setname = data[i].name;
         let hasChildren = data[i].hasChildren;
         let setremoved = data[i].removed;
-        object[number] = new obj(setid, setparent, setname, hasChildren, setremoved);
-        number++;
+        object[numberObjects] = new obj(setid, setparent, setname, hasChildren, setremoved);
+        numberObjects();
     }
 }
 /**
@@ -131,7 +143,8 @@ data = JSON.parse(data);
  */
 function load() {
     document.getElementById("result").innerHTML += "<ul>";
-    for (i = 0; i < data.length; i++)
+    let i = 0;
+    for (;i < data.length; i++)
     {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
@@ -211,7 +224,8 @@ function loadChildren(id) {
 function modelBuilder(id) {
     mas = [];
     j = 0;
-    for (i = id; i < data.length; i++) {
+    i = id;
+    for (; i < data.length; i++) {
         if (data[i].parent == id) {
             mas[j] = data[i];
             j++;
@@ -247,7 +261,8 @@ function res(m) {
 function getChildren() {
     setTimeout(function(){
         document.getElementById(id).innerHTML = "";
-        for(i = 0; i < mas.length; i++)
+        i = 0;
+        for(; i < mas.length; i++)
         { 
             document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
             if(mas[i].hasChildren == true)
@@ -260,7 +275,8 @@ function getChildren() {
 }
 function loadChildren(id) {
     return new Promise(function(resolve, reject){
-        for (i = id; i < data.length; i++) {
+        i = id;
+        for (; i < data.length; i++) {
             if (data[i].hasChildren == true) {
                 resolve(modelBuilder(data[i].id));
             }

@@ -95,7 +95,7 @@ class obj {
             return undefined;
         else {
             if (key === undefined) {
-                return `${this._name}; ${this._parent}; ${this._id}; ${this._hasChildren};`;
+                return `${this._name}; ${this._parent}; ${this._id}; ${this._hasChildren}; ${this._done}; \n${this._description}`;
             }
             else if (key == 'id') {
                 return this._id;

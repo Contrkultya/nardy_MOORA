@@ -2,7 +2,6 @@
  * @class
  * @name obj
  * @description Класс obj — основная база для взаимодействия с объектами. Присутствует конструктор, методы чтения, обновления, удаления.
- * @property {get read()} read
  * @property {method} read
  * @property {method} update 
  * @property {method} delete
@@ -20,13 +19,66 @@ class obj {
      * @param {string} name — ключ-имя элемента;
      * @param {bool} hasChildren — ключ-признак на наличие дочерних элементов;
      * @param {bool} removed — ключ-признак удаления элемента;
+     * @param {bool} done — ключ-признак, указывает, выполнена ли задача или нет;
+     * @param {string} description — ключ-признак, хранит в себе описание задачи;
      */
-    constructor(id, parent, name, hasChildren, removed) {
-        this.id = id;
-        this.parent = parent;
-        this.name = name;
-        this.hasChildren = hasChildren;
-        this.removed = removed;
+    constructor(id, parent, name, hasChildren, removed, done, description) {
+        this._id = id;
+        this._parent = parent;
+        this._name = name;
+        this._hasChildren = hasChildren;
+        this._removed = removed;
+        this._done = done;
+        this._description = description;
+    }
+    
+    get id() {
+        return this._id;
+    }
+    set id(id) {
+        this._id = id;
+    }
+
+    get parent() {
+        return this._parent;
+    }
+    set parent(parentId) {
+        this._parent = parentId;
+    }
+
+    get name() {
+        return this._name;
+    }
+    set name(name) {
+        this._name = name;
+    }
+
+    get hasChildren() {
+        return this._hasChildren;
+    }
+    set hasChildren(haveBool) {
+        this._hasChildren = haveBool;
+    }
+
+    get removed() {
+        return this._removed;
+    }
+    set removed(haveBool) {
+        this._removed = haveBool;
+    }
+
+    get done() {
+        return this._done;
+    }
+    set done(haveBool) {
+        this._done = haveBool;
+    }
+
+    get description() {
+        return this._description;
+    }
+    set description(setDesc) {
+        this._description = setDesc;
     }
     /** 
      * @method 
@@ -39,26 +91,32 @@ class obj {
      * Если, передан без ключа, то строку, содержащую в себе ключи элемента;
     */
     read(key) {
-        if (this.removed == true)
+        if (this.checkRemove())
             return undefined;
         else {
             if (key === undefined) {
-                return `${this.name}; ${this.parent}; ${this.id}; ${this.hasChildren};`;
+                return `${this._name}; ${this._parent}; ${this._id}; ${this._hasChildren};`;
             }
             else if (key == 'id') {
-                return this.id;
+                return this._id;
             }
             else if (key == 'parent') {
-                return this.parent;
+                return this._parent;
             }
             else if (key == 'name') {
-                return this.name;
+                return this._name;
             }
             else if (key == 'hasChildren') {
-                return this.hasChildren;
+                return this._hasChildren;
             }
             else if(key == 'removed') {
-                return this.removed;
+                return this._removed;
+            }
+            else if(key == 'done') {
+                return this._done;
+            }
+            else if(key == 'description') {
+                return this._description;
             }
             else return null;
         }
@@ -71,16 +129,47 @@ class obj {
      * @param {object} updObj — обновлённый объект;
      */
     update(updObj) {
-        Object.assign(this, updObj);
+        if (this.checkRemove()) {
+            return undefined;
+        }
+        else Object.assign(this, updObj);
     }
     /**
      * @method 
      * @memberof obj
      * @name delete
-     * @description Помечает объект на удаление, после этого он выводиться в списках не будет
+     * @description Помечает объект на удаление, после этого он выводиться в списках не будет.
      */
     delete() {
-        this.removed = true;
+        this._removed = true;
+    }
+    /**
+     * @method 
+     * @memberof obj
+     * @name checkRemove
+     * @description Метод, проверяющий помечен ли объект на удаление, или нет.
+     * @return {bool};
+     */
+    checkRemove() {
+        if (this._removed)
+            return true;
+        else return false;
+    }
+    /**
+     * @method
+     * @memberof obj
+     * @name changeDone
+     * @description Изменяет состояние завершённости объекта. (Завершён/Не завершён);
+     */
+    changeDone() {
+        if (this.checkRemove()) {
+            return undefined;
+        }
+        else if (this._done)
+        {
+            this._done = false;
+        }
+        else this._done = true;
     }
 }
 /**
@@ -90,20 +179,26 @@ class obj {
  * @public
  */
 var object = [];
+var numberObjects = 0;
 var keys = [ 'id', 'parent', 'name', 'hasChildren', 'remove' ];
-/**
- * @function
- * @name numberObjects
- * @description Замыкнутая функция, считает количество объектов;
- * @param {number} counter — счётчик объектов;
- * @public
- */
-function numberObjects() {
-    var counter = 0;
-    return function() {
-        return ++counter;
-    }
+
+/* NOTE: Открыть, когда ящик пандоры будет решён.
+var bank = {
+    objects: [],
+    numberObjects() {
+        var counter = 0;
+        return function() {
+            return ++counter;
+        }
+    },
+    getLenght() {
+        return counter;
+    },
+    keys: [ 'id', 'parent', 'name', 'hasChildren', 'remove' ],
 }
+*/
+
+
 /**
  * @function
  * @name objBuilder_file
@@ -117,7 +212,7 @@ function numberObjects() {
  * @public
  */
 function objBuilder_file(data) {
-    let i = 0, numberObjects = numberObjects();
+    let i = 0;
     for (;i < data.length; i++) {
         let setid = data[i].id;
         let setparent = data[i].parent;
@@ -125,7 +220,7 @@ function objBuilder_file(data) {
         let hasChildren = data[i].hasChildren;
         let setremoved = data[i].removed;
         object[numberObjects] = new obj(setid, setparent, setname, hasChildren, setremoved);
-        numberObjects();
+        numberObjects++;
     }
 }
 /**
@@ -157,8 +252,8 @@ function load() {
         }
     }
 }
-//Закомменчено, тк "реализованы" promis'ы, но мы не показывали вам callback'и.
 
+//Закомменчено, тк "реализованы" promis'ы, но мы не показывали вам callback'и.
 /**
  * @function 
  * @name res
@@ -213,6 +308,9 @@ function loadChildren(id) {
         }
     }
 }
+
+
+
 /**
  * @function
  * @name modelBuilder

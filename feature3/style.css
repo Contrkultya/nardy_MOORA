@@ -1,13 +1,24 @@
 #result
 {
-    width: 350px;
-    background-color:rgb(170, 199, 161);
-    height: 400px;
+    width: 500px;
+    background-color:rgb(194, 216, 228);
+    height: 700px;
     font-size: 16pt;
-    border: 2px solid;
+    border: 1px solid;
     border-radius: 5px;
     padding-left:50px;
 }
 div{
 margin-bottom: 10px;
+}
+.greenCheck, .redCheck {
+    display: inline;
+    margin: 5px;
+    border-radius: 5px;
+}
+.greenCheck {
+    background-color: #58e958;
+}
+.redCheck {
+    background-color: #e95858;
 }

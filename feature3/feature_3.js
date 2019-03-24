@@ -5,6 +5,8 @@
  * @property {method} read
  * @property {method} update 
  * @property {method} delete
+ * @property {method} checkRemove
+ * @property {method} changeDone
  * @extends
  * @author narDy_MOORA
  * @public
@@ -14,13 +16,13 @@ class obj {
      * @constructor
      * @name constructor
      * @description Создаёт объект из полученных данных.
-     * @param {number} id — ключ-идентификатор элемента;
-     * @param {number} parent — ключ-идентификатор родителя; 
-     * @param {string} name — ключ-имя элемента;
-     * @param {bool} hasChildren — ключ-признак на наличие дочерних элементов;
-     * @param {bool} removed — ключ-признак удаления элемента;
-     * @param {bool} done — ключ-признак, указывает, выполнена ли задача или нет;
-     * @param {string} description — ключ-признак, хранит в себе описание задачи;
+     * @param {number} id ключ-идентификатор элемента;
+     * @param {number} parent ключ-идентификатор родителя; 
+     * @param {string} name ключ-имя элемента;
+     * @param {bool} hasChildren ключ-признак на наличие дочерних элементов;
+     * @param {bool} removed ключ-признак удаления элемента;
+     * @param {bool} done ключ-признак, указывает, выполнена ли задача или нет;
+     * @param {string} description ключ-признак, хранит в себе описание задачи;
      */
     constructor(id, parent, name, hasChildren, removed, done, description) {
         this._id = id;
@@ -85,7 +87,7 @@ class obj {
      * @memberof obj
      * @name read
      * @description Производит чтение всех свойств элемента, если передан ключ, производит чтение определённого свойства объекта.
-     * @param {undefined | string} key — не содержит|содержит в себе имя ключа;
+     * @param {undefined | string} key не содержит|содержит в себе имя ключа;
      * @returns {undefined | null | string} undefined — если объект помечен на удаление;
      * Если переданного ключа не существует, то возвращает null;
      * Если, передан без ключа, то строку, содержащую в себе ключи элемента;
@@ -126,7 +128,7 @@ class obj {
      * @memberof obj
      * @name update
      * @description Получает обновлённый объект и изменяет ключи на ключи полученного объекта.
-     * @param {object} updObj — обновлённый объект;
+     * @param {object} updObj обновлённый объект;
      */
     update(updObj) {
         if (this.checkRemove()) {
@@ -172,15 +174,6 @@ class obj {
         else this._done = true;
     }
 }
-/**
- * @description Глобальные переменные для вывода.
- * @param {array} object — массив объектов;
- * @param {array} keys — массив ключей;
- * @public
- */
-var object = [];
-var numberObjects = 0;
-var keys = [ 'id', 'parent', 'name', 'hasChildren', 'remove' ];
 
 /* NOTE: Открыть, когда ящик пандоры будет решён.
 var bank = {
@@ -203,14 +196,14 @@ var bank = {
  * @function
  * @name objBuilder_file
  * @description Строит объект из полученного JSON'а.
- * @param {json} data — передаваемый в функцию JSON; 
- * @param {number} setid — хранит в себе введённый идентификатор;
- * @param {number} setparent — хранит в себе введённое значение;
- * @param {string} setname — хранит в себе введённое имя;
- * @param {bool} hasChildren — хранит в себе информацию о наличии дочерних элементов;
- * @param {bool} setremoved — хранит в себе информацию о наличии «удаления»;
+ * @param {json} data передаваемый в функцию JSON; 
+ * @param {number} setid хранит в себе введённый идентификатор;
+ * @param {number} setparent хранит в себе введённое значение;
+ * @param {string} setname хранит в себе введённое имя;
+ * @param {bool} hasChildren хранит в себе информацию о наличии дочерних элементов;
+ * @param {bool} setremoved хранит в себе информацию о наличии «удаления»;
  * @public
- */
+ *
 function objBuilder_file(data) {
     let i = 0;
     for (;i < data.length; i++) {
@@ -227,7 +220,7 @@ function objBuilder_file(data) {
  * Демо-данные
  * @param {string} -> {json} data — хранение данных;
  */
-var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true},{ "id": 3,"parent": 2,"name": "Задача 1.1.1" },{ "id": 4,"parent": 2,"name": "Задача 1.1.2" },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": true},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" },{ "id": 7,"parent": 5,"name": "Задача 1.2.2" },{"id": 8,"parent": 1,"name": "Список задач 1.3"},{"id": 9,"name": "Доска 2"}]';
+var data = '[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false },{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": false, "removed": false },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false},{"id": 9,"name": "Доска 2", "done": false, "removed": false}]';
 data = JSON.parse(data);
 /**
  * @function
@@ -244,7 +237,10 @@ function load() {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("result").innerHTML += "<li id='" + (data[i].id+"li") + "'>" + data[i].name + " <button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></li>";
+            document.getElementById("result").innerHTML += "<li id='" + (data[i].id+"li") + "'>" + data[i].name + /** Списковый вывод имени */
+            "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + data[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
+            "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + data[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
+            "<button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></li>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (data[i].hasChildren == true) {
                 document.getElementById("result").innerHTML += "<button onClick=res("+i+")>Открыть</button><ul><div id='"+i+"'></ul>";
@@ -259,7 +255,7 @@ function load() {
  * @name res
  * @description Функция-рендер — выгружает результаты в html.
  * Вызывается в функции load(); Начинает вызывать цепочку колбеков-загрузчиков дочерних элементов;
- * @param {number} m — хранит в себе идентификатор элемента, у которого была вызвана эта функция; 
+ * @param {number} m хранит в себе идентификатор элемента, у которого была вызвана эта функция; 
  *
  function res(m) {
     /** Возможность разворачивания списка; *
@@ -299,7 +295,7 @@ function getChildren(callback) {
  * @function
  * @name loadChildren
  * @description Функция-колбек — если элемент имеет дочерние элементы, то вызывает функцию modelBuilder(), передавая в неё идентификатор текущего элемента в цикле;
- * @param {*} id — идентификатор объекта;
+ * @param {*} id идентификатор объекта;
  *
 function loadChildren(id) {
     for (i = id; i < data.length; i++) {
@@ -313,11 +309,11 @@ function loadChildren(id) {
 
 /**
  * @function
- * @name modelBuilder
+ * @name modelBuilder ЯЩИК ПАНДОРЫ
  * @description Функция-строитель — получает идентификатор и выводит детей (погулять;).
- * @param {number} id — полученный идентификатор объекта; 
- * @param {array} mas — массив элементов;
- * @param {number} j — переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
+ * @param {number} id  полученный идентификатор ***И ЖОПАСРУЧКОЙ*** объекта; 
+ * @param {array} mas массив элементов;
+ * @param {number} j переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
  */
 function modelBuilder(id) {
     mas = [];
@@ -334,8 +330,8 @@ function modelBuilder(id) {
  * @function
  * @name render
  * @description Функция-управлятор — благодаря ей, пользователь может изменять стили определённого элемента в списке.
- * @param {number} x — идентификатор элемента;
- * @param {string} stl — переменная изменяющая стиль;
+ * @param {number} x идентификатор ***И ЖОПАСРУЧКОЙ*** элемента;
+ * @param {string} stl переменная изменяющая стиль;
  */
 function render(x) {
     stl = prompt("Введите стиль:");
@@ -360,11 +356,12 @@ function getChildren() {
     setTimeout(function(){
         document.getElementById(id).innerHTML = "";
         i = 0;
-        for(; i < mas.length; i++)
-        { 
-            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
-            if(mas[i].hasChildren == true)
-            {
+        for(; i < mas.length; i++) {
+            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + /** Списковый вывод имени */
+            "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + mas[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
+            "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + mas[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
+            "<button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>"; /** Кнопка изменения стиля */
+            if(mas[i].hasChildren == true) {
                 document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
             }
         }
@@ -380,4 +377,107 @@ function loadChildren(id) {
             }
         }
     })
+}
+/**
+ * @param {object} colorChecker
+ * @description Надзиратель за цветом.
+ * @param {number} counterArrays Счётчик массивов, связующее звено между массивом идентификаторов и массивом цветов.
+ * @param {Array} idArray Числовой массив, хранит в себе идентификаторы.
+ * @param {Array} currentColor Строковый массив, хранит в себе текущий цвет элемента, чей идентификатор находится на той же позиции в idArray.
+ * @param {Array} colors Массив возможных цветов.
+ * @property {method} masFinder
+ * @property {method} changerColor
+ * @protected
+ * @public
+ */
+var colorChecker = {
+    counterArrays: 0,
+    idArray: [],
+    currentColor: [],
+    colors: [ "black", "green", "red"],
+    /**
+     * @method 
+     * @memberof colorChecker
+     * @name masFinder
+     * @description Осуществляет поиск в массиве объектов. Возвращает номер объекта с совпадающим идентификатором;
+     * @param {number} id Идентификатор ***И ЖОПАСРУЧКОЙ*** элемента;
+     * @returns {number} 
+     */
+    masFinder(id) {
+        let i = 0;
+        for (; i < data.length; i++) {
+            if (data[i].id == parseInt(id)) {
+                return i;
+            }
+        }
+    },
+    /**
+     * @method
+     * @memberof colorChecker
+     * @name changerColor
+     * @description Основная логика надзирателя за цветом тут.
+     * Проверяет на наличие в массивах переданный идентификатор.
+     * Проверяет на совпадение с переданным цветом.
+     * Проблема: тыкать сразу на два чекбокса в одном элементе — плохо.
+     * @param {number} id Идентификатор ***И ЖОПАСРУЧКОЙ*** элемента, у которого проверяется цвет . 
+     * @param {string} whatColor Цвет из какого чекбокса был вызван.
+     * @returns {string} Строку с применением определённого стиля.
+     */
+    changerColor(id, whatColor) {
+        let i = 0, findedI = this.masFinder(id);
+        for (; i <= this.counterArrays; i++) {
+            if (this.idArray[i] == id) {
+                if (this.currentColor[i] == whatColor) {
+                    this.currentColor[i] = "black";
+                    if (whatColor == "green") {
+                        data[findedI].done = false;
+                    }
+                    else {
+                        data[findedI].removed = false;
+                    }
+                    return document.getElementById(id).style = "color: black";
+                }
+                else {
+                    this.currentColor[i] = whatColor;
+                    if (whatColor == "green") {
+                        data[findedI].done = true;
+                    }
+                    else {
+                        data[findedI].removed = true;
+                    }
+                    return document.getElementById(id).style = "color:" + whatColor;
+                }
+            }
+            else if (i == this.counterArrays) {
+                this.idArray[this.counterArrays] = id;
+                this.currentColor[this.counterArrays] = whatColor;
+                this.counterArrays++;
+                if (whatColor == "green") {
+                    data[findedI].done = true;
+                }
+                else {
+                    data[findedI].removed = true;
+                }
+                return document.getElementById(id).style = "color:" + whatColor;
+            }
+        }
+    },
+}
+/**
+ * @function
+ * @name doneChanger
+ * @description Событие, когда кликаешь на зелёные чекбоксы.
+ * @param {number} x Идентификатор ***И ЖОПАСРУЧКОЙ*** объекта.
+ */
+function doneChanger(x) {
+    colorChecker.changerColor(x, "green");
+}
+/**
+ * @function
+ * @name deleteChanger
+ * @description Событие, когда кликаешь на красные чекбоксы.
+ * @param {number} x Идентификатор ***И ЖОПАСРУЧКОЙ*** объекта.
+ */
+function deleteChanger(x) {
+    colorChecker.changerColor(x, "red");
 }

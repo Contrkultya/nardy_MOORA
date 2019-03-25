@@ -1,12 +1,17 @@
 #result
 {
-    width: 500px;
+    width: 400px;
     background-color:rgb(194, 216, 228);
-    height: 700px;
+    height: 900px;
     font-size: 16pt;
     border: 1px solid;
     border-radius: 5px;
     padding-left:50px;
+    margin:0 auto;
+}
+#result li
+{
+    list-style-type: none;
 }
 div{
 margin-bottom: 10px;
@@ -21,4 +26,15 @@ margin-bottom: 10px;
 }
 .redCheck {
     background-color: #e95858;
+}
+#brd1
+{
+    width: 220px;
+    height: 50px;
+    background: rgb(162, 226, 162);
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
 }

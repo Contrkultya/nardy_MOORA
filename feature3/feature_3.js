@@ -192,7 +192,7 @@ var bank = {
 */
 
 
-/**
+/* 
  * @function
  * @name objBuilder_file
  * @description Строит объект из полученного JSON'а.
@@ -203,17 +203,25 @@ var bank = {
  * @param {bool} hasChildren хранит в себе информацию о наличии дочерних элементов;
  * @param {bool} setremoved хранит в себе информацию о наличии «удаления»;
  * @public
- *
-function objBuilder_file(data) {
-    let i = 0;
-    for (;i < data.length; i++) {
-        let setid = data[i].id;
-        let setparent = data[i].parent;
-        let setname = data[i].name;
-        let hasChildren = data[i].hasChildren;
-        let setremoved = data[i].removed;
-        object[numberObjects] = new obj(setid, setparent, setname, hasChildren, setremoved);
-        numberObjects++;
+ */
+var object=[];
+function objBuilder_file(index) 
+{
+    object=[];  
+    m=0; 
+    for (i=0;i<data.length; i++) 
+    {
+       
+         if(data[i].parent==index)
+        {
+            let setid = data[i].id;
+            let setparent = data[i].parent;
+            let setname = data[i].name;
+            let hasChildren = data[i].hasChildren;
+            let setremoved = data[i].removed;
+            object[m] = new obj(setid, setparent, setname, hasChildren, setremoved);
+            m++
+        }
     }
 }
 /**
@@ -231,19 +239,19 @@ data = JSON.parse(data);
  */
 function load() {
     document.getElementById("result").innerHTML += "<ul>";
-    let i = 0;
-    for (;i < data.length; i++)
+  
+    for (i=0;i < data.length; i++)
     {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("result").innerHTML += "<li id='" + (data[i].id+"li") + "'>" + data[i].name + /** Списковый вывод имени */
+            document.getElementById("result").innerHTML += "<div style='width:300px; border-radius:10px; padding:5px; text-align:center; height:50px;background-color:brown;' id='" + (data[i].id+"d") + "'>" + data[i].name + /** Списковый вывод имени */
             "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + data[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
             "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + data[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
-            "<button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></li>"; /** Кнопка изменения стиля */
+            "<button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (data[i].hasChildren == true) {
-                document.getElementById("result").innerHTML += "<button onClick=res("+i+")>Открыть</button><ul><div id='"+i+"'></ul>";
+                document.getElementById(data[i].id+"d").innerHTML += "<button onClick=res("+i+")>Открыть</button><ul><div id='"+i+"'></ul>";
             }
         }
     }
@@ -315,17 +323,7 @@ function loadChildren(id) {
  * @param {array} mas массив элементов;
  * @param {number} j переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
  */
-function modelBuilder(id) {
-    mas = [];
-    j = 0;
-    i = id;
-    for (; i < data.length; i++) {
-        if (data[i].parent == id) {
-            mas[j] = data[i];
-            j++;
-        }
-    }
-}
+
 /**
  * @function
  * @name render
@@ -342,38 +340,63 @@ function render(x) {
  * Документация скоро будет~
  */
 
-function res(m) {
-    if(document.getElementById(m).innerHTML == "") {
-        document.getElementById(m).innerHTML = "Загрузка...";
-        id = m;
-        loadChildren(id).then(getChildren);
+function res(m) 
+{
+    if(data[m].parent!=undefined)
+    {
+        if(document.getElementById(data[m].parent+"d").innerHTML == "") {
+            document.getElementById(data[m].parent+"d").innerHTML = "Загрузка...";
+            id = m;
+            document.getElementById(data[m].parent+"d").style.height='500px';
+            loadChildren(id).then(getChildren);
+        }
+        else if(document.getElementById(data[m].parent+"d").innerHTML != "") {
+            document.getElementById(data[m].id+"d").style.height='50px';
+            document.getElementById(data[m].parent+"d").innerHTML = "";
+        }
     }
-    else if(document.getElementById(m).innerHTML != "") {
-        document.getElementById(m).innerHTML = "";
+    else if(data[m].parent==undefined)
+    {
+        alert(data[m].id+"d");
+        if(document.getElementById(data[m].id+"d").innerHTML == "") {
+            document.getElementById(data[m].id+"d").innerHTML = "Загрузка...";
+            id = m;
+            document.getElementById(data[m].id+"d").style.height='500px';
+            loadChildren(id).then(getChildren);
+        }
+        else if(document.getElementById(data[m].id+"d").innerHTML != "") {
+            document.getElementById(data[m].id+"d").style.height='500px';
+            document.getElementById(data[m].id+"d").innerHTML = "";
+            id = m;
+            loadChildren(id).then(getChildren);
+        }  
     }
+   
 }
 function getChildren() {
     setTimeout(function(){
-        document.getElementById(id).innerHTML = "";
+        document.getElementById(data[m].id+"d").innerHTML = "";
         i = 0;
-        for(; i < mas.length; i++) {
-            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + /** Списковый вывод имени */
-            "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + mas[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + mas[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
-            "<button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>"; /** Кнопка изменения стиля */
-            if(mas[i].hasChildren == true) {
-                document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
+        for(; i < object.length; i++) {
+            document.getElementById(object[i].parent+"d").innerHTML +="<li id='" + (object[i].id+"li") + "'>" + "<div id="+object[i].parent+1+"d"+">"+object[i].name+ /** Списковый вывод имени */
+            "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + object[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
+            "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + object[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
+            "<button onClick=render('" + object[i].id + "li" + "')>Изменить стиль</button>" +"</div>" + "</li>"; /** Кнопка изменения стиля */
+            if(object[i].hasChildren == true) {
+                document.getElementById(object[i].parent+"d").innerHTML+="<button onClick=res("+(object[i].id-1)+")>Открыть</button><ul><div id='"+(object[i].parent+1+"d")+"'></ul>";
             }
         }
-    }, 1000);
-    
+    }, 1000);   
 }
 function loadChildren(id) {
     return new Promise(function(resolve, reject){
-        i = id;
-        for (; i < data.length; i++) {
-            if (data[i].hasChildren == true) {
-                resolve(modelBuilder(data[i].id));
+        
+        for (i = id; i < data.length; i++) 
+        {
+            if (data[i].hasChildren == true) 
+            {
+                resolve(objBuilder_file(data[i].id));
+                return;
             }
         }
     })

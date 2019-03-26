@@ -13,8 +13,9 @@
 {
     list-style-type: none;
 }
-div{
-margin-bottom: 10px;
+#result>div{
+margin-bottom: 50px;
+margin-top: 50px;
 }
 .greenCheck, .redCheck {
     display: inline;

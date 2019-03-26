@@ -205,14 +205,14 @@ var bank = {
  * @public
  */
 var object=[];
-function objBuilder_file(index) 
+function objBuilder_file(ind) 
 {
+    alert("ind "+ind);
     object=[];  
     m=0; 
     for (i=0;i<data.length; i++) 
-    {
-       
-         if(data[i].parent==index)
+    { 
+         if(data[i].parent==ind)
         {
             let setid = data[i].id;
             let setparent = data[i].parent;
@@ -223,6 +223,7 @@ function objBuilder_file(index)
             m++
         }
     }
+    console.log(object);
 }
 /**
  * Демо-данные
@@ -245,13 +246,13 @@ function load() {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("result").innerHTML += "<div style='width:300px; border-radius:10px; padding:5px; text-align:center; height:50px;background-color:brown;' id='" + (data[i].id+"d") + "'>" + data[i].name + /** Списковый вывод имени */
+            document.getElementById("result").innerHTML += "<div style='width:300px; margin-bottom:10px;border-radius:10px; padding:5px; text-align:center; height:50px;background-color:brown;' id='" + (data[i].id+"d") + "'>" + data[i].name + /** Списковый вывод имени */
             "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + data[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
             "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + data[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
             "<button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (data[i].hasChildren == true) {
-                document.getElementById(data[i].id+"d").innerHTML += "<button onClick=res("+i+")>Открыть</button><ul><div id='"+i+"'></ul>";
+                document.getElementById(data[i].id+"d").innerHTML += "<button onClick=res("+data[i].id+")>Открыть</button><div style='position: relative; margin:0 auto;' id='"+data[i].id+"_p_"+"'>";
             }
         }
     }
@@ -340,61 +341,74 @@ function render(x) {
  * Документация скоро будет~
  */
 
+ height=600;
 function res(m) 
 {
-    if(data[m].parent!=undefined)
-    {
-        if(document.getElementById(data[m].parent+"d").innerHTML == "") {
-            document.getElementById(data[m].parent+"d").innerHTML = "Загрузка...";
-            id = m;
-            document.getElementById(data[m].parent+"d").style.height='500px';
-            loadChildren(id).then(getChildren);
-        }
-        else if(document.getElementById(data[m].parent+"d").innerHTML != "") {
-            document.getElementById(data[m].id+"d").style.height='50px';
-            document.getElementById(data[m].parent+"d").innerHTML = "";
-        }
-    }
-    else if(data[m].parent==undefined)
-    {
-        alert(data[m].id+"d");
-        if(document.getElementById(data[m].id+"d").innerHTML == "") {
-            document.getElementById(data[m].id+"d").innerHTML = "Загрузка...";
-            id = m;
-            document.getElementById(data[m].id+"d").style.height='500px';
-            loadChildren(id).then(getChildren);
-        }
-        else if(document.getElementById(data[m].id+"d").innerHTML != "") {
-            document.getElementById(data[m].id+"d").style.height='500px';
-            document.getElementById(data[m].id+"d").innerHTML = "";
-            id = m;
-            loadChildren(id).then(getChildren);
-        }  
-    }
-   
+            alert("div "+m+"p");
+            id=m;
+            ind =id-1;
+            if(data[ind].parent==undefined)
+            {
+                if(document.getElementById(id+"d").style.height=='50px')
+                {
+                document.getElementById(id+"d").style.height ='1000px';
+                document.getElementById(id+"_p_").innerHTML = "Загрузка...";
+                loadChildren(id).then(getChildren); 
+                }
+                else
+                {
+                    document.getElementById(id+"d").style.height ='50px';
+                    document.getElementById(id+"_p_").innerHTML = "";
+                    return;
+                }
+            } 
+            else
+            {
+                if(document.getElementById("p_"+m).style.height=='70px')
+                {
+                document.getElementById("p_"+m).style.height ='350px';
+                document.getElementById(id+"_p_").innerHTML = "Загрузка...";
+                loadChildren(id).then(getChildren);
+                }
+                else
+                {
+                    document.getElementById("p_"+m).style.height ='70px';
+                    document.getElementById(id+"_p_").innerHTML = "";
+                    return;
+                }
+            }
+            alert("id "+id);
+
 }
+width = 270;
 function getChildren() {
     setTimeout(function(){
-        document.getElementById(data[m].id+"d").innerHTML = "";
+        alert("id:  "+id);
+        alert(id+"_p_")
+        document.getElementById(id+"_p_").innerHTML = "";
+        meta=id+"_p_";
         i = 0;
-        for(; i < object.length; i++) {
-            document.getElementById(object[i].parent+"d").innerHTML +="<li id='" + (object[i].id+"li") + "'>" + "<div id="+object[i].parent+1+"d"+">"+object[i].name+ /** Списковый вывод имени */
+        alert("meta: "+meta);
+        for(i = 0; i < object.length; i++) {
+            document.getElementById(meta).innerHTML += "<div style='position:relative;height:70px; margin-bottom:10px;margin:0 auto; width:"+width+"px; border:2px solid; border-radius:10px; padding:5px; text-align:center;background-color:#e3e298;' id="+"p_"+object[i].id+">"+"<li id='" + (object[i].id+"li") + "'>" +object[i].name+ /** Списковый вывод имени */
             "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + object[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
             "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + object[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
-            "<button onClick=render('" + object[i].id + "li" + "')>Изменить стиль</button>" +"</div>" + "</li>"; /** Кнопка изменения стиля */
+            "<button onClick=render('" + object[i].id + "li" + "')>Изменить стиль</button>" + "</li>"+"</div>"; /** Кнопка изменения стиля */
             if(object[i].hasChildren == true) {
-                document.getElementById(object[i].parent+"d").innerHTML+="<button onClick=res("+(object[i].id-1)+")>Открыть</button><ul><div id='"+(object[i].parent+1+"d")+"'></ul>";
+                document.getElementById("p_"+object[i].id).innerHTML+="<button onClick=res("+object[i].id+")>Открыть</button><div style='position:relative;margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'>";
             }
         }
-    }, 1000);   
+    }, 1000);  
+    width-=30; 
 }
 function loadChildren(id) {
     return new Promise(function(resolve, reject){
         
-        for (i = id; i < data.length; i++) 
+        for (i = id-1; i < data.length; i++) 
         {
             if (data[i].hasChildren == true) 
             {
+                alert("indent: "+data[i].id)
                 resolve(objBuilder_file(data[i].id));
                 return;
             }

@@ -207,7 +207,6 @@ var bank = {
 var object=[];
 function objBuilder_file(ind) 
 {
-    alert("ind "+ind);
     object=[];  
     m=0; 
     for (i=0;i<data.length; i++) 
@@ -219,11 +218,12 @@ function objBuilder_file(ind)
             let setname = data[i].name;
             let hasChildren = data[i].hasChildren;
             let setremoved = data[i].removed;
-            object[m] = new obj(setid, setparent, setname, hasChildren, setremoved);
+            let setdone = data[i].done;
+            let setDesc = data[i].description;
+            object[m] = new obj(setid, setparent, setname, hasChildren, setremoved, setdone, setDesc);
             m++
         }
     }
-    console.log(object);
 }
 /**
  * Демо-данные
@@ -246,169 +246,85 @@ function load() {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("result").innerHTML += "<div style='width:300px; margin-bottom:10px;border-radius:10px; padding:5px; text-align:center; height:50px;background-color:brown;' id='" + (data[i].id+"d") + "'>" + data[i].name + /** Списковый вывод имени */
-            "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + data[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + data[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
-            "<button onClick=render('" + (data[i].id+"li") + "')>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
+            document.getElementById("result").innerHTML += "<div class='desks' id='" + data[i].id+"d" + "'>" + data[i].name + /** Списковый вывод имени */
+            "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + data[i].id + ")'></div></label>" +/** Checkbox выполнения */
+            "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + data[i].id + ")'></div></label>" + /** Checkbox удаления */
+            "<button onClick='render(" + data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (data[i].hasChildren == true) {
-                document.getElementById(data[i].id+"d").innerHTML += "<button onClick=res("+data[i].id+")>Открыть</button><div style='position: relative; margin:0 auto;' id='"+data[i].id+"_p_"+"'>";
+                document.getElementById(data[i].id+"d").innerHTML += "<button onClick='res("+data[i].id+")'>Открыть</button><div style='margin:0 auto;' id='"+data[i].id+"_p_"+"'></div>";
             }
         }
     }
 }
-
-//Закомменчено, тк "реализованы" promis'ы, но мы не показывали вам callback'и.
-/**
- * @function 
- * @name res
- * @description Функция-рендер — выгружает результаты в html.
- * Вызывается в функции load(); Начинает вызывать цепочку колбеков-загрузчиков дочерних элементов;
- * @param {number} m хранит в себе идентификатор элемента, у которого была вызвана эта функция; 
- *
- function res(m) {
-    /** Возможность разворачивания списка; *
-    if(document.getElementById(m).innerHTML == "") {
-        document.getElementById(m).innerHTML = "Загрузка...";
-        id = m;
-        getChildren(loadChildren);
-    }
-    /** Возможность сворачивания списка; *
-    else if(document.getElementById(m).innerHTML != "") {
-        document.getElementById(m).innerHTML = "";
-    }
-}
-/**
- * @function
- * @name getChildren
- * @description Функция-колбек — осуществляет подгрузку с «сервера» дальнейшего списка элементов;
- * С задержкой в секунду, ответ от сервера, получает в цикле дочерние элементы;
- * Также, есть возможность с помощью функции render() изменять стиль элемента;
- *
-function getChildren(callback) {
-    setTimeout(function(){
-        callback(id);   
-        document.getElementById(id).innerHTML = "";
-        for(i = 0; i < mas.length; i++)
-        { 
-            document.getElementById(id).innerHTML += "<li id='" + (mas[i].id+"li") + "'>" + mas[i].name + " <button onClick=render('" + mas[i].id + "li" + "')>Изменить стиль</button>" + "</li>";
-            if(mas[i].hasChildren == true)
-            {
-                document.getElementById(id).innerHTML+="<button onClick=res("+(mas[i].id-1)+")>Открыть</button><ul><div id='"+(mas[i].id-1)+"'></ul>";
-            }
-        }
-    }, 1000);
-    
-}
-/**
- * @function
- * @name loadChildren
- * @description Функция-колбек — если элемент имеет дочерние элементы, то вызывает функцию modelBuilder(), передавая в неё идентификатор текущего элемента в цикле;
- * @param {*} id идентификатор объекта;
- *
-function loadChildren(id) {
-    for (i = id; i < data.length; i++) {
-        if (data[i].hasChildren == true) {
-            modelBuilder(data[i].id);
-        }
-    }
-}
-
-
-
-/**
- * @function
- * @name modelBuilder ЯЩИК ПАНДОРЫ
- * @description Функция-строитель — получает идентификатор и выводит детей (погулять;).
- * @param {number} id  полученный идентификатор ***И ЖОПАСРУЧКОЙ*** объекта; 
- * @param {array} mas массив элементов;
- * @param {number} j переменная-счётчик количества элементов в массиве(mas), по ней добавляются элементы в сам массив;
- */
-
 /**
  * @function
  * @name render
  * @description Функция-управлятор — благодаря ей, пользователь может изменять стили определённого элемента в списке.
- * @param {number} x идентификатор ***И ЖОПАСРУЧКОЙ*** элемента;
- * @param {string} stl переменная изменяющая стиль;
+ * @param {number} x идентификатор эемента;
  */
 function render(x) {
-    stl = prompt("Введите стиль:");
-    document.getElementById(x).style = stl;
+    document.getElementById(x).style = prompt("Введите стиль:");
 }
 
 /**
  * Документация скоро будет~
  */
-
- height=600;
 function res(m) 
 {
-            alert("div "+m+"p");
-            id=m;
-            ind =id-1;
-            if(data[ind].parent==undefined)
-            {
-                if(document.getElementById(id+"d").style.height=='50px')
-                {
-                document.getElementById(id+"d").style.height ='1000px';
-                document.getElementById(id+"_p_").innerHTML = "Загрузка...";
-                loadChildren(id).then(getChildren); 
-                }
-                else
-                {
-                    document.getElementById(id+"d").style.height ='50px';
-                    document.getElementById(id+"_p_").innerHTML = "";
-                    return;
-                }
-            } 
-            else
-            {
-                if(document.getElementById("p_"+m).style.height=='70px')
-                {
-                document.getElementById("p_"+m).style.height ='350px';
-                document.getElementById(id+"_p_").innerHTML = "Загрузка...";
-                loadChildren(id).then(getChildren);
-                }
-                else
-                {
-                    document.getElementById("p_"+m).style.height ='70px';
-                    document.getElementById(id+"_p_").innerHTML = "";
-                    return;
-                }
-            }
-            alert("id "+id);
+    
+    let height=600;
+    id = m;
+    let ind =id-1;
+    if(data[ind].parent==undefined) {
+        if(document.getElementById(id+"d").style.height=='50px') {
+            document.getElementById(id+"d").style.height ='auto';
+            document.getElementById(id+"_p_").innerHTML = "Загрузка...";
+            loadChildren(id).then(getChildren); 
+        }
+        else {
+            document.getElementById(id+"d").style.height ='50px';
+            document.getElementById(id+"_p_").innerHTML = "";
+            return;
+        }
+    } 
+    else {
+        if(document.getElementById("p_"+m).style.height=='70px') {
+            document.getElementById("p_"+m).style.height ='auto';
+            document.getElementById(id+"_p_").innerHTML = "Загрузка...";
+            loadChildren(id).then(getChildren);
+        }
+        else {
+            document.getElementById("p_"+m).style.height ='70px';
+            document.getElementById(id+"_p_").innerHTML = "";
+            return;
+        }
+    }
 
 }
-width = 270;
 function getChildren() {
     setTimeout(function(){
-        alert("id:  "+id);
-        alert(id+"_p_")
         document.getElementById(id+"_p_").innerHTML = "";
-        meta=id+"_p_";
-        i = 0;
-        alert("meta: "+meta);
-        for(i = 0; i < object.length; i++) {
-            document.getElementById(meta).innerHTML += "<div style='position:relative;height:70px; margin-bottom:10px;margin:0 auto; width:"+width+"px; border:2px solid; border-radius:10px; padding:5px; text-align:center;background-color:#e3e298;' id="+"p_"+object[i].id+">"+"<li id='" + (object[i].id+"li") + "'>" +object[i].name+ /** Списковый вывод имени */
-            "<label><div class='greenCheck'><input type='checkbox' onClick=doneChanger('" + object[i].id + "li" + "')></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><input type='checkbox' onClick=deleteChanger('" + object[i].id + "li" + "')></div></label>" + /** Checkbox удаления */
-            "<button onClick=render('" + object[i].id + "li" + "')>Изменить стиль</button>" + "</li>"+"</div>"; /** Кнопка изменения стиля */
+        let meta = id+"_p_";
+        let i = 0;
+        for(; i < object.length; i++) {
+            document.getElementById(meta).innerHTML += "<div class='tasks' id="+"p_"+object[i].id+">"+"<li id='" + (object[i].id) + "'>" +object[i].name+ /** Списковый вывод имени */
+            "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
+            "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
+            "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>"+"</div><hr>"; /** Кнопка изменения стиля */
             if(object[i].hasChildren == true) {
-                document.getElementById("p_"+object[i].id).innerHTML+="<button onClick=res("+object[i].id+")>Открыть</button><div style='position:relative;margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'>";
+                document.getElementById("p_"+object[i].id).innerHTML+="<button onClick='res("+object[i].id+")'>Открыть</button><div style='margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'></div>";
             }
         }
-    }, 1000);  
-    width-=30; 
+    }, 1000);
 }
 function loadChildren(id) {
     return new Promise(function(resolve, reject){
-        
-        for (i = id-1; i < data.length; i++) 
+        let i = id - 1;
+        for (; i < data.length; i++) 
         {
             if (data[i].hasChildren == true) 
             {
-                alert("indent: "+data[i].id)
                 resolve(objBuilder_file(data[i].id));
                 return;
             }
@@ -437,7 +353,7 @@ var colorChecker = {
      * @memberof colorChecker
      * @name masFinder
      * @description Осуществляет поиск в массиве объектов. Возвращает номер объекта с совпадающим идентификатором;
-     * @param {number} id Идентификатор ***И ЖОПАСРУЧКОЙ*** элемента;
+     * @param {number} id Идентификатор элемента;
      * @returns {number} 
      */
     masFinder(id) {
@@ -456,7 +372,7 @@ var colorChecker = {
      * Проверяет на наличие в массивах переданный идентификатор.
      * Проверяет на совпадение с переданным цветом.
      * Проблема: тыкать сразу на два чекбокса в одном элементе — плохо.
-     * @param {number} id Идентификатор ***И ЖОПАСРУЧКОЙ*** элемента, у которого проверяется цвет . 
+     * @param {number} id Идентификатор элемента, у которого проверяется цвет . 
      * @param {string} whatColor Цвет из какого чекбокса был вызван.
      * @returns {string} Строку с применением определённого стиля.
      */
@@ -504,7 +420,7 @@ var colorChecker = {
  * @function
  * @name doneChanger
  * @description Событие, когда кликаешь на зелёные чекбоксы.
- * @param {number} x Идентификатор ***И ЖОПАСРУЧКОЙ*** объекта.
+ * @param {number} x Идентификатор объекта.
  */
 function doneChanger(x) {
     colorChecker.changerColor(x, "green");
@@ -513,7 +429,7 @@ function doneChanger(x) {
  * @function
  * @name deleteChanger
  * @description Событие, когда кликаешь на красные чекбоксы.
- * @param {number} x Идентификатор ***И ЖОПАСРУЧКОЙ*** объекта.
+ * @param {number} x Идентификатор объекта.
  */
 function deleteChanger(x) {
     colorChecker.changerColor(x, "red");

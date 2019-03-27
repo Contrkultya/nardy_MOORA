@@ -1,26 +1,24 @@
-#result
-{
-    width: 400px;
-    background-color:rgb(194, 216, 228);
-    height: 900px;
-    font-size: 16pt;
-    border: 1px solid;
-    border-radius: 5px;
-    padding-left:50px;
-    margin:0 auto;
+body {
+    background-image: url(паттерн.svg);
 }
-#result li
-{
+#result {
+    width: auto;
+    height: auto;
+    font-size: 16pt;
+    padding-left: 50px;
+    margin: 0 auto;
+}
+#result li {
     list-style-type: none;
 }
-#result>div{
-margin-bottom: 50px;
+#result > div {
 margin-top: 50px;
+display: inline-block;
 }
 .greenCheck, .redCheck {
     display: inline;
     margin: 5px;
-    border-radius: 5px;
+    border-radius: 2px;
 }
 .greenCheck {
     background-color: #58e958;
@@ -28,8 +26,7 @@ margin-top: 50px;
 .redCheck {
     background-color: #e95858;
 }
-#brd1
-{
+#brd1 {
     width: 220px;
     height: 50px;
     background: rgb(162, 226, 162);
@@ -38,4 +35,24 @@ margin-top: 50px;
     padding: 10px;
     margin: 5px;
     text-align: center;
+}
+.desks {
+    width: 310px;
+    height: auto;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+    height: 50px;
+    background-color:rgba(196, 215, 216, 0.651);
+}
+.tasks {
+    position: relative;
+    height: 70px;
+    width: auto;
+    margin: 5px;
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    background-color: #82b3e78e;
 }

@@ -1,0 +1,110 @@
+body{
+    background-image: url("bg.jpg");
+}
+header {
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(255,255,255,0.8);
+    margin-top:-10px;
+    height:50px;
+    border-radius: 0 0 20px 20px;
+    justify-content: space-between;
+    padding:15px;
+    align-items:center;
+}
+#logo{
+    height: 50px;
+}
+#user{
+    height: 50px;
+}
+#profile{
+    font-family: Calibri;
+    font-size:20pt;
+}
+#availableBoards{
+    font-family: Calibri;
+    font-size:20pt;
+    background-color: rgba(255,255,255,0.8);
+    margin-top:10px;
+    width:300px;
+    padding:20px;
+    margin-left:-10px;
+    border-radius:0 20px 20px 0;
+    text-align:center;
+}
+#name_avlbl{
+    width:300px;
+    background-color: rgba(247, 255, 181, 0.8);
+    border-radius:0 20px 20px 0;
+    margin-left:-20px;
+    padding:10px;
+    border: 2px brown solid;
+}
+#boardList{
+    display: flex;
+    flex-direction: row;
+    margin-top:-97px;
+    overflow-x: scroll;
+    background-color: rgba(255,255,255,0.8);
+    margin-left:350px;
+    height:800px;
+    border-radius:20px;
+}
+#availableBoardsMobile{
+    display: none;
+}
+
+
+@media (max-width:1280px){
+    header {
+        padding:10px;
+    }
+    #logo{
+        height: 30px;
+    }
+    #user{
+        height: 30px;
+    }
+    #availableBoards{
+        font-size:18pt;
+        width:200px;
+        padding:20px;
+        margin-left:-10px;
+    }
+    #profile{
+        font-size:14pt;
+    }
+    #name_avlbl{
+        width:200px;
+        padding:5px;
+    }
+    #boardList{
+        margin-top:-85px;
+        margin-left:250px;
+        height:650px;
+        border-radius:20px;
+        flex-wrap: wrap;
+    }
+    
+    
+}
+@media (max-width:768px){
+    #availableBoardsMobile{
+        display: block;
+        background-color: rgba(255,255,255,0.8);
+        height:50px;
+        margin-top:5px;
+    }
+    #availableBoards{
+        display: none;
+    }
+    #boardList{
+        margin-top:5px;
+        margin-left:0px;
+        border-radius:0px;
+    }
+    header{
+        border-radius:0px;
+    }
+}

@@ -1,4 +1,7 @@
-@import url(http://allfont.net/allfont.css?fonts=rodchenkoctt);
+@font-face {
+    font-family: "RodchenkoTT";
+    src: url("RodchenkoCond_Regular.otf");
+}
 body{
     background-color: white;
 }
@@ -34,7 +37,7 @@ header {
     text-align:center;
 }
 #name_avlbl{
-    width:300px;
+    width:300px;@
     margin-left:-20px;
     color:white;
     padding:10px;

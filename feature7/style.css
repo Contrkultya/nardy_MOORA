@@ -1,13 +1,13 @@
+@import url(http://allfont.net/allfont.css?fonts=rodchenkoctt);
 body{
-    background-image: url("bg.jpg");
+    background-color: white;
 }
 header {
     display: flex;
     flex-direction: row;
-    background-color: rgba(255,255,255,0.8);
+    background-color: #211654;
     margin-top:-10px;
     height:50px;
-    border-radius: 0 0 20px 20px;
     justify-content: space-between;
     padding:15px;
     align-items:center;
@@ -19,37 +19,34 @@ header {
     height: 50px;
 }
 #profile{
-    font-family: Calibri;
+    font-family: 'RodchenkoCTT', arial;
     font-size:20pt;
+    color:white;
 }
 #availableBoards{
-    font-family: Calibri;
+    font-family: 'RodchenkoCTT', arial;
     font-size:20pt;
-    background-color: rgba(255,255,255,0.8);
+    background-color: #32227f;
     margin-top:10px;
     width:300px;
     padding:20px;
     margin-left:-10px;
-    border-radius:0 20px 20px 0;
     text-align:center;
 }
 #name_avlbl{
     width:300px;
-    background-color: rgba(247, 255, 181, 0.8);
-    border-radius:0 20px 20px 0;
     margin-left:-20px;
+    color:white;
     padding:10px;
-    border: 2px brown solid;
 }
 #boardList{
     display: flex;
     flex-direction: row;
     margin-top:-97px;
     overflow-x: scroll;
-    background-color: rgba(255,255,255,0.8);
+    background-color: #432da9;
     margin-left:350px;
     height:800px;
-    border-radius:20px;
 }
 #availableBoardsMobile{
     display: none;
@@ -83,7 +80,6 @@ header {
         margin-top:-85px;
         margin-left:250px;
         height:650px;
-        border-radius:20px;
         flex-wrap: wrap;
     }
     
@@ -92,7 +88,7 @@ header {
 @media (max-width:768px){
     #availableBoardsMobile{
         display: block;
-        background-color: rgba(255,255,255,0.8);
+        background-color: #017163;
         height:50px;
         margin-top:5px;
     }
@@ -102,9 +98,5 @@ header {
     #boardList{
         margin-top:5px;
         margin-left:0px;
-        border-radius:0px;
-    }
-    header{
-        border-radius:0px;
     }
 }

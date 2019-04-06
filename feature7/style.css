@@ -1,6 +1,6 @@
-@font-face {
-    font-family: "RodchenkoTT";
-    src: url("RodchenkoCond_Regular.otf");
+@font-face{
+    font-family: 'RodchenkoCTT';
+    src:url('https://nomail.com.ua/files/woff/4f92ce49d3e9bb369d836662431a8194.woff') format('woff');
 }
 body{
     background-color: white;

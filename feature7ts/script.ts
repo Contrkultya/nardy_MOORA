@@ -343,7 +343,7 @@ function loadChildren(id) {
         {
             if (data[i].hasChildren == true) 
             {
-                resolve(objBuilder_file(data[i].id));
+                resolve(objBuilder_file(data[i].id)); //fixme
                 return;
             }
         }

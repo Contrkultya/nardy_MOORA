@@ -6,7 +6,9 @@ interface Iobj{
     removed:boolean;
     done:boolean;
     description:string;
+
 }
+
 /**
  * @class
  * @name obj
@@ -224,7 +226,7 @@ function objBuilder_file(ind)
 { 
     var m =0; 
     let i=0;
-    for (i;i<data.length; i++) 
+    for (i;i<Object.keys(data).length; i++) 
     { 
          if(data[i].parent==ind)
         {
@@ -255,7 +257,7 @@ var data:Iobj = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": tru
 function load() {
     document.getElementById("result").innerHTML += "<ul>";
   
-    for (let i=0;i < data.length; i++)
+    for (let i=0;i < Object.keys(data).length; i++)
     {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
@@ -337,7 +339,7 @@ function getChildren() {
 function loadChildren(id) {
     return new Promise(function(resolve, reject){
         let i = id - 1;
-        for (i; i < data.length; i++) 
+        for (i; i < Object.keys(data).length; i++) 
         {
             if (data[i].hasChildren == true) 
             {
@@ -374,7 +376,7 @@ var colorChecker = {
      */
     masFinder(id) {
         let i = 0;
-        for (; i < data.length; i++) {
+        for (; i < Object.keys(data).length; i++) {
             if (data[i].id == parseInt(id)) {
                 return i;
             }
@@ -404,7 +406,7 @@ var colorChecker = {
                     else {
                         data[findedI].removed = false;
                     }
-                    return document.getElementById(id).style = "color: black";
+                    return document.getElementById(id).setAttribute("style", "color:black");
                 }
                 else {
                     this.currentColor[i] = whatColor;
@@ -414,7 +416,7 @@ var colorChecker = {
                     else {
                         data[findedI].removed = true;
                     }
-                    return document.getElementById(id).style = "color:" + whatColor;
+                    return document.getElementById(id).setAttribute("style ","color:black") + whatColor;
                 }
             }
             else if (i == this.counterArrays) {
@@ -427,7 +429,7 @@ var colorChecker = {
                 else {
                     data[findedI].removed = true;
                 }
-                return document.getElementById(id).style = "color:" + whatColor;
+                return document.getElementById(id).setAttribute("color:","") + whatColor; //whatafuk????????????????????????????????????????????
             }
         }
     },

@@ -2,6 +2,10 @@
     font-family: 'RodchenkoCTT';
     src:url('https://nomail.com.ua/files/woff/4f92ce49d3e9bb369d836662431a8194.woff') format('woff');
 }
+@font-face{
+    font-family: 'RodchenkoCTTLight';
+    src:url('https://nomail.com.ua/files/woff/efcf91d9f8deb54d264661bbd7d1aa89.woff') format('woff');
+}
 body{
     background-color: white;
 }

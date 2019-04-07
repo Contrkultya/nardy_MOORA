@@ -1,4 +1,4 @@
-interface obj{
+interface Iobj{
     id: number;
     parent:number;
     name:string;
@@ -20,7 +20,7 @@ interface obj{
  * @author narDy_MOORA
  * @public
 */
-class obj {
+class obj implements obj{
     /**
      * @constructor
      * @name constructor
@@ -34,13 +34,13 @@ class obj {
      * @param {string} description ключ-признак, хранит в себе описание задачи;
      */
     private _id:number;
-    private _parent:obj;
+    private _parent:number;
     private _name:string;
     private _hasChildren:boolean;
     private _removed:boolean;
     private _done:boolean;
     private _description:string;
-    constructor(id, parent, name, hasChildren, removed, done, description) {
+    constructor(id:number, parent:number, name:string, hasChildren:boolean, removed:boolean, done:boolean, description:string) {
         this.id = id;
         this.parent = parent;
         this.name = name;
@@ -52,49 +52,49 @@ class obj {
     get id():number {
         return this._id;
     }
-    set id(id) {
+    set id(id:number) {
         this.id = id;
     }
 
     get parent() {
         return this.parent;
     }
-    set parent(parentId) {
+    set parent(parentId:number) {
         this.parent = parentId;
     }
 
     get name() {
         return this.name;
     }
-    set name(name) {
+    set name(name:string) {
         this.name = name;
     }
 
     get hasChildren() {
         return this.hasChildren;
     }
-    set hasChildren(haveBool) {
+    set hasChildren(haveBool:boolean) {
         this.hasChildren = haveBool;
     }
 
     get removed() {
         return this.removed;
     }
-    set removed(haveBool) {
+    set removed(haveBool:boolean) {
         this.removed = haveBool;
     }
 
     get done() {
         return this.done;
     }
-    set done(haveBool) {
+    set done(haveBool:boolean) {
         this.done = haveBool;
     }
 
     get description() {
         return this.description;
     }
-    set description(setDesc) {
+    set description(setDesc:string) {
         this.description = setDesc;
     }
     /** 
@@ -199,7 +199,7 @@ var bank = {
             return ++counter;
         }
     },
-    getLenght() {
+    getLength() {
         return counter;
     },
     keys: [ 'id', 'parent', 'name', 'hasChildren', 'remove' ],
@@ -244,8 +244,7 @@ function objBuilder_file(ind)
  * Демо-данные
  * @param {string} -> {json} data — хранение данных;
  */
-var data:JSON = '[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false },{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": false, "removed": false },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false},{"id": 9,"name": "Доска 2", "done": false, "removed": false}]';
-data = JSON.parse(data);
+var data:Iobj = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false },{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": false, "removed": false },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false},{"id": 9,"name": "Доска 2", "done": false, "removed": false}');
 /**
  * @function
  * @name load
@@ -256,7 +255,7 @@ data = JSON.parse(data);
 function load() {
     document.getElementById("result").innerHTML += "<ul>";
   
-    for (i=0;i < data.length; i++)
+    for (let i=0;i < data.length; i++)
     {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
@@ -279,17 +278,19 @@ function load() {
  * @param {number} x идентификатор эемента;
  */
 function render(x) {
-    document.getElementById(x).style = prompt("Введите стиль:");
+    let style:string;
+    style = prompt("Введите стиль:");
+    document.getElementById(x).setAttribute("style", style);
 }
 
 /**
  * Документация скоро будет~
- */
+ */   
+ var id = 0;
 function res(m) 
 {
-    
-    let height=600;
     id = m;
+    let height=600;
     let ind =id-1;
     if(data[ind].parent==undefined) {
         if(document.getElementById(id+"d").style.height=='50px') {
@@ -336,7 +337,7 @@ function getChildren() {
 function loadChildren(id) {
     return new Promise(function(resolve, reject){
         let i = id - 1;
-        for (; i < data.length; i++) 
+        for (i; i < data.length; i++) 
         {
             if (data[i].hasChildren == true) 
             {

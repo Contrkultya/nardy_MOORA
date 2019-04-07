@@ -29,6 +29,10 @@ header {
     font-family: 'RodchenkoCTT', arial;
     font-size:20pt;
     color:white;
+    height:75px;
+}
+#profile:hover{
+    background-color: #432da9;
 }
 #name_avlbl{
     font-family: 'RodchenkoCTT', arial;
@@ -68,6 +72,7 @@ header {
     }
     #profile{
         font-size:14pt;
+        height:70px;
     }
     #boardList{
         height:650px;
@@ -86,4 +91,5 @@ header {
     }
     #boardList{
         margin-top:25px;
- 
+    }
+}

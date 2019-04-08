@@ -222,7 +222,7 @@ var bank = {
  * @public
  */
 var object=[];
-function objBuilder_file(ind) 
+function objBuilder_file(ind):any
 { 
     var m =0; 
     let i=0;
@@ -343,7 +343,7 @@ function loadChildren(id) {
         {
             if (data[i].hasChildren == true) 
             {
-                resolve(objBuilder_file(data[i].id)); //fixme
+                resolve(objBuilder_file(data[i].id)); 
                 return;
             }
         }

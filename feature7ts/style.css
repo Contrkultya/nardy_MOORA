@@ -29,30 +29,27 @@ header {
     font-family: 'RodchenkoCTT', arial;
     font-size:20pt;
     color:white;
+    height:75px;
 }
-#availableBoards{
+#profile:hover{
+    background-color: #432da9;
+}
+#name_avlbl{
     font-family: 'RodchenkoCTT', arial;
     font-size:20pt;
     background-color: #32227f;
-    margin-top:10px;
-    width:300px;
     padding:20px;
-    margin-left:-10px;
     text-align:center;
 }
 #name_avlbl{
-    width:300px;
-    margin-left:-20px;
     color:white;
-    padding:10px;
 }
 #boardList{
-    display: flex;
+    display:flex;
     flex-direction: row;
-    margin-top:-97px;
+    margin-top:10px;
     overflow-x: scroll;
     background-color: #432da9;
-    margin-left:350px;
     height:800px;
 }
 #availableBoardsMobile{
@@ -72,30 +69,20 @@ header {
     }
     #availableBoards{
         font-size:18pt;
-        width:200px;
-        padding:20px;
-        margin-left:-10px;
     }
     #profile{
         font-size:14pt;
-    }
-    #name_avlbl{
-        width:200px;
-        padding:5px;
+        height:70px;
     }
     #boardList{
-        margin-top:-85px;
-        margin-left:250px;
         height:650px;
         flex-wrap: wrap;
     }
-    
-    
 }
 @media (max-width:768px){
     #availableBoardsMobile{
         display: block;
-        background-color: #017163;
+        background-color: #32227f;
         height:50px;
         margin-top:5px;
     }
@@ -103,7 +90,6 @@ header {
         display: none;
     }
     #boardList{
-        margin-top:5px;
-        margin-left:0px;
+        margin-top:25px;
     }
 }

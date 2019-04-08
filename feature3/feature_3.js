@@ -1,4 +1,6 @@
-/**
+
+   
+ /**
  * @class
  * @name obj
  * @description Класс obj — основная база для взаимодействия с объектами. Присутствует конструктор, методы чтения, обновления, удаления.
@@ -239,14 +241,14 @@ data = JSON.parse(data);
  * Нажатия кнопок вызывают функции-цепочки, которые получают дальнейшие дочерние элементы, если они имеются;
  */
 function load() {
-    document.getElementById("result").innerHTML += "<ul>";
+    document.getElementById("boardList").innerHTML += "<ul>";
   
     for (i=0;i < data.length; i++)
     {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("result").innerHTML += "<div class='desks' id='" + data[i].id+"d" + "'>" + data[i].name + /** Списковый вывод имени */
+            document.getElementById("boardList").innerHTML += "<div class='desks' id='" + data[i].id+"d" + "' style='height: auto;'>" + data[i].name + /** Списковый вывод имени */
             "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + data[i].id + ")'></div></label>" +/** Checkbox выполнения */
             "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + data[i].id + ")'></div></label>" + /** Checkbox удаления */
             "<button onClick='render(" + data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
@@ -271,25 +273,23 @@ function render(x) {
  * Документация скоро будет~
  */
 function res(m) 
-{
-    
-    let height=600;
+{  
     id = m;
     let ind =id-1;
     if(data[ind].parent==undefined) {
-        if(document.getElementById(id+"d").style.height=='50px') {
+        if(document.getElementById(id+"d").style.height=='auto') {
             document.getElementById(id+"d").style.height ='auto';
             document.getElementById(id+"_p_").innerHTML = "Загрузка...";
             loadChildren(id).then(getChildren); 
         }
         else {
-            document.getElementById(id+"d").style.height ='50px';
+            document.getElementById(id+"d").style.height ='auto';
             document.getElementById(id+"_p_").innerHTML = "";
             return;
         }
     } 
     else {
-        if(document.getElementById("p_"+m).style.height=='70px') {
+        if(document.getElementById("p_"+m).style.height=='auto') {
             document.getElementById("p_"+m).style.height ='auto';
             document.getElementById(id+"_p_").innerHTML = "Загрузка...";
             loadChildren(id).then(getChildren);
@@ -308,7 +308,7 @@ function getChildren() {
         let meta = id+"_p_";
         let i = 0;
         for(; i < object.length; i++) {
-            document.getElementById(meta).innerHTML += "<div class='tasks' id="+"p_"+object[i].id+">"+"<li id='" + (object[i].id) + "'>" +object[i].name+ /** Списковый вывод имени */
+            document.getElementById(meta).innerHTML += "<div class='tasks' id="+"p_"+object[i].id+" style='height:auto;'>"+"<li id='" + (object[i].id) + "'>" +object[i].name+ /** Списковый вывод имени */
             "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
             "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
             "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>"+"</div><hr>"; /** Кнопка изменения стиля */

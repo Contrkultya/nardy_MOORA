@@ -1,15 +1,16 @@
+
 @font-face{
     font-family: 'RodchenkoCTT';
     src:url('https://nomail.com.ua/files/woff/4f92ce49d3e9bb369d836662431a8194.woff') format('woff');
-}
-@font-face{
+ }
+ @font-face{
     font-family: 'RodchenkoCTTLight';
     src:url('https://nomail.com.ua/files/woff/efcf91d9f8deb54d264661bbd7d1aa89.woff') format('woff');
-}
-body{
+ }
+ body{
     background-color: white;
-}
-header {
+ }
+ header {
     display: flex;
     flex-direction: row;
     background-color: #211654;
@@ -18,46 +19,69 @@ header {
     justify-content: space-between;
     padding:15px;
     align-items:center;
-}
-#logo{
+ }
+ 
+ @font-face {
+    font-family: 'RodchenkoCond-Regular';
+    src: local('RodchenkoCond-Regular'), url('https://nomail.com.ua/files/woff/3fdc414356e9bb7ef65ea320bc57d981.woff') format('woff');
+ }
+ button {
+    font-family: 'RodchenkoCond-Regular', arial;
+    font-size: 12pt;
+ }
+ .desks {
+    margin: 5px;
+    padding: 10px;
+    font-family: 'RodchenkoCTT', arial;
+    font-size: 18pt;
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    list-style-type: none;
+ }
+ .tasks {
+   padding: 10px;
+   font-family: 'RodchenkoCond-Regular';
+ }
+ #logo{
     height: 50px;
-}
-#user{
+ }
+ #user{
     height: 50px;
-}
-#profile{
+ }
+ #profile{
     font-family: 'RodchenkoCTT', arial;
     font-size:20pt;
     color:white;
     height:75px;
-}
-#profile:hover{
+ }
+ #profile:hover{
     background-color: #432da9;
-}
-#name_avlbl{
+ }
+ #name_avlbl{
     font-family: 'RodchenkoCTT', arial;
     font-size:20pt;
     background-color: #32227f;
     padding:20px;
     text-align:center;
-}
-#name_avlbl{
+ }
+ #name_avlbl{
     color:white;
-}
-#boardList{
+ }
+ #boardList{
     display:flex;
     flex-direction: row;
     margin-top:10px;
     overflow-x: scroll;
     background-color: #432da9;
     height:800px;
-}
-#availableBoardsMobile{
+ }
+ #availableBoardsMobile{
     display: none;
-}
-
-
-@media (max-width:1280px){
+ }
+ 
+ 
+ @media (max-width:1280px){
     header {
         padding:10px;
     }
@@ -78,8 +102,8 @@ header {
         height:650px;
         flex-wrap: wrap;
     }
-}
-@media (max-width:768px){
+ }
+ @media (max-width:768px){
     #availableBoardsMobile{
         display: block;
         background-color: #32227f;
@@ -92,4 +116,7 @@ header {
     #boardList{
         margin-top:25px;
     }
-}
+ }
+ 
+ 
+ 

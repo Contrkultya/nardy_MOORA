@@ -2,9 +2,10 @@
   "name": "feature7ts",
   "version": "1.0.0",
   "description": "GreetingZ from Speedwagon foundation",
-  "main": "index.js",
+  "main": "script.ts",
   "scripts": {
-    "test": "chck"
+    "test": "chck",
+    "start": "script.ts"
   },
   "repository": {
     "type": "git",

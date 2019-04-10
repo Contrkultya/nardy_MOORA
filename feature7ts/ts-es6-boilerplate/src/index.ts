@@ -190,28 +190,29 @@ class obj implements Iobj{
         else this._done = true;
     }
 }
-
-/* NOTE: Открыть, когда ящик пандоры будет решён.
-var bank = {
-    objects: [],
-    numberObjects() {
-        var counter = 0;
-        return function() {
-            return ++counter;
-        }
+var bankLogic = {
+    data:[] = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false },{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": false, "removed": false },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false},{"id": 9,"name": "Доска 2", "done": false, "removed": false}]'),
+    counter: 0,
+    _currentId: 0,
+    counterUp():number {
+        return this.counter++;
     },
-    getLength() {
-        return counter;
+    counterReset() {
+        this.counter = 0;
     },
-    keys: [ 'id', 'parent', 'name', 'hasChildren', 'remove' ],
+    get currentId():number {
+        return this._currentId;
+    },
+    set currentId(receivedId:number) {
+        this._currentId = receivedId;
+    }
 }
-*/
-
-
-/* 
+var object:object[];
+/**
  * @function
  * @name objBuilder_file
  * @description Строит объект из полученного JSON'а.
+ * @param {number} ind индекс объекта;
  * @param {json} data передаваемый в функцию JSON; 
  * @param {number} setid хранит в себе введённый идентификатор;
  * @param {number} setparent хранит в себе введённое значение;
@@ -220,31 +221,24 @@ var bank = {
  * @param {bool} setremoved хранит в себе информацию о наличии «удаления»;
  * @public
  */
-var m:number = 0;
-var object:object[];
 function objBuilder_file(ind:number):any
 {
+    bankLogic.counterReset();
+    object = []; 
     let i = 0;
-    object = [], m = 0; 
-    for (i; i < data.length; i++) { 
-         if(data[i].parent == ind) {
-            let setid = data[i].id;
-            let setparent = data[i].parent;
-            let setname = data[i].name;
-            let hasChildren = data[i].hasChildren;
-            let setremoved = data[i].removed;
-            let setdone = data[i].done;
-            let setDesc = data[i].description;
-            object[m] = new obj(setid, setparent, setname, hasChildren, setremoved, setdone, setDesc);
-            m++;
+    for (i; i < bankLogic.data.length; i++) { 
+         if(bankLogic.data[i].parent == ind) {
+            let setid = bankLogic.data[i].id;
+            let setparent = bankLogic.data[i].parent;
+            let setname = bankLogic.data[i].name;
+            let hasChildren = bankLogic.data[i].hasChildren;
+            let setremoved = bankLogic.data[i].removed;
+            let setdone = bankLogic.data[i].done;
+            let setDesc = bankLogic.data[i].description;
+            object[bankLogic.counterUp()] = new obj(setid, setparent, setname, hasChildren, setremoved, setdone, setDesc);
         }
     }
 }
-/**
- * Демо-данные
- * @param {string} -> {json} data — хранение данных;
- */
-var data:Iobj[] = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false },{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": false, "removed": false },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false},{"id": 9,"name": "Доска 2", "done": false, "removed": false}]');
 /**
  * @function
  * @name load
@@ -255,18 +249,18 @@ var data:Iobj[] = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": t
 function load() {
     document.getElementById("boardList").innerHTML += "<ul>";
     let i = 0;
-    for (i; i < data.length; i++)
+    for (i; i < bankLogic.data.length; i++)
     {
         /** Выводит на страницу родительские элементы */
-        if (data[i].parent == undefined) {
+        if (bankLogic.data[i].parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("boardList").innerHTML += "<div class='desks' style='height:auto;' id='" + data[i].id+"d" + "'>" + data[i].name + /** Списковый вывод имени */
-            "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + data[i].id + ")'></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + data[i].id + ")'></div></label>" + /** Checkbox удаления */
-            "<button onClick='render(" + data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
+            document.getElementById("boardList").innerHTML += "<div class='desks' style='height:auto;' id='" + bankLogic.data[i].id+"d" + "'>" + bankLogic.data[i].name + /** Списковый вывод имени */
+            //Пока не трогать "<label><div class='greenCheck'><img src= 'content\\nar_yes.svg' onClick='doneChanger(" + bankLogic.data[i].id + ")'></div></label>" +/** Checkbox выполнения */
+            //"<label><div class='redCheck'><img src= 'content\\nar_no.svg' onClick='deleteChanger(" + bankLogic.data[i].id + ")'></div></label>" + /** Checkbox удаления */
+            "<button onClick='render(" + bankLogic.data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
-            if (data[i].hasChildren == true) {
-                document.getElementById(data[i].id+"d").innerHTML += "<button onClick='res("+data[i].id+")'>Открыть</button><div style='margin:0 auto;' id='"+data[i].id+"_p_"+"'></div>";
+            if (bankLogic.data[i].hasChildren == true) {
+                document.getElementById(bankLogic.data[i].id+"d").innerHTML += "<button onClick='res("+bankLogic.data[i].id+")'>Открыть</button><div style='margin:0 auto;' id='"+bankLogic.data[i].id+"_p_"+"'></div>";
             }
         }
     }
@@ -286,31 +280,30 @@ function render(x:string) {
 /**
  * Документация скоро будет~
  */   
-var id:number = 0;
-function res(m:number) {
-    id = m;
-    let ind = id - 1;
-    if(data[ind].parent == undefined) {
-        if(document.getElementById(id+"d").style.height=='auto') {
-            document.getElementById(id+"d").style.height ='auto';
-            document.getElementById(id+"_p_").innerHTML = "Загрузка...";
-            loadChildren(id).then(getChildren); 
+function res(id:number) {
+    bankLogic.currentId = id;
+    let ind = bankLogic.currentId - 1;
+    if(bankLogic.data[ind].parent == undefined) {
+        if(document.getElementById(bankLogic.currentId +"d").style.height=='auto') {
+            document.getElementById(bankLogic.currentId +"d").style.height ='auto';
+            document.getElementById(bankLogic.currentId +"_p_").innerHTML = "Загрузка...";
+            loadChildren(bankLogic.currentId).then(getChildren); 
         }
         else {
-            document.getElementById(id+"d").style.height ='0';
-            document.getElementById(id+"_p_").innerHTML = "";
+            document.getElementById(bankLogic.currentId +"d").style.height ='0';
+            document.getElementById(bankLogic.currentId +"_p_").innerHTML = "";
             return;
         }
     } 
     else {
-        if(document.getElementById("p_"+m).style.height=='auto') {
-            document.getElementById("p_"+m).style.height ='auto';
-            document.getElementById(id+"_p_").innerHTML = "Загрузка...";
-            loadChildren(id).then(getChildren);
+        if(document.getElementById("p_"+bankLogic.currentId).style.height=='auto') {
+            document.getElementById("p_"+bankLogic.currentId).style.height ='auto';
+            document.getElementById(bankLogic.currentId +"_p_").innerHTML = "Загрузка...";
+            loadChildren(bankLogic.currentId).then(getChildren);
         }
         else {
-            document.getElementById("p_"+m).style.height ='0';
-            document.getElementById(id+"_p_").innerHTML = "";
+            document.getElementById("p_"+ bankLogic.currentId).style.height ='0';
+            document.getElementById(bankLogic.currentId +"_p_").innerHTML = "";
             return;
         }
     }
@@ -318,16 +311,16 @@ function res(m:number) {
 }
 function getChildren() {
     setTimeout(function(){
-        document.getElementById(id+"_p_").innerHTML = "";
-        let meta = id+"_p_";
+        document.getElementById(bankLogic.currentId +"_p_").innerHTML = "";
+        let meta = bankLogic.currentId +"_p_";
         let i = 0;
         for(; i < object.length; i++) {
             document.getElementById(meta).innerHTML += "<div class='tasks' id="+"p_"+object[i].id+" style='height:auto;'>"+"<li id='" + (object[i].id) + "'>" +object[i].name+ /** Списковый вывод имени */
-            "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
-            "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>"+"</div><hr>"; /** Кнопка изменения стиля */
+            "<label><div class='greenCheck'><img src= 'content\\nar_yes.svg' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
+            "<label><div class='redCheck'><img src= 'content\\nar_no.svg' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
+            "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>"+"</div>"; /** Кнопка изменения стиля */
             if(object[i].hasChildren == true) {
-                document.getElementById("p_"+object[i].id).innerHTML+="<button onClick='res("+object[i].id+")'>Открыть</button><div style='margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'></div>";
+                document.getElementById("p_"+object[i].id).innerHTML+="<button onClick='res("+object[i].id+")'>Открыть</button><div style='margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'></div><hr>";
             }
         }
     }, 1000);
@@ -335,11 +328,11 @@ function getChildren() {
 function loadChildren(id:number) {
     return new Promise(function(resolve, reject){
         let i = id - 1;
-        for (i; i < data.length; i++) 
+        for (i; i < bankLogic.data.length; i++) 
         {
-            if (data[i].hasChildren == true) 
+            if (bankLogic.data[i].hasChildren == true) 
             {
-                resolve(objBuilder_file(data[i].id)); 
+                resolve(objBuilder_file(bankLogic.data[i].id)); 
                 return;
             }
         }
@@ -359,26 +352,9 @@ function loadChildren(id:number) {
  */
 var colorChecker = {
     counterArrays: 0,
-    idArray:[String],
+    idArray: [String],
     currentColor: [String],
-    colors: [ "black", "green", "red"],
-    /**
-     * @method 
-     * @memberof colorChecker
-     * @name masFinder
-     * @description Осуществляет поиск в массиве объектов. Возвращает номер объекта с совпадающим идентификатором;
-     * @param {number} id Идентификатор элемента;
-     * @returns {number} 
-     */
-    masFinder(id:string) {
-        let i = 0;
-        for (; i < data.length; i++) {
-            if (data[i].id == parseInt(id)) {
-                return i;
-            }
-        } 
-
-    },
+    colors: ["black", "green", "red"],
     /**
      * @method
      * @memberof colorChecker
@@ -391,29 +367,42 @@ var colorChecker = {
      * @param {string} whatColor Цвет из какого чекбокса был вызван.
      * @returns {string} Строку с применением определённого стиля.
      */
-    changerColor(id:string, whatColor:string) {
-        let i = 0, findedI = this.masFinder(id);
-        for (; i <= this.counterArrays; i++) {
+    changerColor(id:number, whatColor:string) {
+        let i = 0;
+        for (i; i <= this.counterArrays; i++) {
             if (this.idArray[i] == id) {
                 if (this.currentColor[i] == whatColor) {
-                    this.currentColor[i] = "white";
+                    this.currentColor[i] = "black";
                     if (whatColor == "green") {
-                        data[findedI].done = false;
+                        bankLogic.data[id].done = false;
                     }
                     else {
-                        data[findedI].removed = false;
+                        bankLogic.data[id].removed = false;
                     }
-                    return document.getElementById(id).setAttribute("style", "color:white");
+                    return document.getElementById(id.toString()).setAttribute("style", "color:black");
                 }
-                else {
+                else if (this.currentColor[i] == "black") {
                     this.currentColor[i] = whatColor;
                     if (whatColor == "green") {
-                        data[findedI].done = true;
+                        bankLogic.data[id].done = true;
                     }
                     else {
-                        data[findedI].removed = true;
+                        bankLogic.data[id].removed = true;
                     }
-                    return document.getElementById(id).setAttribute("style ","color:white") + whatColor;
+                    return document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
+                }
+                else {
+                    if (this.currentColor[i] == "green") {
+                        bankLogic.data[id].done = false;
+                        bankLogic.data[id].removed = true;
+                        document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
+                    }
+                    else {
+                        bankLogic.data[id].done = true;
+                        bankLogic.data[id].removed = false;
+                        document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
+                    }
+                    return this.currentColor[i] = whatColor;
                 }
             }
             else if (i == this.counterArrays) {
@@ -421,12 +410,12 @@ var colorChecker = {
                 this.currentColor[this.counterArrays] = whatColor;
                 this.counterArrays++;
                 if (whatColor == "green") {
-                    data[findedI].done = true;
+                    bankLogic.data[id].done = true;
                 }
                 else {
-                    data[findedI].removed = true;
+                    bankLogic.data[id].removed = true;
                 }
-                return document.getElementById(id).setAttribute("color:","") + whatColor; //whatafuk????????????????????????????????????????????
+                return document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
             }
         }
     },
@@ -437,8 +426,10 @@ var colorChecker = {
  * @description Событие, когда кликаешь на зелёные чекбоксы.
  * @param {number} x Идентификатор объекта.
  */
-function doneChanger(x:string) {
+function doneChanger(x:number) {
     colorChecker.changerColor(x, "green");
+    console.log('GREN'+bankLogic.data[x].done);
+    console.log('RED'+bankLogic.data[x].removed);
 }
 /**
  * @function
@@ -446,6 +437,8 @@ function doneChanger(x:string) {
  * @description Событие, когда кликаешь на красные чекбоксы.
  * @param {number} x Идентификатор объекта.
  */
-function deleteChanger(x:string) {
+function deleteChanger(x:number) {
     colorChecker.changerColor(x, "red");
+    console.log('GREN'+bankLogic.data[x].done);
+    console.log('RED'+bankLogic.data[x].removed);
 }

@@ -86,7 +86,9 @@ button {
    height: 20px;
    width: 20px;
 }
-
+.descriptionLogic {
+   
+}
 @media (max-width:1280px) {
    header {
        padding:10px;

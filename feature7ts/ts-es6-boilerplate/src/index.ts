@@ -225,7 +225,7 @@ function objBuilder_file(ind:number):any
 {
     bankLogic.counterReset();
     object = []; 
-    let i = 0;
+    let i:number = 0;
     for (i; i < bankLogic.data.length; i++) { 
          if(bankLogic.data[i].parent == ind) {
             let setid = bankLogic.data[i].id;
@@ -272,8 +272,7 @@ function load() {
  * @param {number} x идентификатор эемента;
  */
 function render(x:string) {
-    let style:string;
-    style = prompt("Введите стиль:");
+    let style:string = prompt("Введите стиль:");
     document.getElementById(x).setAttribute("style", style);
 }
 
@@ -314,12 +313,12 @@ function getChildren() {
         document.getElementById(bankLogic.currentId +"_p_").innerHTML = "";
         let meta = bankLogic.currentId +"_p_";
         let i = 0;
-        for(; i < object.length; i++) {
-            document.getElementById(meta).innerHTML += "<div class='tasks' id="+"p_"+object[i].id+" style='height:auto;'>"+"<li id='" + (object[i].id) + "'>" +object[i].name+ /** Списковый вывод имени */
+        for (i; i < object.length; i++) {
+            document.getElementById(meta).innerHTML += "<div class='tasks' onClick='descChanger.descriptionLogic(" + meta + "," + object[i].id + ")' id="+"p_"+object[i].id+" style='height:auto;'>"+"<li id='" + (object[i].id) + "'>" +object[i].name + /** Списковый вывод имени */
             "<label><div class='greenCheck'><img src= 'content\\nar_yes.svg' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
             "<label><div class='redCheck'><img src= 'content\\nar_no.svg' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
             "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>"+"</div>"; /** Кнопка изменения стиля */
-            if(object[i].hasChildren == true) {
+            if (object[i].hasChildren == true) {
                 document.getElementById("p_"+object[i].id).innerHTML+="<button onClick='res("+object[i].id+")'>Открыть</button><div style='margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'></div><hr>";
             }
         }
@@ -428,8 +427,6 @@ var colorChecker = {
  */
 function doneChanger(x:number) {
     colorChecker.changerColor(x, "green");
-    console.log('GREN'+bankLogic.data[x].done);
-    console.log('RED'+bankLogic.data[x].removed);
 }
 /**
  * @function
@@ -439,6 +436,11 @@ function doneChanger(x:number) {
  */
 function deleteChanger(x:number) {
     colorChecker.changerColor(x, "red");
-    console.log('GREN'+bankLogic.data[x].done);
-    console.log('RED'+bankLogic.data[x].removed);
+}
+var descChanger = {
+    arrCounter: 0,
+    openerArray: [Boolean],
+    descriptionLogic(htmlId:string, objectId:number) {
+        let docBlock:string = document.getElementById(htmlId).innerHTML;
+    },
 }

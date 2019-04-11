@@ -314,9 +314,10 @@ function getChildren() {
         let meta = bankLogic.currentId +"_p_";
         let i = 0;
         for (i; i < object.length; i++) {
-            document.getElementById(meta).innerHTML += "<div class='tasks' onClick='descChanger.descriptionLogic(" + meta + "," + object[i].id + ")' id="+"p_"+object[i].id+" style='height:auto;'>"+"<li id='" + (object[i].id) + "'>" +object[i].name + /** Списковый вывод имени */
-            "<label><div class='greenCheck'><img src= 'content\\nar_yes.svg' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><img src= 'content\\nar_no.svg' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
+            document.getElementById(meta).innerHTML += "<div class='tasks' id="+"p_"+object[i].id+" style='height:auto;'>"+"<li id='" + (object[i].id) + "'>" + 
+            "<span onClick='descChanger.descriptionLogic(" + meta + "," + object[i].id + ")'>" + object[i].name + "</span>" +/** Списковый вывод имени и щёлк*/
+            "<label><div class='greenCheck'><img src='content\\nar_yes.svg' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
+            "<label><div class='redCheck'><img src='content\\nar_no.svg' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
             "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>"+"</div>"; /** Кнопка изменения стиля */
             if (object[i].hasChildren == true) {
                 document.getElementById("p_"+object[i].id).innerHTML+="<button onClick='res("+object[i].id+")'>Открыть</button><div style='margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'></div><hr>";

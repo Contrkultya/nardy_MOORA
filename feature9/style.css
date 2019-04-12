@@ -87,7 +87,10 @@ button {
    width: 20px;
 }
 .descriptionLogic {
-   
+   width: 250px;
+   text-align: justify;
+   font-family: 'RodchenkoCTTLight', arial;
+   font-size: 16pt;
 }
 @media (max-width:1280px) {
    header {

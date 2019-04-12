@@ -186,7 +186,7 @@ var obj = function () {
 }();
 
 var bankLogic = {
-    data: (_JSON$parse = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false },{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": false, "removed": false },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false},{"id": 9,"name": "Доска 2", "done": false, "removed": false}]'), _JSON$parse2 = _toArray(_JSON$parse), _JSON$parse),
+    data: (_JSON$parse = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false, "description": "Сделать removeKebab 2.0"},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false },{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": false, "removed": false },{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false},{"id": 9,"name": "Доска 2", "done": false, "removed": false}]'), _JSON$parse2 = _toArray(_JSON$parse), _JSON$parse),
     counter: 0,
     _currentId: 0,
     counterUp: function counterUp() {
@@ -303,10 +303,12 @@ function getChildren() {
         var meta = bankLogic.currentId + "_p_";
         var i = 0;
         for (i; i < object.length; i++) {
-            document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" + object[i].id + " style='height:auto;'>" + "<li id='" + object[i].id + "'>" + "<span onClick='descChanger.descriptionLogic(" + meta + "," + object[i].id + ")'>" + object[i].name + "</span>" + /** Списковый вывод имени и щёлк*/
+            document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" + object[i].id + " style='height:auto;'>" + "<li id='" + object[i].id + "'>" +
+            "<span onClick='descriptionChanger(" + object[i].id +")'>" + object[i].name + "</span>" + /** Списковый вывод имени и щёлк*/
             "<label><div class='greenCheck'><img src='content\\nar_yes.svg' onClick='doneChanger(" + object[i].id + ")'></div></label>" + /** Checkbox выполнения */
             "<label><div class='redCheck'><img src='content\\nar_no.svg' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
-            "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>" + "</div>"; /** Кнопка изменения стиля */
+            "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>" + /** Кнопка изменения стиля */
+            "<div id='" + object[i].id+ "description' class='descriptionLogic' style='display: none;'>" + object[i].description + "</div></div>"; /** Описание */
             if (object[i].hasChildren == true) {
                 document.getElementById("p_" + object[i].id).innerHTML += "<button onClick='res(" + object[i].id + ")'>Открыть</button><div style='margin:0 auto;margin-bottom:30px;' id='" + (object[i].id + "_p_") + "'></div><hr>";
             }
@@ -417,10 +419,35 @@ function doneChanger(x) {
 function deleteChanger(x) {
     colorChecker.changerColor(x, "red");
 }
+//В процессе
 var descChanger = {
     arrCounter: 0,
-    openerArray: [Boolean],
-    descriptionLogic: function descriptionLogic(htmlId, objectId) {
-        var docBlock = document.getElementById(htmlId).innerHTML;
+    openerArray: [],
+    boolArray: [],
+    descriptionLogic: function descriptionLogic(objectId) {
+        let docBlock = document.getElementById(objectId);
+        let i = 0;
+        while (i <= this.arrCounter) {
+            if (this.openerArray[i] == objectId) {
+                if (this.boolArray[i]) {
+                    this.boolArray[i] = false;
+                    return document.getElementById(objectId + 'description').style = "display: none";
+                }
+                else {
+                    this.boolArray[i] = true;
+                    return document.getElementById(objectId + 'description').style = "display: block";
+                }
+            }
+            i++;
+        }
+        if (i > this.arrCounter) {
+            this.openerArray[this.arrCounter] = objectId;
+            this.boolArray[this.arrCounter] = true;
+            this.arrCounter++;
+            return document.getElementById(objectId + 'description').style = "display: block";
+        }
     }
 };
+function descriptionChanger(objectId){
+    descChanger.descriptionLogic(objectId);
+}

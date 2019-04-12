@@ -1,0 +1,21 @@
+{
+  "name": "feature7ts",
+  "version": "1.0.0",
+  "description": "GreetingZ from Speedwagon foundation",
+  "main": "script.ts",
+  "scripts": {
+    "test": "chck",
+    "start": "script.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Contrkultya/nardy_MOORA/tree/master/feature7ts"
+  },
+  "author": "NARDY_MOORA",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.1",
+    "typescript": "^3.4.3"
+  }
+}

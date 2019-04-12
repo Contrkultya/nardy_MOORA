@@ -6,17 +6,17 @@
     <script src="index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-<body onLoad="load()">
-    <header>
-        <div id="brand"><img src="content\Умоорительно.svg" id="logo"></div>
-        <div id="availableBoards"> <div id="name_avlbl">Доступные доски</div> </div>
-        <div id="profile">Личный кабинет <img src="content\user.png" id="user"> </div>
+<body onLoad="load()" class="main">
+    <header class="main__header">
+        <div id="brand" class="main__header_brand"><img src="content\Умоорительно.svg" id="logo"></div>
+        <div id="availableBoards" class="main__header_availableBoards"> <div id="name_avlbl">Доступные доски</div> </div>
+        <div id="profile" class="main__header_profile">Личный кабинет <img src="content\user.png" id="user"> </div>
     </header>
-    <aside>
-        <div id="availableBoardsMobile"><div id="name_avlbl">Доступные доски</div></div>
+    <aside class="main__aside">
+        <div id="availableBoardsMobile" class="main__aside_availableBoardsMobile"><div id="name_avlbl">Доступные доски</div></div>
     </aside>
-    <article>  
-            <div id="boardList"> </div>
+    <article class="main__article">  
+            <div id="boardList" class="main__article_boardList"> </div>
     </article>
 </body>
 

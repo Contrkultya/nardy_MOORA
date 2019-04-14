@@ -8,6 +8,9 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+import {store} from './store';//Хранилище с огромным хуищем, обратиться можно, используя свойство "store";
+
+
 /**
  * @class
  * @name obj

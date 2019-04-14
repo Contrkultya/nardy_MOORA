@@ -238,6 +238,31 @@ function objBuilder_file(ind) {
         }
     }
 }
+function new_objBuilder_file(ind)
+{
+    object=[]
+    var i = 0;
+    var m = 0;
+    for(i; i < bankLogic.data.length; i++)
+    {
+        if(bankLogic.data[i].parent == ind)
+        {
+            var element=new Vue({
+                data:{
+                    setid: bankLogic.data[i].id,
+                    setparent: bankLogic.data[i].parent,
+                    setname: bankLogic.data[i].name,
+                    hasChildren: bankLogic.data[i].hasChildren,
+                    setremoved: bankLogic.data[i].removed,
+                    setdone: bankLogic.data[i].done,
+                    setDesc: bankLogic.data[i].description,
+                }
+            });
+            object[m]=element;
+            m++
+        }
+    }
+}
 /**
  * @function
  * @name load
@@ -307,14 +332,16 @@ function getChildren() {
         var meta = bankLogic.currentId + "_p_";
         var i = 0;
         for (i; i < object.length; i++) {
-            document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" + object[i].id + " style='height:auto;'>" + "<li id='" + object[i].id + "'>" +
-            "<span onClick='descriptionChanger(" + object[i].id +")'>" + object[i].name + "</span>" + /** Списковый вывод имени и щёлк*/
-            "<label><div class='greenCheck'><img src='content\\nar_yes.svg' onClick='doneChanger(" + object[i].id + ")'></div></label>" + /** Checkbox выполнения */
-            "<label><div class='redCheck'><img src='content\\nar_no.svg' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
-            "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>" + /** Кнопка изменения стиля */
-            "<div id='" + object[i].id+ "description' class='descriptionLogic' style='display: none;'>" + object[i].description + "</div></div>"; /** Описание */
-            if (object[i].hasChildren == true) {
-                document.getElementById("p_" + object[i].id).innerHTML += "<button onClick='res(" + object[i].id + ")'>Открыть</button><button onClick='close("+'"' + object[i].id+'"'+ ")'>Закрыть</button><div style='margin:0 auto;margin-bottom:30px;' id='" + (object[i].id + "_p_") + "'></div><hr>";
+            document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" +object[i].setid+ " style='height:auto;'>" + "<li id='" + object[i].setid + "'>" +
+            "<span onClick='descriptionChanger(" + object[i].setid +")'>" + object[i].setname + "</span>" + /** Списковый вывод имени и щёлк*/
+            "<label><div class='greenCheck'><img src='content\\nar_yes.svg' onClick='doneChanger(" + object[i].setid + ")'></div></label>" + /** Checkbox выполнения */
+            "<label><div class='redCheck'><img src='content\\nar_no.svg' onClick='deleteChanger(" + object[i].setid + ")'></div></label>" + /** Checkbox удаления */
+            "<button onClick='render(" + object[i].setid + ")'>Изменить стиль</button>" + "</li>" + /** Кнопка изменения стиля */
+            "<div id='" + object[i].setid+ "description' class='descriptionLogic' style='display: none;'>" + object[i].setDesc + "</div></div>"; /** Описание */
+            var check=object[i].hasChildren;
+            console.log(object[i].setid);
+            if (check==true) {
+                document.getElementById("p_" + object[i].setid).innerHTML += "<button onClick='res(" + object[i].setid + ")'>Открыть</button><button onClick='close("+'"' + object[i].setid+'"'+ ")'>Закрыть</button><div style='margin:0 auto;margin-bottom:30px;' id='" + (object[i].setid + "_p_") + "'></div><hr>";
             }
         }
     }, 1000);
@@ -324,7 +351,7 @@ function loadChildren(id) {
         var i = id - 1;
         for (i; i < bankLogic.data.length; i++) {
             if (bankLogic.data[i].hasChildren == true) {
-                resolve(objBuilder_file(bankLogic.data[i].id));
+                resolve(new_objBuilder_file(bankLogic.data[i].id));
                 return;
             }
         }

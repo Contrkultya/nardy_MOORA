@@ -188,25 +188,29 @@ var obj = function () {
 function close(id){
     document.getElementById(id).innerHTML="";
 }
-
-var bankLogic = {
-    data: (_JSON$parse = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false, "description": "Сделать removeKebab 2.0"},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false, "description": "Сделать removeAutism"},{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": true, "removed": false, "description": "Сделать vue"},{ "id": 10,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false, "description": "Радоваться жизни"},{"id": 9,"name": "Доска 2", "done": false, "removed": false}]'), _JSON$parse2 = _toArray(_JSON$parse), _JSON$parse),
-    counter: 0,
-    _currentId: 0,
-    counterUp: function counterUp() {
-        return this.counter++;
+var bankLogic = new Vue({
+    data: {
+        data: (_JSON$parse = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false, "description": "Сделать removeKebab 2.0"},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false, "description": "Сделать removeAutism"},{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": true, "removed": false, "description": "Сделать vue"},{ "id": 9,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false, "description": "Заработать тут чекбох"},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false, "description": "Радоваться жизни"},{"id": 10,"name": "Доска 2", "done": false, "removed": false}]'), _JSON$parse2 = _toArray(_JSON$parse), _JSON$parse),
+        counter: 0,
+        _currentId: 0,
     },
-    counterReset: function counterReset() {
-        this.counter = 0;
+    methods: {
+        counterUp: function counterUp() {
+            return this.counter++;
+        },
+        counterReset: function counterReset() {
+            this.counter = 0;
+        },
+        currentId: {
+            get: function() {
+                return this._currentId;
+            },
+            set: function(receivedId) {
+                this._currentId = receivedId;
+            }
+        },
     },
-
-    get currentId() {
-        return this._currentId;
-    },
-    set currentId(receivedId) {
-        this._currentId = receivedId;
-    }
-};
+})
 var object;
 /**
  * @function
@@ -369,69 +373,61 @@ function loadChildren(id) {
  * @protected
  * @public
  */
-var colorChecker = {
-    counterArrays: 0,
-    idArray: [String],
-    currentColor: [String],
-    colors: ["black", "green", "red"],
-    /**
-     * @method
-     * @memberof colorChecker
-     * @name changerColor
-     * @description Основная логика надзирателя за цветом тут.
-     * Проверяет на наличие в массивах переданный идентификатор.
-     * Проверяет на совпадение с переданным цветом.
-     * Проблема: тыкать сразу на два чекбокса в одном элементе — плохо.
-     * @param {number} id Идентификатор элемента, у которого проверяется цвет .
-     * @param {string} whatColor Цвет из какого чекбокса был вызван.
-     * @returns {string} Строку с применением определённого стиля.
-     */
-    changerColor: function changerColor(id, whatColor) {
-        var i = 0;
-        for (i; i <= this.counterArrays; i++) {
-            if (this.idArray[i] == id) {
-                if (this.currentColor[i] == whatColor) {
-                    this.currentColor[i] = "black";
-                    if (whatColor == "green") {
-                        bankLogic.data[id].done = false;
+var colorChecker = new Vue({
+    data: {
+        counterArrays: 0,
+        idArray: [],
+        currentColor: [],
+        colors: ["black", "green", "red"],
+    },
+    methods: {
+        changerColor: function (id, whatColor) {
+            var i = 0;
+            for (i; i <= this.counterArrays; i++) {
+                if (this.idArray[i] == id) {
+                    if (this.currentColor[i] == whatColor) {
+                        this.currentColor[i] = "black";
+                        if (whatColor == "green") {
+                            bankLogic.data[id].done = false;
+                        } else {
+                            bankLogic.data[id].removed = false;
+                        }
+                        return document.getElementById(id.toString()).setAttribute("style", "color:black");
+                    } else if (this.currentColor[i] == "black") {
+                        this.currentColor[i] = whatColor;
+                        if (whatColor == "green") {
+                            bankLogic.data[id].done = true;
+                        } else {
+                            bankLogic.data[id].removed = true;
+                        }
+                        return document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
                     } else {
-                        bankLogic.data[id].removed = false;
+                        if (this.currentColor[i] == "green") {
+                            bankLogic.data[id].done = false;
+                            bankLogic.data[id].removed = true;
+                            document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
+                        } else {
+                            bankLogic.data[id].done = true;
+                            bankLogic.data[id].removed = false;
+                            document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
+                        }
+                        return this.currentColor[i] = whatColor;
                     }
-                    return document.getElementById(id.toString()).setAttribute("style", "color:black");
-                } else if (this.currentColor[i] == "black") {
-                    this.currentColor[i] = whatColor;
+                } else if (i == this.counterArrays) {
+                    this.idArray[this.counterArrays] = id;
+                    this.currentColor[this.counterArrays] = whatColor;
+                    this.counterArrays++;
                     if (whatColor == "green") {
                         bankLogic.data[id].done = true;
                     } else {
                         bankLogic.data[id].removed = true;
                     }
                     return document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
-                } else {
-                    if (this.currentColor[i] == "green") {
-                        bankLogic.data[id].done = false;
-                        bankLogic.data[id].removed = true;
-                        document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
-                    } else {
-                        bankLogic.data[id].done = true;
-                        bankLogic.data[id].removed = false;
-                        document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
-                    }
-                    return this.currentColor[i] = whatColor;
                 }
-            } else if (i == this.counterArrays) {
-                this.idArray[this.counterArrays] = id;
-                this.currentColor[this.counterArrays] = whatColor;
-                this.counterArrays++;
-                if (whatColor == "green") {
-                    bankLogic.data[id].done = true;
-                } else {
-                    bankLogic.data[id].removed = true;
-                }
-                return document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
             }
-        }
-    }
-};
+        },
+    },
+})
 /**
  * @function
  * @name doneChanger
@@ -450,13 +446,11 @@ function doneChanger(x) {
 function deleteChanger(x) {
     colorChecker.changerColor(x, "red");
 }
-//В процессе
 var descChanger = {
     arrCounter: 0,
     openerArray: [],
     boolArray: [],
     descriptionLogic: function descriptionLogic(objectId) {
-        let docBlock = document.getElementById(objectId);
         let i = 0;
         while (i <= this.arrCounter) {
             if (this.openerArray[i] == objectId) {

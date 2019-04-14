@@ -1,0 +1,132 @@
+@font-face {
+   font-family: 'RodchenkoCTT';
+   src:url('https://nomail.com.ua/files/woff/4f92ce49d3e9bb369d836662431a8194.woff') format('woff');
+}
+@font-face {
+   font-family: 'RodchenkoCond-Regular';
+   src: local('RodchenkoCond-Regular'), url('https://nomail.com.ua/files/woff/3fdc414356e9bb7ef65ea320bc57d981.woff') format('woff');
+}
+@font-face {
+   font-family: 'RodchenkoCTTLight';
+   src:url('https://nomail.com.ua/files/woff/efcf91d9f8deb54d264661bbd7d1aa89.woff') format('woff');
+}
+* {
+   padding: 0px;
+   margin: 0px;
+}
+body {
+   background-color: white;
+}
+header {
+   display: flex;
+   flex-direction: row;
+   background-color: #211654;
+   height:50px;
+   justify-content: space-between;
+   padding:15px;
+   align-items:center;
+}
+button {
+   font-family: 'RodchenkoCond-Regular', arial;
+   font-size: 12pt;
+}
+.desks {
+   margin: 10px;
+   padding: 10px;
+   font-family: 'RodchenkoCTT', arial;
+   font-size: 18pt;
+   background-color: white;
+   border: none;
+   border-radius: 8px;
+   list-style-type: none;
+}
+.tasks {
+  padding: 10px;
+  font-family: 'RodchenkoCond-Regular';
+}
+#logo {
+   height: 50px;
+}
+#user {
+   height: 50px;
+}
+#profile {
+   font-family: 'RodchenkoCTT', arial;
+   font-size:20pt;
+   color:white;
+   height:75px;
+}
+#profile:hover {
+   background-color: #432da9;
+}
+#name_avlbl {
+   font-family: 'RodchenkoCTT', arial;
+   font-size:20pt;
+   background-color: #32227f;
+   padding:20px;
+   text-align:center;
+}
+#name_avlbl {
+   color:white;
+}
+#boardList {
+   display:flex;
+   flex-direction: row;
+   margin-top: 10px;
+   overflow-x: scroll;
+   background-color: #432da9;
+   min-height: 800px;
+}
+#availableBoardsMobile {
+   display: none;
+}
+.greenCheck, .redCheck {
+   display: inline-block;
+   margin: 5px;
+   height: 20px;
+   width: 20px;
+}
+.descriptionLogic {
+   width: 250px;
+   text-align: justify;
+   font-family: 'RodchenkoCTTLight', arial;
+   font-size: 16pt;
+}
+@media (max-width:1280px) {
+   header {
+       padding:10px;
+   }
+   #logo {
+       height: 30px;
+   }
+   #user {
+       height: 30px;
+   }
+   #availableBoards {
+       font-size:18pt;
+   }
+   #profile {
+       font-size:14pt;
+       height:70px;
+   }
+   #boardList {
+       height: auto;
+       flex-wrap: wrap;
+   }
+}
+@media (max-width:768px) {
+   #availableBoardsMobile {
+       display: block;
+       background-color: #32227f;
+       height:50px;
+       margin-top:5px;
+   }
+   #availableBoards {
+       display: none;
+   }
+   #boardList {
+       margin-top:25px;
+   }
+}
+
+

@@ -14,10 +14,10 @@
    padding: 0px;
    margin: 0px;
 }
-body {
+.main {
    background-color: white;
 }
-header {
+.main__upper {
    display: flex;
    flex-direction: row;
    background-color: #211654;
@@ -30,7 +30,7 @@ button {
    font-family: 'RodchenkoCond-Regular', arial;
    font-size: 12pt;
 }
-.desks {
+.main__downer_boardList_desks {
    margin: 10px;
    padding: 10px;
    font-family: 'RodchenkoCTT', arial;
@@ -40,36 +40,34 @@ button {
    border-radius: 8px;
    list-style-type: none;
 }
-.tasks {
+.main__downer_boardList_desks_tasks {
   padding: 10px;
   font-family: 'RodchenkoCond-Regular';
 }
-#logo {
+.main__upper_brand_logo {
    height: 50px;
 }
-#user {
+.main__upper_profile_user {
    height: 50px;
 }
-#profile {
+.main__upper_profile {
    font-family: 'RodchenkoCTT', arial;
    font-size:20pt;
    color:white;
    height:75px;
 }
-#profile:hover {
+.main__upper_profile:hover {
    background-color: #432da9;
 }
-#name_avlbl {
+.main__upper_boards_avlbl {
    font-family: 'RodchenkoCTT', arial;
    font-size:20pt;
    background-color: #32227f;
    padding:20px;
    text-align:center;
-}
-#name_avlbl {
    color:white;
 }
-#boardList {
+.main__downer_boardList {
    display:flex;
    flex-direction: row;
    margin-top: 10px;
@@ -77,54 +75,48 @@ button {
    background-color: #432da9;
    min-height: 800px;
 }
-#availableBoardsMobile {
+.main__underUpper_boardsMobile {
    display: none;
 }
-.greenCheck, .redCheck {
+.main__downer_boardList_greenCheck, .main__downer_boardList_redCheck {
    display: inline-block;
    margin: 5px;
    height: 20px;
    width: 20px;
 }
-.descriptionLogic {
-   width: 250px;
-   text-align: justify;
-   font-family: 'RodchenkoCTTLight', arial;
-   font-size: 16pt;
-}
 @media (max-width:1280px) {
-   header {
+   .main__upper {
        padding:10px;
    }
-   #logo {
+   .main__upper_brand_logo {
        height: 30px;
    }
-   #user {
+   .main__upper_profile_user {
        height: 30px;
    }
-   #availableBoards {
+   .main__upper_boards {
        font-size:18pt;
    }
-   #profile {
+   .main__upper_profile {
        font-size:14pt;
        height:70px;
    }
-   #boardList {
+   .main__downer_boardList {
        height: auto;
        flex-wrap: wrap;
    }
 }
 @media (max-width:768px) {
-   #availableBoardsMobile {
+   .main__underUpper_boardsMobile {
        display: block;
        background-color: #32227f;
        height:50px;
        margin-top:5px;
    }
-   #availableBoards {
+   .main__upper_boards {
        display: none;
    }
-   #boardList {
+   .main__downer_boardList {
        margin-top:25px;
    }
 }

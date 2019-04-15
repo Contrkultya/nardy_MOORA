@@ -2,20 +2,20 @@
 <html>
 <head>
     <title>Page Title</title>
-    <link rel="stylesheet"  href="style.css">
+    <link rel="stylesheet"  href="style_tobem.css">
     <script src="ts-es6-boilerplate\build\js\index.js"></script>
 </head>
-<body onLoad="load()">
-    <header>
-        <div id="brand"><img src="content\Умоорительно.svg" id="logo"></div>
-        <div id="availableBoards"> <div id="name_avlbl">Доступные доски</div> </div>
-        <div id="profile">Личный кабинет <img src="content\user.png" id="user"> </div>
+<body class="main" onLoad="load()">
+    <header class="main__upper">
+        <div id="brand" class="main__upper_brand"><img src="content\Умоорительно.svg" id="logo" class="main__upper_brand_logo"></div>
+        <div id="availableBoards" class="main__upper_boards"> <div id="name_avlbl" class="main__upper_boards_avlbl">Доступные доски</div> </div>
+        <div id="profile" class="main__upper_profile">Личный кабинет <img src="content\user.png" id="user" class="main__upper_profile_user"> </div>
     </header>
-    <aside>
-        <div id="availableBoardsMobile"><div id="name_avlbl">Доступные доски</div></div>
+    <aside class="main__underUpper">
+        <div id="availableBoardsMobile" class="main__underUpper_boardsMobile"><div class="main__upper_boards_avlbl">Доступные доски</div></div>
     </aside>
-    <article>  
-            <div id="boardList"> </div>
+    <article class="main__downer">  
+            <div id="boardList" class="main__downer_boardList"></div>
     </article>
 </body>
 

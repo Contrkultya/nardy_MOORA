@@ -262,9 +262,9 @@ function load() {
         /** Выводит на страницу родительские элементы */
         if (data[i].parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("result").innerHTML += "<div class='desks' id='" + data[i].id+"d" + "'>" + data[i].name + /** Списковый вывод имени */
-            "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + data[i].id + ")'></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + data[i].id + ")'></div></label>" + /** Checkbox удаления */
+            document.getElementById("result").innerHTML += "<div class='main__downer_boardList_desks' id='" + data[i].id+"d" + "'>" + data[i].name + /** Списковый вывод имени */
+            "<label><div class='main__downer_boardList_greenCheck'><input type='checkbox' onClick='doneChanger(" + data[i].id + ")'></div></label>" +/** Checkbox выполнения */
+            "<label><div class='main__downer_boardList_redCheck'><input type='checkbox' onClick='deleteChanger(" + data[i].id + ")'></div></label>" + /** Checkbox удаления */
             "<button onClick='render(" + data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (data[i].hasChildren == true) {
@@ -326,9 +326,9 @@ function getChildren() {
         let meta = id+"_p_";
         let i = 0;
         for(; i < object.length; i++) {
-            document.getElementById(meta).innerHTML += "<div class='tasks' id="+"p_"+object[i].id+">"+"<li id='" + (object[i].id) + "'>" +object[i].name+ /** Списковый вывод имени */
-            "<label><div class='greenCheck'><input type='checkbox' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
-            "<label><div class='redCheck'><input type='checkbox' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
+            document.getElementById(meta).innerHTML += "<div class='main__downer_boardList_desks_tasks' id="+"p_"+object[i].id+">"+"<li id='" + (object[i].id) + "'>" +object[i].name+ /** Списковый вывод имени */
+            "<label><div class='main__downer_boardList_greenCheck'><input type='checkbox' onClick='doneChanger(" + object[i].id + ")'></div></label>" +/** Checkbox выполнения */
+            "<label><div class='main__downer_boardList_redCheck'><input type='checkbox' onClick='deleteChanger(" + object[i].id + ")'></div></label>" + /** Checkbox удаления */
             "<button onClick='render(" + object[i].id + ")'>Изменить стиль</button>" + "</li>"+"</div><hr>"; /** Кнопка изменения стиля */
             if(object[i].hasChildren == true) {
                 document.getElementById("p_"+object[i].id).innerHTML+="<button onClick='res("+object[i].id+")'>Открыть</button><div style='margin:0 auto;margin-bottom:30px;' id='"+(object[i].id+"_p_")+"'></div>";

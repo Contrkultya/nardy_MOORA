@@ -273,7 +273,7 @@ function load() {
             "<button onClick='render(" + bankLogic.data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (bankLogic.data[i].hasChildren == true) {
-                document.getElementById(bankLogic.data[i].id + "d").innerHTML += "<button onClick='res(" + bankLogic.data[i].id + ")'>Открыть</button><button onClick='close("+'"' + bankLogic.data[i].id +'_p_'+'"'+ ")'>Закрыть</button><div style='margin:0 auto;' id='" + bankLogic.data[i].id + "_p_" + "'></div>";
+                document.getElementById(bankLogic.data[i].id + "d").innerHTML += "<button onClick='res(" + bankLogic.data[i].id + ")'>Открыть</button><button onClick='closeList.close("+'"' + bankLogic.data[i].id +'_p_'+'"'+ ")'>Закрыть</button></button><div style='margin:0 auto;' id='" + bankLogic.data[i].id + "_p_" + "'></div>";
             }
         }
     }
@@ -331,7 +331,7 @@ function getChildren() {
             var check=object[i].hasChildren;
             console.log(object[i].setid);
             if (check==true) {
-                document.getElementById("p_" + object[i].setid).innerHTML += "<button onClick='res(" + object[i].setid + ")'>Открыть</button><button onClick='close("+'"' + object[i].setid+'"'+ ")'>Закрыть</button><div style='margin:0 auto;margin-bottom:30px;' id='" + (object[i].setid + "_p_") + "'></div><hr>";
+                document.getElementById("p_" + object[i].setid).innerHTML += "<button onClick='res(" + object[i].setid + ")'>Открыть</button><button onClick='closeList.close("+'"' + object[i].setid+'_p_"'+ ")'>Закрыть</button><div style='margin:0 auto;margin-bottom:30px;' id='" + (object[i].setid + "_p_") + "'></div><hr>";
             }
         }
     }, 1000);
@@ -423,6 +423,15 @@ var colorChecker = new Vue({
 function doneChanger(x) {
     colorChecker.changerColor(x, "green");
 }
+
+var closeList =new Vue({
+    methods: {
+        close:function(id){
+            document.getElementById(id).innerHTML = "";
+        }
+    }
+})
+
 /**
  * @function
  * @name deleteChanger

@@ -316,7 +316,7 @@ function res(id) {
     if (bankLogic.data[ind].parent == undefined) {
         if (document.getElementById(bankLogic.currentId + "d").style.height == 'auto') {
             document.getElementById(bankLogic.currentId + "d").style.height = 'auto';
-            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
+            //document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
             loadChildren(bankLogic.currentId).then(getChildren);
         } else {
             document.getElementById(bankLogic.currentId + "d").style.height = '0';
@@ -326,7 +326,7 @@ function res(id) {
     } else {
         if (document.getElementById("p_" + bankLogic.currentId).style.height == 'auto') {
             document.getElementById("p_" + bankLogic.currentId).style.height = 'auto';
-            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
+           // document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
             loadChildren(bankLogic.currentId).then(getChildren);
         } else {
             document.getElementById("p_" + bankLogic.currentId).style.height = '0';

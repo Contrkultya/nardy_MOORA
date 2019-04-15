@@ -8,7 +8,7 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-import {store} from './store';//Хранилище с огромным хуищем, обратиться можно, используя свойство "store";
+//import {store} from './store';//Хранилище с огромным хуищем, обратиться можно, используя свойство "store";
 
 
 /**
@@ -193,7 +193,7 @@ function close(id){
 }
 var bankLogic = new Vue({
     data: {
-        data: (_JSON$parse = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false, "description": "Сделать removeKebab 2.0"},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false, "description": "Сделать removeAutism"},{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": true, "removed": false, "description": "Сделать vue"},{ "id": 9,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false, "description": "Заработать тут чекбох"},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false, "description": "Радоваться жизни"},{"id": 10,"name": "Доска 2", "done": false, "removed": false}]'), _JSON$parse2 = _toArray(_JSON$parse), _JSON$parse),
+        data: (_JSON$parse = JSON.parse('[{ "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},{"id": 2,"parent": 1,"name": "Список задач 1.1","hasChildren": true, "done": false, "removed": false, "description": "Сделать removeKebab 2.0"},{ "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false, "description": "Сделать removeAutism"},{ "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": true, "removed": false, "description": "Сделать vue"},{ "id": 9,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false, "description": "Заработать тут чекбох"},{"id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true,"description":"Сыграть в нарды с Моором", "done": false, "removed": false},{ "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},{ "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },{"id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false, "description": "Радоваться жизни"},{"id": 10,"name": "Доска 2", "done": false, "removed": false}]'), _JSON$parse2 = _toArray(_JSON$parse), _JSON$parse),
         counter: 0,
         _currentId: 0,
     },
@@ -323,11 +323,11 @@ function getChildren() {
         var i = 0;
         for (i; i < object.length; i++) {
             document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" +object[i].setid+ " style='height:auto;'>" + "<li id='" + object[i].setid + "'>" +
-            "<span onClick='descriptionChanger(" + object[i].setid +")'>" + object[i].setname + "</span>" + /** Списковый вывод имени и щёлк*/
+            "<span onClick='descriptionChanger(" + object[i].setid +")' >" + object[i].setname + "</span>" + /** Списковый вывод имени и щёлк*/
             "<label><div class='greenCheck'><img src='content\\nar_yes.svg' onClick='doneChanger(" + object[i].setid + ")'></div></label>" + /** Checkbox выполнения */
             "<label><div class='redCheck'><img src='content\\nar_no.svg' onClick='deleteChanger(" + object[i].setid + ")'></div></label>" + /** Checkbox удаления */
             "<button onClick='render(" + object[i].setid + ")'>Изменить стиль</button>" + "</li>" + /** Кнопка изменения стиля */
-            "<div id='" + object[i].setid+ "description' class='descriptionLogic' style='display: none;'>" + object[i].setDesc + "</div></div>"; /** Описание */
+            "<div id='" + object[i].setid+ "description' class='descriptionLogic'ondblclick='descChanger.changeDescription("+object[i].setid+")' style='display: none;'>" + object[i].setDesc + "</div></div>"; /** Описание */
             var check=object[i].hasChildren;
             console.log(object[i].setid);
             if (check==true) {
@@ -466,6 +466,12 @@ var descChanger = {
             this.arrCounter++;
             return document.getElementById(objectId + 'description').style = "display: block";
         }
+    },
+    changeDescription :function(id){
+        var newDesc = prompt("Введите новое описание");
+        bankLogic.data[id].description = newDesc;
+        var idDesc = id+"description";
+        document.getElementById(idDesc).innerText = newDesc;
     }
 };
 function descriptionChanger(objectId){

@@ -338,7 +338,6 @@ function res(id) {
 function getChildren() {
     //document.getElementById("dot_"+object[0].setparent).innerHTML = "";
     setTimeout(function () {
-        alert("dot_"+object[0].setparent);
         var meta = "dot_"+object[0].setparent;
         var i = 0;
         for (i; i < object.length; i++) {

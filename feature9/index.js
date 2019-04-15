@@ -8,7 +8,7 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-import {store} from './store';//Хранилище с огромным хуищем, обратиться можно, используя свойство "store";
+//import {store} from './store';//Хранилище с огромным хуищем, обратиться можно, используя свойство "store";
 
 
 /**
@@ -253,6 +253,25 @@ function new_objBuilder_file(ind)
         }
     }
 }
+function add(ind)
+{
+    var style = prompt("Введите название нового элемента:");
+    object=[];
+    var element=new Vue({
+        el:'#dot_'+ind,
+        data:{
+            setid: bankLogic.data.length,
+            setname: style,
+            setparent:ind,
+            hasChildren: 'false',
+            setremoved: 'false',
+            setdone: 'false',
+            setDesc: "New element",
+        }
+    });
+    object [0]= element;
+    getChildren(object);
+}
 /**
  * @function
  * @name load
@@ -273,7 +292,7 @@ function load() {
             "<button onClick='render(" + bankLogic.data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
             if (bankLogic.data[i].hasChildren == true) {
-                document.getElementById(bankLogic.data[i].id + "d").innerHTML += "<button onClick='res(" + bankLogic.data[i].id + ")'>Открыть</button><button onClick='closeList.close("+'"' + bankLogic.data[i].id +'_p_'+'"'+ ")'>Закрыть</button></button><div style='margin:0 auto;' id='" + bankLogic.data[i].id + "_p_" + "'></div>";
+                document.getElementById(bankLogic.data[i].id + "d").innerHTML += "<button onClick='res(" + bankLogic.data[i].id + ")'>Открыть</button><button onClick='closeList.close("+'"dot_' + bankLogic.data[i].id +'"'+ ")'>Закрыть</button></button><div style='margin:0 auto;' id='" +"dot_"+ bankLogic.data[i].id  + "'></div>";
             }
         }
     }
@@ -297,29 +316,30 @@ function res(id) {
     if (bankLogic.data[ind].parent == undefined) {
         if (document.getElementById(bankLogic.currentId + "d").style.height == 'auto') {
             document.getElementById(bankLogic.currentId + "d").style.height = 'auto';
-            document.getElementById(bankLogic.currentId + "_p_").innerHTML = "Загрузка...";
+            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
             loadChildren(bankLogic.currentId).then(getChildren);
         } else {
             document.getElementById(bankLogic.currentId + "d").style.height = '0';
-            document.getElementById(bankLogic.currentId + "_p_").innerHTML = "";
+            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "";
             return;
         }
     } else {
         if (document.getElementById("p_" + bankLogic.currentId).style.height == 'auto') {
             document.getElementById("p_" + bankLogic.currentId).style.height = 'auto';
-            document.getElementById(bankLogic.currentId + "_p_").innerHTML = "Загрузка...";
+            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
             loadChildren(bankLogic.currentId).then(getChildren);
         } else {
             document.getElementById("p_" + bankLogic.currentId).style.height = '0';
-            document.getElementById(bankLogic.currentId + "_p_").innerHTML = "";
+            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "";
             return;
         }
     }
 }
 function getChildren() {
+    //document.getElementById("dot_"+object[0].setparent).innerHTML = "";
     setTimeout(function () {
-        document.getElementById(bankLogic.currentId + "_p_").innerHTML = "";
-        var meta = bankLogic.currentId + "_p_";
+        alert("dot_"+object[0].setparent);
+        var meta = "dot_"+object[0].setparent;
         var i = 0;
         for (i; i < object.length; i++) {
             document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" +object[i].setid+ " style='height:auto;'>" + "<li id='" + object[i].setid + "'>" +
@@ -331,7 +351,7 @@ function getChildren() {
             var check=object[i].hasChildren;
             console.log(object[i].setid);
             if (check==true) {
-                document.getElementById("p_" + object[i].setid).innerHTML += "<button onClick='res(" + object[i].setid + ")'>Открыть</button><button onClick='closeList.close("+'"' + object[i].setid+'_p_"'+ ")'>Закрыть</button><div style='margin:0 auto;margin-bottom:30px;' id='" + (object[i].setid + "_p_") + "'></div><hr>";
+                document.getElementById("p_" + object[i].setid).innerHTML += "<button onClick='res(" + object[i].setid + ")'>Открыть</button><button onClick='add("+object[i].setid+")'>Добавить</button><button onClick='closeList.close("+'"dot_' + object[i].setid +'"'+ ")'>Закрыть</button><div style='margin:0 auto;margin-bottom:30px;' id='" + ("dot_"+object[i].setid) + "'></div><hr>";
             }
         }
     }, 1000);

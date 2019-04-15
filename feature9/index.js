@@ -228,23 +228,6 @@ var object;
  * @param {bool} setremoved хранит в себе информацию о наличии «удаления»;
  * @public
  */
-function objBuilder_file(ind) {
-    bankLogic.counterReset();
-    object = [];
-    var i = 0;
-    for (i; i < bankLogic.data.length; i++) {
-        if (bankLogic.data[i].parent == ind) {
-            var setid = bankLogic.data[i].id;
-            var setparent = bankLogic.data[i].parent;
-            var setname = bankLogic.data[i].name;
-            var hasChildren = bankLogic.data[i].hasChildren;
-            var setremoved = bankLogic.data[i].removed;
-            var setdone = bankLogic.data[i].done;
-            var setDesc = bankLogic.data[i].description;
-            object[bankLogic.counterUp()] = new obj(setid, setparent, setname, hasChildren, setremoved, setdone, setDesc);
-        }
-    }
-}
 function new_objBuilder_file(ind)
 {
     object=[]

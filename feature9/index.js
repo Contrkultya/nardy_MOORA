@@ -7,8 +7,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-//import {store} from './store';//Хранилище с огромным хуищем, обратиться можно, используя свойство "store";
+//Хранилище с огромным хуищем, обратиться можно, используя свойство "store"
 const store = new Vuex.Store({
   state:{
        todos: [
@@ -53,7 +52,7 @@ console.log(store.getters.todosCount);
 console.log(store.getters.currentId);
 store.commit('setCurrentId', 1);
 console.log(store.getters.currentId);
-/**
+/**store.getters.getTodoById(i)
  * @class
  * @name obj
  * @description Класс obj — основная база для взаимодействия с объектами. Присутствует конструктор, методы чтения, обновления, удаления.
@@ -273,21 +272,21 @@ var object;
 function new_objBuilder_file(ind)
 {
     object=[]
-    var i = 0;
-    var m = 0;
-    for(i; i < bankLogic.data.length; i++)
+    var i = 1;
+    var m = 1;
+    for(i; i < store.getters.todosCount ; i++)
     {
-        if(bankLogic.data[i].parent == ind)
+        if(store.getters.getTodoById(i).parent == ind)
         {
             var element=new Vue({
                 data:{
-                    setid: bankLogic.data[i].id,
-                    setparent: bankLogic.data[i].parent,
-                    setname: bankLogic.data[i].name,
-                    hasChildren: bankLogic.data[i].hasChildren,
-                    setremoved: bankLogic.data[i].removed,
-                    setdone: bankLogic.data[i].done,
-                    setDesc: bankLogic.data[i].description,
+                    setid: store.getters.getTodoById(i).id,
+                    setparent: store.getters.getTodoById(i).parent,
+                    setname: store.getters.getTodoById(i).name,
+                    hasChildren: store.getters.getTodoById(i).hasChildren,
+                    setremoved: store.getters.getTodoById(i).removed,
+                    setdone: store.getters.getTodoById(i).done,
+                    setDesc: store.getters.getTodoById(i).description,
                 }
             });
             object[m]=element;
@@ -302,7 +301,7 @@ function add(ind)
     var element=new Vue({
         el:'#dot_'+ind,
         data:{
-            setid: bankLogic.data.length,
+            setid: store.getters.todosCount,
             setname: style,
             setparent:ind,
             hasChildren: 'false',
@@ -323,18 +322,20 @@ function add(ind)
  */
 function load() {
     document.getElementById("boardList").innerHTML += "<ul>";
-    var i = 0;
-    for (i; i < bankLogic.data.length; i++) {
+    var i = 1;
+    console.log(store.getters.todosCount);
+    console.log(store.getters.getTodoById(3))
+    for (i; i < store.getters.todosCount+1; i++) {
         /** Выводит на страницу родительские элементы */
-        if (bankLogic.data[i].parent == undefined) {
+        if (store.getters.getTodoById(i).parent == undefined) {
             /** Добавляет кнопку изменения стиля */
-            document.getElementById("boardList").innerHTML += "<div class='desks' style='height:auto;' id='" + bankLogic.data[i].id + "d" + "'>" + bankLogic.data[i].name + /** Списковый вывод имени */
+            document.getElementById("boardList").innerHTML += "<div class='desks' style='height:auto;' id='" + store.getters.getTodoById(i).id + "d" + "'>" + store.getters.getTodoById(i).name + /** Списковый вывод имени */
             //Пока не трогать "<label><div class='greenCheck'><img src= 'content\\nar_yes.svg' onClick='doneChanger(" + bankLogic.data[i].id + ")'></div></label>" +/** Checkbox выполнения */
             //"<label><div class='redCheck'><img src= 'content\\nar_no.svg' onClick='deleteChanger(" + bankLogic.data[i].id + ")'></div></label>" + /** Checkbox удаления */
-            "<button onClick='render(" + bankLogic.data[i].id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
+            "<button onClick='render(" + store.getters.getTodoById(i).id + ")'>Изменить стиль</button></div>"; /** Кнопка изменения стиля */
             /** Если иммеет дочерние элементы, добавляет кнопку получения элементов. */
-            if (bankLogic.data[i].hasChildren == true) {
-                document.getElementById(bankLogic.data[i].id + "d").innerHTML += "<button onClick='res(" + bankLogic.data[i].id + ")'>Открыть</button><button onClick='closeList.close("+'"dot_' + bankLogic.data[i].id +'"'+ ")'>Закрыть</button></button><div style='margin:0 auto;' id='" +"dot_"+ bankLogic.data[i].id  + "'></div>";
+            if (store.getters.getTodoById(i).hasChildren == true) {
+                document.getElementById(store.getters.getTodoById(i).id + "d").innerHTML += "<button onClick='res(" + store.getters.getTodoById(i).id + ")'>Открыть</button><button onClick='closeList.close("+'"dot_' + store.getters.getTodoById(i).id +'"'+ ")'>Закрыть</button></button><div style='margin:0 auto;' id='" +"dot_"+ store.getters.getTodoById(i).id  + "'></div>";
             }
         }
     }
@@ -353,26 +354,26 @@ function render(x) {
  * Документация скоро будет~
  */
 function res(id) {
-    bankLogic.currentId = id;
-    var ind = bankLogic.currentId - 1;
-    if (bankLogic.data[ind].parent == undefined) {
-        if (document.getElementById(bankLogic.currentId + "d").style.height == 'auto') {
-            document.getElementById(bankLogic.currentId + "d").style.height = 'auto';
+    store.commit('setCurrentId', id);
+    var ind = store.getters.currentId;
+    if (store.getters.getTodoById(ind).parent == undefined) {
+        if (document.getElementById(store.getters.currentId + "d").style.height == 'auto') {
+            document.getElementById(store.getters.currentId + "d").style.height = 'auto';
             //document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
-            loadChildren(bankLogic.currentId).then(getChildren);
+            loadChildren(store.getters.currentId).then(getChildren);
         } else {
-            document.getElementById(bankLogic.currentId + "d").style.height = '0';
-            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "";
+            document.getElementById(store.getters.currentId + "d").style.height = '0';
+            document.getElementById("dot_"+store.getters.currentId).innerHTML = "";
             return;
         }
     } else {
-        if (document.getElementById("p_" + bankLogic.currentId).style.height == 'auto') {
-            document.getElementById("p_" + bankLogic.currentId).style.height = 'auto';
+        if (document.getElementById("p_" + store.getters.currentId).style.height == 'auto') {
+            document.getElementById("p_" + store.getters.currentId).style.height = 'auto';
            // document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
-            loadChildren(bankLogic.currentId).then(getChildren);
+            loadChildren(store.getters.currentId).then(getChildren);
         } else {
-            document.getElementById("p_" + bankLogic.currentId).style.height = '0';
-            document.getElementById("dot_"+bankLogic.currentId).innerHTML = "";
+            document.getElementById("p_" + store.getters.currentId).style.height = '0';
+            document.getElementById("dot_"+store.getters.currentId).innerHTML = "";
             return;
         }
     }
@@ -380,8 +381,8 @@ function res(id) {
 function getChildren() {
     //document.getElementById("dot_"+object[0].setparent).innerHTML = "";
     setTimeout(function () {
-        var meta = "dot_"+object[0].setparent;
-        var i = 0;
+        var meta = "dot_"+object[1].setparent;
+        var i = 1;
         for (i; i < object.length; i++) {
             document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" +object[i].setid+ " style='height:auto;'>" + "<li id='" + object[i].setid + "'>" +
             "<span onClick='descriptionChanger(" + object[i].setid +")' >" + object[i].setname + "</span>" + /** Списковый вывод имени и щёлк*/
@@ -399,10 +400,10 @@ function getChildren() {
 }
 function loadChildren(id) {
     return new Promise(function (resolve, reject) {
-        var i = id - 1;
-        for (i; i < bankLogic.data.length; i++) {
-            if (bankLogic.data[i].hasChildren == true) {
-                resolve(new_objBuilder_file(bankLogic.data[i].id));
+        var i = id;
+        for (i; i < store.getters.todosCount; i++) {
+            if (store.getters.getTodoById(i).hasChildren == true) {
+                resolve(new_objBuilder_file(store.getters.getTodoById(i).id));
                 return;
             }
         }
@@ -435,27 +436,27 @@ var colorChecker = new Vue({
                     if (this.currentColor[i] == whatColor) {
                         this.currentColor[i] = "black";
                         if (whatColor == "green") {
-                            bankLogic.data[id].done = false;
+                            store.getters.getTodoById(id).done = false;
                         } else {
-                            bankLogic.data[id].removed = false;
+                            store.getters.getTodoById(id).removed = false;
                         }
                         return document.getElementById(id.toString()).setAttribute("style", "color:black");
                     } else if (this.currentColor[i] == "black") {
                         this.currentColor[i] = whatColor;
                         if (whatColor == "green") {
-                            bankLogic.data[id].done = true;
+                            store.getters.getTodoById(id).done = true;
                         } else {
-                            bankLogic.data[id].removed = true;
+                           store.getters.getTodoById(id).removed = true;
                         }
                         return document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
                     } else {
                         if (this.currentColor[i] == "green") {
-                            bankLogic.data[id].done = false;
-                            bankLogic.data[id].removed = true;
+                            store.getters.getTodoById(id).done = false;
+                            store.getters.getTodoById(id).removed = true;
                             document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
                         } else {
-                            bankLogic.data[id].done = true;
-                            bankLogic.data[id].removed = false;
+                            store.getters.getTodoById(id).done = true;
+                            store.getters.getTodoById(id).removed = false;
                             document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
                         }
                         return this.currentColor[i] = whatColor;
@@ -465,9 +466,9 @@ var colorChecker = new Vue({
                     this.currentColor[this.counterArrays] = whatColor;
                     this.counterArrays++;
                     if (whatColor == "green") {
-                        bankLogic.data[id].done = true;
+                        store.getters.getTodoById(id).done = true;
                     } else {
-                        bankLogic.data[id].removed = true;
+                        store.getters.getTodoById(id).removed = true;
                     }
                     return document.getElementById(id.toString()).setAttribute("style", "color: " + whatColor);
                 }
@@ -530,7 +531,7 @@ var descChanger = {
     },
     changeDescription :function(id){
         var newDesc = prompt("Введите новое описание");
-        bankLogic.data[id].description = newDesc;
+        store.getters.getTodoById(id).description = newDesc;
         var idDesc = id+"description";
         document.getElementById(idDesc).innerText = newDesc;
     }

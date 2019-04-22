@@ -41,6 +41,12 @@ const store = new Vuex.Store({
     setCurrentId(state, id){
         state.currentId = id;
       //прописать мутации и коммиты
+    },
+    newNote(state, note){
+        state.todos.push(note);
+    },
+    delNote(state, id){
+        state.todos.splice(state.todos.find(todo => todo.id === id), 1);
     }
   },
   actions: {

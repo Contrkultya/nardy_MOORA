@@ -354,12 +354,12 @@ function render(x) {
  * Документация скоро будет~
  */
 function res(id) {
+    document.getElementById("dot_"+id).innerText = "Loading...";
     store.commit('setCurrentId', id);
     var ind = store.getters.currentId;
     if (store.getters.getTodoById(ind).parent == undefined) {
         if (document.getElementById(store.getters.currentId + "d").style.height == 'auto') {
             document.getElementById(store.getters.currentId + "d").style.height = 'auto';
-            //document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
             loadChildren(store.getters.currentId).then(getChildren);
         } else {
             document.getElementById(store.getters.currentId + "d").style.height = '0';
@@ -369,7 +369,6 @@ function res(id) {
     } else {
         if (document.getElementById("p_" + store.getters.currentId).style.height == 'auto') {
             document.getElementById("p_" + store.getters.currentId).style.height = 'auto';
-           // document.getElementById("dot_"+bankLogic.currentId).innerHTML = "Загрузка...";
             loadChildren(store.getters.currentId).then(getChildren);
         } else {
             document.getElementById("p_" + store.getters.currentId).style.height = '0';
@@ -382,6 +381,7 @@ function getChildren() {
     //document.getElementById("dot_"+object[0].setparent).innerHTML = "";
     setTimeout(function () {
         var meta = "dot_"+object[1].setparent;
+        document.getElementById(meta).innerText = "";
         var i = 1;
         for (i; i < object.length; i++) {
             document.getElementById(meta).innerHTML += "<div class='tasks' id=" + "p_" +object[i].setid+ " style='height:auto;'>" + "<li id='" + object[i].setid + "'>" +

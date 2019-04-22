@@ -48,11 +48,11 @@ const store = new Vuex.Store({
       //добавить асинхронности
   },
 });
-console.log(store.getTodoById(0));
-console.log(store.todosCount);
-console.log(store.currentId);
-console.log(store.setCurrentId(1));
-
+console.log(store.getters.getTodoById(0));
+console.log(store.getters.todosCount);
+console.log(store.getters.currentId);
+store.commit('setCurrentId', 1);
+console.log(store.getters.currentId);
 /**
  * @class
  * @name obj

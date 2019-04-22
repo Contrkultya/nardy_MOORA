@@ -280,7 +280,7 @@ function new_objBuilder_file(ind)
     object=[]
     var i = 1;
     var m = 1;
-    for(i; i < store.getters.todosCount ; i++)
+    for(i; i < store.getters.todosCount+1 ; i++)
     {
         if(store.getters.getTodoById(i).parent == ind)
         {
@@ -302,22 +302,19 @@ function new_objBuilder_file(ind)
 }
 function add(ind)
 {
+    let newid=store.getters.todosCount+1;
     var style = prompt("Введите название нового элемента:");
-    object=[];
-    var element=new Vue({
-        el:'#dot_'+ind,
-        data:{
-            setid: store.getters.todosCount,
-            setname: style,
-            setparent:ind,
-            hasChildren: 'false',
-            setremoved: 'false',
-            setdone: 'false',
-            setDesc: "New element",
-        }
-    });
-    object [0]= element;
-    getChildren(object);
+        var element= [];
+           let setid = newid;
+            let setname= style;
+            let setparent=ind;
+            let hasChildren= 'false';
+            let setremoved= 'false';
+            let setdone='false';
+            let setDesc= "New element";
+            element= new obj(setid, setparent, setname, hasChildren, setremoved, setdone, setDesc);  
+    store.commit('newNote', element);
+    getChildren(new_objBuilder_file(ind));
 }
 /**
  * @function

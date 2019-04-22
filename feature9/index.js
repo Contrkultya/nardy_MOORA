@@ -9,10 +9,7 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //import {store} from './store';//Хранилище с огромным хуищем, обратиться можно, используя свойство "store";
-import Vue from 'vue'
-import Vuex from 'vuex' 
-Vue.use(Vuex);
-export const store = new Vuex.Store({
+const store = new Vuex.Store({
   state:{
        todos: [
        { "id": 1,"name": "Доска 1","hasChildren": true, "done": false, "removed": false},
@@ -51,6 +48,10 @@ export const store = new Vuex.Store({
       //добавить асинхронности
   },
 });
+console.log(store.getTodoById(0));
+console.log(store.todosCount);
+console.log(store.currentId);
+console.log(store.setCurrentId(1));
 
 /**
  * @class

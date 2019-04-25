@@ -1,11 +1,11 @@
 {
-  "name": "feature7ts",
+  "name": "feature9",
   "version": "1.0.0",
   "description": "GreetingZ from Speedwagon foundation",
-  "main": "script.ts",
+  "main": "index.js",
   "scripts": {
     "test": "chck",
-    "start": "script.ts"
+    "start": "index.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,7 @@
   "dependencies": {
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.1",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.3",
+    "vuetify": "^1.5.13"
   }
 }

@@ -50,7 +50,6 @@
             v-for="(obj, id) in childrens"
             :key="id"
             @click=""
-            :style=""
             style="margin-top:10px; width:300px;margin-left:10px"
             >
             
@@ -90,8 +89,9 @@
             absolute
             top
             right
-            fab
-            @click=""
+            fab  
+            to="/form"
+            @click="toForm()"
             >
             <v-icon>add</v-icon>
           </v-btn>
@@ -101,23 +101,33 @@
   </v-app>
 </template>
 <script>
+
   export default {
     data() {
       return {
         items: [
           { icon: 'dashboard' }
         ],
+        number:1,
         status: false,
         show: false,
         right: null
       }
     },
     computed: {
+      menuItems(){
+        return[
+          {
+            route:'/form',
+          }
+        ]
+      },
       desks() {
         return this.$store.getters.getdesk;
       },
-      childrens() {
-        return this.$store.getters.getChildren;
+      childrens(number) {
+        var id =1;
+        return this.$store.getters.getChildren(id);
       },
       object() {
         return this.$store.getters.todos;
@@ -133,6 +143,10 @@
       add:function(id) {
         this.$store.dispatch('add',id);
       },
+      toForm:function()
+      {
+        this.$router.push('/form');
+      }
     }
   }
 

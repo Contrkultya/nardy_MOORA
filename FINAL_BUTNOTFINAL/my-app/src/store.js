@@ -35,8 +35,8 @@ export const store = new Vuex.Store({
     getdesk: state => {
       return state.todos.filter(todos=>todos.parent === 0)
     },
-    getChildren: state => {
-      return state.todos.filter(todos=>todos.parent === 1)
+    getChildren: state => id=>{
+      return state.todos.filter(todos=>todos.parent === id)
     }
     //прописать методы взаимодействия 
   },

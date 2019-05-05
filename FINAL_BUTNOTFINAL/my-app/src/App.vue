@@ -2,7 +2,7 @@
   <v-app>
     <v-toolbar app style="background-color: #03a9f4;z-index:1">
       <v-toolbar-title class="headline text-uppercase" style="color: white">
-        <span>NARDY MOORA </span>
+        <span class="font-weight-bold">NARDY MOORA </span>
         <span class="font-weight-light"> MATERIAL DESIGN</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -28,7 +28,6 @@
           v-for="obj in desks"
           :key="obj.id"
           @click="show=true"
-          
         >
           <v-list-tile-action>
             <v-icon
@@ -46,8 +45,8 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-flex style="align-center justify-right row/">
-      <v-card v-if="show==true"
+    <v-flex v-if="show==true" style="align-center justify-right row/">
+      <v-card
        v-for="(obj, id) in childrens"
           :key="id"
           @click=""
@@ -69,9 +68,9 @@
         </v-slide-y-transition>
 
                <v-card-actions>
-          <v-btn flat color="purple"
+          <v-btn flat color="green"
           @click="status=!status">Завершить</v-btn>
-          <v-btn flat color="blue" 
+          <v-btn flat color="red" 
           @click="del(obj.id)">Удалить</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>

@@ -93,48 +93,48 @@
   </v-app>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      items: [
-        { icon: 'dashboard' }
-      ],
-      status:false,
-      show: false,
-      right: null
+  export default {
+    data() {
+      return {
+        items: [
+          { icon: 'dashboard' }
+        ],
+        status:false,
+        show: false,
+        right: null
+      }
+    },
+    computed:{
+      desks() {
+        return this.$store.getters.getdesk;
+      },
+      childrens() {
+        return this.$store.getters.getChildren;
+      },
+      object() {
+        return this.$store.getters.todos;
+      },
+      count() {
+        return this.$store.getters.todosCount;
+      }
+    },
+    methods: {
+      del:function(id) {
+        this.$store.dispatch('del',id);
+      },
+      add:function(id) {
+        this.$store.dispatch('add',id);
+      },
     }
-  },
-  computed:{
-    desks() {
-      return this.$store.getters.getdesk;
-    },
-    childrens() {
-      return this.$store.getters.getChildren;
-    },
-    object() {
-      return this.$store.getters.todos;
-    },
-    count() {
-      return this.$store.getters.todosCount;
-    }
-  },
-  methods: {
-    del:function(id) {
-      this.$store.dispatch('del',id);
-    },
-    add:function(id) {
-      this.$store.dispatch('add',id);
-    },
   }
-}
 
 
 </script>
 
 <style>
-.strike {
-background-color:red;
-}
+  .strike {
+    background-color:red;
+  }
 </style>
 
 

@@ -18,11 +18,11 @@ export const store = new Vuex.Store({
     { "id": 10,"parent": 0,"name": "Доска 2", "done": false, "removed": false}
     ],
     currentId: 0
-   },
-   getters: {
+  },
+  getters: {
     getTodoById: state => id => {
-       return state.todos.find(todo => todo.id === id);
-      },
+      return state.todos.find(todo => todo.id === id);
+    },
     todosCount: state => {
       return state.todos.length;
     },
@@ -38,8 +38,7 @@ export const store = new Vuex.Store({
     getChildren: state => {
       return state.todos.filter(todos=>todos.parent === 1)
     }
-     
-   //прописать методы взаимодействия 
+    //прописать методы взаимодействия 
   },
   mutations: {
     setCurrentId(state, id) {

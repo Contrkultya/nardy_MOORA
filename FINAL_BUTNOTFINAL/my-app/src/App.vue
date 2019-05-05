@@ -59,6 +59,14 @@
                 <div class="headline">{{obj.name}}</div>
                 <span class="grey--text"></span>
               </div>
+
+              <div class="text-xs-center">
+                <v-badge right color="grey lighten-1">
+                  <template v-slot:badge>
+                    <span v-if="obj.hasChildren==true">+</span>
+                  </template>
+                </v-badge>
+              </div>
             </v-card-title>
 
             <v-slide-y-transition>
@@ -99,12 +107,12 @@
         items: [
           { icon: 'dashboard' }
         ],
-        status:false,
+        status: false,
         show: false,
         right: null
       }
     },
-    computed:{
+    computed: {
       desks() {
         return this.$store.getters.getdesk;
       },

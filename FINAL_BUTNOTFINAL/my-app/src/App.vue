@@ -41,7 +41,7 @@
                 <v-list-tile-title>{{ obj.name }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-btn flat color="purple">Добавить</v-btn> 
+            <v-btn flat color="green">Добавить</v-btn> 
           </v-list>
         </v-navigation-drawer>
 
@@ -82,26 +82,54 @@
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
-          <v-btn
+                  <v-dialog v-model="dialog" persistent max-width="600px">
+        <template v-slot:activator="{ on }">
+            <v-btn
             color="#ef5350"
             dark
             big7
             absolute
-            top
+            
             right
             fab  
             to="/form"
-            @click="toForm()"
-            >
+            v-on="on">
             <v-icon>add</v-icon>
           </v-btn>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="headline">Новая задача</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+
+                <v-flex xs12 sm6>
+                  <v-text-field v-model="name" label="Название задачи*" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="description" label="Описание задачи"></v-text-field>
+                </v-flex>
+                
+              </v-layout>
+            </v-container>
+            <small>*поля, отмеченные звездочкой, обязательны для заполнения</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="dialog = false">Закрыть</v-btn>
+            <v-btn color="blue darken-1" flat @click="dialog = false, add({id, name, description})">Сохранить</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
         </v-flex>
       </v-layout>
     </v-content>
   </v-app>
 </template>
 <script>
-
   export default {
     data() {
       return {
@@ -111,7 +139,9 @@
         number:1,
         status: false,
         show: false,
-        right: null
+        right: null,
+        drawer: null,
+        dialog: false
       }
     },
     computed: {
@@ -140,9 +170,9 @@
       del:function(id) {
         this.$store.dispatch('del',id);
       },
-      add:function(id) {
-        this.$store.dispatch('add',id);
-      },
+      add:function(id, name, description) {
+        this.$store.dispatch('add',id,name, description);
+       },
       toForm:function()
       {
         this.$router.push('/form');

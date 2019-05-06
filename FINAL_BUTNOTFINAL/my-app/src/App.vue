@@ -49,7 +49,9 @@
           <v-card
             v-for="(obj, id) in childrens"
             :key="id"
-            @click=""
+            @click="
+            current_Id = obj.id;
+            child_Show = !child_Show;"
             style="margin-top:10px; width:300px;margin-left:10px"
             >
             
@@ -59,8 +61,8 @@
                 <span class="grey--text"></span>
               </div>
 
-              <div class="text-xs-center">
-                <v-badge right color="grey lighten-1" style="float: right; margin-left: 25px;">
+              <div class="text-xs-center" v-if="child_Show == false">
+                <v-badge right color="grey lighten-1" style="float: right; margin-left: 5px;">
                   <template v-slot:badge>
                     <span v-if="obj.hasChildren==true">+</span>
                   </template>
@@ -69,10 +71,28 @@
             </v-card-title>
 
             <v-slide-y-transition>
-              <v-card-text>
+              <v-card-text  style="margin-top: -22px;">
                 {{obj.description}}
               </v-card-text>
             </v-slide-y-transition>
+            
+            <v-hover v-if="child_Show==true"  v-for="(obj, id) in childrens_childrens" :key="id">
+              <v-card
+                slot-scope="{ hover }"
+                :class="`elevation-${hover ? 12 : 2}`"
+                class="mx-auto"
+                width="269"
+                style="margin-bottom: 8px;"
+                >
+                <v-card-title>
+                  <div>
+                    <span style="font-size: 10pt;">{{obj.name}}</span>
+                  </div>
+                  <v-spacer></v-spacer>
+                </v-card-title>
+              </v-card>
+            </v-hover>
+            
 
             <v-card-actions>
               <v-btn flat color="green"
@@ -108,9 +128,10 @@
         items: [
           { icon: 'dashboard' }
         ],
-        number:1,
+        current_Id: 1,
         status: false,
         show: false,
+        child_Show: false,
         right: null
       }
     },
@@ -125,9 +146,11 @@
       desks() {
         return this.$store.getters.getdesk;
       },
-      childrens(number) {
-        var id =1;
-        return this.$store.getters.getChildren(id);
+      childrens() {
+        return this.$store.getters.getChildren(1);
+      },
+      childrens_childrens() {
+        return this.$store.getters.getChildren(this.current_Id);
       },
       object() {
         return this.$store.getters.todos;

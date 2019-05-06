@@ -60,7 +60,7 @@
               </div>
 
               <div class="text-xs-center">
-                <v-badge right color="grey lighten-1">
+                <v-badge right color="grey lighten-1" style="float: right; margin-left: 25px;">
                   <template v-slot:badge>
                     <span v-if="obj.hasChildren==true">+</span>
                   </template>

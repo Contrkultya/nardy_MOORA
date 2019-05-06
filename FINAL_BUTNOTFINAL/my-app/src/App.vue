@@ -87,6 +87,7 @@
                 <v-card-title>
                   <div>
                     <span style="font-size: 10pt;">{{obj.name}}</span>
+                    <br><span style="font-size: 8pt;">{{obj.description}}</span>
                   </div>
                   <v-spacer></v-spacer>
                 </v-card-title>

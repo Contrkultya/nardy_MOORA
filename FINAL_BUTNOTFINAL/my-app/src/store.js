@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
     { "id": 3,"parent": 2,"name": "Задача 1.1.1", "done": false, "removed": false, "description": "Сделать removeAutism"},
     { "id": 4,"parent": 2,"name": "Задача 1.1.2", "done": true, "removed": false, "description": "Сделать vue"},
     { "id": 9,"parent": 2,"name": "Задача 1.1.3", "done": false, "removed": false, "description": "Заработать тут чекбох"},
-    { "id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false, "removed": false},
+    { "id": 5,"parent": 1,"name": "Список задач 1.2","hasChildren": true, "done": false,"description": "Чтобы ровно было", "removed": false},
     { "id": 6,"parent": 5,"name": "Задача 1.2.1" , "done": false, "removed": false},
     { "id": 7,"parent": 5,"name": "Задача 1.2.2", "done": false, "removed": false },
     { "id": 8,"parent": 1,"name": "Список задач 1.3", "done": false, "removed": false, "description": "Радоваться жизни"},

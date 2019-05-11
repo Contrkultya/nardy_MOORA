@@ -5,11 +5,53 @@
         <span class="font-weight-bold">NARDY MOORA </span>
         <span class="font-weight-light"> MATERIAL DESIGN</span>
       </v-toolbar-title>
+                        <v-dialog v-model="dialog" persistent max-width="600px">
+
+            <template v-slot:activator="{ on }">
+
+            <v-btn
+            color="#ef5350"
+            dark
+            big7
+            absolute
+            bottom
+            right
+            fab  
+            v-on="on">
+            <v-icon>add</v-icon>
+          </v-btn></template>
+        <v-card>
+          <v-card-title>
+            <span class="headline">Новая задача</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+
+                <v-flex xs12 sm6>
+                  <v-text-field v-model="name" label="Название задачи*" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="description" label="Описание задачи"></v-text-field>
+                </v-flex>
+                
+              </v-layout>
+            </v-container>
+            <small>*поля, отмеченные звездочкой, обязательны для заполнения</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="dialog = false">Закрыть</v-btn>
+            <v-btn color="blue darken-1" flat @click="dialog = false, add({id, name, description})">Сохранить</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-spacer></v-spacer>
     </v-toolbar >
 
     <v-content id="boardlist">
-      <v-layout style="height:100%;">
+      <v-layout  style="height:100%; width:70%;">
         <v-navigation-drawer style="z-index:0;">
             <v-toolbar flat>
               <v-list>
@@ -44,8 +86,7 @@
             <v-btn flat color="green">Добавить</v-btn> 
           </v-list>
         </v-navigation-drawer>
-
-        <v-flex v-if="show==true" style="align-center justify-right row/">
+        <v-layout d-{flex} v-if="show==true"  align-start justify-space-between row>
           <v-card
             v-for="(obj, id) in childrens"
             :key="id"
@@ -103,49 +144,7 @@
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
-                  <v-dialog v-model="dialog" persistent max-width="600px">
-        <template v-slot:activator="{ on }">
-            <v-btn
-            color="#ef5350"
-            dark
-            big7
-            absolute
-            
-            right
-            fab  
-            to="/form"
-            v-on="on">
-            <v-icon>add</v-icon>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title>
-            <span class="headline">Новая задача</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-layout wrap>
-
-                <v-flex xs12 sm6>
-                  <v-text-field v-model="name" label="Название задачи*" required></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field v-model="description" label="Описание задачи"></v-text-field>
-                </v-flex>
-                
-              </v-layout>
-            </v-container>
-            <small>*поля, отмеченные звездочкой, обязательны для заполнения</small>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="dialog = false">Закрыть</v-btn>
-            <v-btn color="blue darken-1" flat @click="dialog = false, add({id, name, description})">Сохранить</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-        </v-flex>
+        </v-layout>
       </v-layout>
     </v-content>
   </v-app>
@@ -163,7 +162,7 @@
 
         right: null,
         drawer: null,
-        dialog: false
+        dialog: false,
         child_Show: false,
 
       }

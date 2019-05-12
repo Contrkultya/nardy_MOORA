@@ -40,7 +40,31 @@
                 <v-list-tile-title>{{ todo.name }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-btn flat color="purple">Добавить</v-btn> 
+            
+            <v-dialog v-model="dialog" persistent max-width="600px">
+        <template v-slot:activator="{ on }">
+          <v-btn flat color="purple" dark v-on="on">Добавить</v-btn>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="headline">Создать доску</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <v-text-field label="Доска*" required v-model="nameDesk"></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="dialog = false">Закрыть</v-btn>
+            <v-btn color="blue darken-1" flat  @click="dialog = false, addDesk">Добавить</v-btn>
+          </v-card-actions>
+        </v-card> 
+            </v-dialog>
           </v-list>
         </v-navigation-drawer>
 
@@ -131,6 +155,7 @@
         current_Id: 1,
         status: false,
         show: false,
+         dialog: false,
         child_Show: false,
         right: null
       }
@@ -180,6 +205,9 @@
       },
       add:function(id) {
         this.$store.dispatch('add',id);
+      },
+      addDesk: function(){
+        this.$store.dispatch('addDesk', {name:this.nameDesk})
       },
       toForm:function()
       {

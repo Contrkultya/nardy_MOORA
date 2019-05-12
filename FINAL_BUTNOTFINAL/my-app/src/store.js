@@ -43,6 +43,9 @@ export const store = new Vuex.Store({
     newNote(state, note) {
       state.todos.push(note);
     },
+    newDesk(state, name) {
+      state.todos.push({"id": 11,"name":name, "parent": 0,"hasChildren": false, "done": false, "removed": false});
+    },
     delNote(state, id) {
       state.todos.splice(state.todos.findIndex(todo => todo.id === id), 1);
     }
@@ -53,6 +56,9 @@ export const store = new Vuex.Store({
     },
     add ({commit}, id) {
       commit('newNote', id)
+    },
+    addDesk ({commit}, payload) {
+      commit('newDesk', payload.name)
     }
   },
 })

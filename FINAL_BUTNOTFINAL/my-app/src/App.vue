@@ -25,33 +25,30 @@
   
           <v-list dense class="pt-0">
             <v-list-tile
-              v-for="obj in desks"
-              :key="obj.id"
-              @click="show=true"
+              v-for="(todo, id) in desks"
+              :key="id"
+              @click="selectTodo(id+1)"
               >
               <v-list-tile-action>
                 <v-icon
                 v-for="icon in items"
                 :key="icon.icon"
-                @click=""
                 >{{icon.icon}}</v-icon>
               </v-list-tile-action>
       
               <v-list-tile-content>
-                <v-list-tile-title>{{ obj.name }}</v-list-tile-title>
+                <v-list-tile-title>{{ todo.name }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <v-btn flat color="purple">Добавить</v-btn> 
           </v-list>
         </v-navigation-drawer>
 
-        <v-flex v-if="show==true" style="align-center justify-right row/">
+        <v-flex v-if="doneTodo" style="align-start justify-right row">
           <v-card
             v-for="(obj, id) in childrens"
             :key="id"
-            @click="
-            current_Id = obj.id;
-            child_Show = !child_Show;"
+            @click=""
             style="margin-top:10px; width:300px;margin-left:10px"
             >
             
@@ -76,7 +73,8 @@
               </v-card-text>
             </v-slide-y-transition>
             
-            <v-hover v-if="child_Show==true"  v-for="(obj, id) in childrens_childrens" :key="id">
+            <v-hover v-if="doneTodo"
+            v-for="(obj,name) in obj.tasks" :key="name">
               <v-card
                 slot-scope="{ hover }"
                 :class="`elevation-${hover ? 12 : 2}`"
@@ -87,7 +85,6 @@
                 <v-card-title>
                   <div>
                     <span style="font-size: 10pt;">{{obj.name}}</span>
-                    <br><span style="font-size: 10pt; font-style: italic">{{obj.description}}</span>
                   </div>
                   <v-spacer></v-spacer>
                 </v-card-title>
@@ -102,8 +99,9 @@
               @click="del(obj.id)">Удалить</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
-          </v-card>
-          <v-btn
+          </v-card>         
+        </v-flex>
+        <v-btn
             color="#ef5350"
             dark
             big7
@@ -116,7 +114,6 @@
             >
             <v-icon>add</v-icon>
           </v-btn>
-        </v-flex>
       </v-layout>
     </v-content>
   </v-app>
@@ -144,11 +141,14 @@
           }
         ]
       },
+      doneTodo() {
+            return this.$store.state.todos.find(todo => todo.done);
+        },
       desks() {
         return this.$store.getters.getdesk;
       },
       childrens() {
-        return this.$store.getters.getChildren(1);
+        return this.$store.state.todos.filter(todo=>todo.done===true);
       },
       childrens_childrens() {
         return this.$store.getters.getChildren(this.current_Id);
@@ -170,7 +170,21 @@
       toForm:function()
       {
         this.$router.push('/form');
-      }
+      },
+       disableAllTodos() {
+            this.$store.state.todos.forEach(todo => todo.done = false);
+        },
+      selectTodo(groupIndex) {
+            this.disableAllTodos();
+            //this.selectedTask = null;
+            this.$store.state.todos.forEach(todo => {
+              if(todo.parent===groupIndex)
+              {
+                 todo.done = true;
+              }
+            });
+            
+        },
     }
   }
 

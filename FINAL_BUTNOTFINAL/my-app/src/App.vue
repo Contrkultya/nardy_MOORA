@@ -48,7 +48,7 @@
           <v-card
             v-for="(obj, id) in childrens"
             :key="id"
-            @click=""
+            @click="showTasks(obj.id)"
             style="margin-top:10px; width:300px;margin-left:10px"
             >
             
@@ -73,9 +73,10 @@
               </v-card-text>
             </v-slide-y-transition>
             
-            <v-hover v-if="doneTodo"
-            v-for="(obj,name) in obj.tasks" :key="name">
-              <v-card
+            <v-hover v-if="obj.selectTasks"
+             v-for="(object,name) in obj.tasks" :key="name"
+            >
+              <v-card 
                 slot-scope="{ hover }"
                 :class="`elevation-${hover ? 12 : 2}`"
                 class="mx-auto"
@@ -84,7 +85,7 @@
                 >
                 <v-card-title>
                   <div>
-                    <span style="font-size: 10pt;">{{obj.name}}</span>
+                    <span style="font-size: 10pt;">{{object.name}}</span>
                   </div>
                   <v-spacer></v-spacer>
                 </v-card-title>
@@ -99,7 +100,8 @@
               @click="del(obj.id)">Удалить</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
-          </v-card>         
+          </v-card>
+          
         </v-flex>
         <v-btn
             color="#ef5350"
@@ -163,6 +165,18 @@
     methods: {
       del:function(id) {
         this.$store.dispatch('del',id);
+      },
+      showTasks:function(index){
+         this.$store.state.todos.forEach(todo => {
+              if(todo.id=== index&&todo.selectTasks == false)
+              {
+                 todo.selectTasks = true;
+              }
+              else if(todo.id=== index&&todo.selectTasks == true)
+               {
+                 todo.selectTasks = false;
+              }
+            });
       },
       add:function(id) {
         this.$store.dispatch('add',id);

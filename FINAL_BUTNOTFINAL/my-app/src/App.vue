@@ -42,10 +42,10 @@
             </v-list-tile>
             
             <v-dialog v-model="dialog" persistent max-width="600px">
-        <template v-slot:activator="{ on }">
-          <v-btn flat color="purple" dark v-on="on">Добавить</v-btn>
-        </template>
-        <v-card>
+              <template v-slot:activator="{ on }">
+              <v-btn flat color="purple" dark v-on="on">Добавить</v-btn>
+              </template>
+            <v-card>
           <v-card-title>
             <span class="headline">Создать доску</span>
           </v-card-title>
@@ -53,7 +53,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field label="Доска*" required v-model="nameDesk"></v-text-field>
+                  <v-text-field v-model="nameDesk" label="Доска*" required></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -61,7 +61,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="dialog = false">Закрыть</v-btn>
-            <v-btn color="blue darken-1" flat  @click="dialog = false, addDesk">Добавить</v-btn>
+            <v-btn color="blue darken-1" flat  @click=" addDesk, dialog = false">Добавить</v-btn>
           </v-card-actions>
         </v-card> 
             </v-dialog>
@@ -71,6 +71,7 @@
         <v-flex v-if="doneTodo" style="align-start justify-right row">
           <v-card
             v-for="(obj, id) in childrens"
+            :class=obj.color
             :key="id"
             @click="showTasks(obj.id)"
             style="margin-top:10px; width:300px;margin-left:10px"
@@ -119,7 +120,7 @@
 
             <v-card-actions>
               <v-btn flat color="green"
-              @click="status=!status">Завершить</v-btn>
+              @click="changeColor(obj.id)">Завершить</v-btn>
               <v-btn flat color="red" 
               @click="del(obj.id)">Удалить</v-btn>
               <v-spacer></v-spacer>
@@ -153,7 +154,7 @@
           { icon: 'dashboard' }
         ],
         current_Id: 1,
-        status: false,
+        status: "",
         show: false,
          dialog: false,
         child_Show: false,
@@ -191,6 +192,22 @@
       del:function(id) {
         this.$store.dispatch('del',id);
       },
+      changeColor:function(index)
+      {
+        this.$store.state.todos.forEach(todo => {
+              if(todo.id===index)
+              {
+                if(todo.color=='white')
+                {
+                 todo.color = 'green lighten-4';
+                }
+                else if(todo.color=='green lighten-4')
+                {
+                  todo.color = 'white';
+                }
+              }
+            });
+      },
       showTasks:function(index){
          this.$store.state.todos.forEach(todo => {
               if(todo.id=== index&&todo.selectTasks == false)
@@ -207,7 +224,7 @@
         this.$store.dispatch('add',id);
       },
       addDesk: function(){
-        this.$store.dispatch('addDesk', {name:this.nameDesk})
+        this.$store.dispatch('addDesk', {name: $this.nameDesk})
       },
       toForm:function()
       {
@@ -234,12 +251,11 @@
 </script>
 
 <style>
-  .strike {
-    background-color:red;
-  }
+  .white {
+   background-color: white;
+}
+
 </style>
-
-
 
 
 

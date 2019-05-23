@@ -73,23 +73,21 @@
             v-for="(obj, id) in childrens"
             :class=obj.color
             :key="id"
-            @click="showTasks(obj.id)"
+           
             style="margin-top:10px; width:300px;margin-left:10px"
             >
             
             <v-card-title primary-title>
               <div>
-                <div class="headline">{{obj.name}}</div>
+                <div class="headline" >{{obj.name}}</div>
                 <span class="grey--text"></span>
               </div>
 
               <div class="text-xs-center" v-if="child_Show == false">
-                <v-badge right color="grey lighten-1" style="float: right; margin-left: 5px;">
-                  <template v-slot:badge>
-                    <span v-if="obj.hasChildren==true">+</span>
-                  </template>
-                </v-badge>
               </div>
+               <v-btn outline fab small absolute right color="blue" @click="showTasks(obj.id)">
+        <v-icon>list</v-icon>
+      </v-btn>
             </v-card-title>
 
             <v-slide-y-transition>
@@ -119,11 +117,14 @@
             
 
             <v-card-actions>
-              <v-btn flat color="green"
-              @click="changeColor(obj.id)">Завершить</v-btn>
-              <v-btn flat color="red" 
-              @click="del(obj.id)">Удалить</v-btn>
               <v-spacer></v-spacer>
+              <v-btn outline fab small color="green"
+              @click="changeColor(obj.id)"><v-icon medium>done</v-icon></v-btn>
+              <v-spacer></v-spacer>
+              <v-btn outline fab small color="red"
+              @click="del(obj.id)"><v-icon medium>delete</v-icon></v-btn>
+              <v-spacer></v-spacer>
+              
             </v-card-actions>
           </v-card>
           
@@ -256,6 +257,8 @@
 }
 
 </style>
+
+
 
 
 

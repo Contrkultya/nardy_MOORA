@@ -109,7 +109,7 @@
           </v-list>
         </v-navigation-drawer>
 
-        <v-layout  d-{flex} v-if="doneTodo"  align-start  row wrap>
+        <v-layout  d-{flex} v-if="doneTodo"  align-start justify-start row wrap>
 
             
           

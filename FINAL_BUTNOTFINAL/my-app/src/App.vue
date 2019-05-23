@@ -6,6 +6,47 @@
         <span class="font-weight-light"> MATERIAL DESIGN</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-dialog v-model="dialog1" persistent max-width="600px">
+        <template v-slot:activator="{ on }">
+            <v-btn
+            color="#ef5350"
+            dark
+            big7
+            absolute
+            bottom
+            right
+            fab
+            v-on="on">
+            <v-icon>add</v-icon>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="headline">Новая задача</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+
+                <v-flex xs12 sm6>
+                  <v-text-field v-model="name" label="Название задачи*" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="description" label="Описание задачи"></v-text-field>
+                </v-flex>
+
+              </v-layout>
+            </v-container>
+            <small>*поля, отмеченные звездочкой, обязательны для заполнения</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="dialog1 = false">Закрыть</v-btn>
+            <v-btn color="blue darken-1" flat @click="dialog1 = false, add({name, description}), selectTodo(1)">Сохранить</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
     </v-toolbar >
 
     <v-content id="boardlist">
@@ -41,7 +82,7 @@
               </v-list-tile-content>
             </v-list-tile>
             
-            <v-dialog v-model="dialog" persistent max-width="600px">
+            <v-dialog v-model="dialog2" persistent max-width="600px">
               <template v-slot:activator="{ on }">
               <v-btn flat color="purple" dark v-on="on">Добавить</v-btn>
               </template>
@@ -60,8 +101,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="dialog = false">Закрыть</v-btn>
-            <v-btn color="blue darken-1" flat  @click=" addDesk, dialog = false">Добавить</v-btn>
+            <v-btn color="blue darken-1" flat @click="dialog2 = false">Закрыть</v-btn>
+            <v-btn color="blue darken-1" flat  @click=" addDesk, dialog2 = false">Добавить</v-btn>
           </v-card-actions>
         </v-card> 
             </v-dialog>
@@ -129,19 +170,6 @@
           </v-card>
           
         </v-flex>
-        <v-btn
-            color="#ef5350"
-            dark
-            big7
-            absolute
-            top
-            right
-            fab  
-            to="/form"
-            @click="toForm()"
-            >
-            <v-icon>add</v-icon>
-          </v-btn>
       </v-layout>
     </v-content>
   </v-app>
@@ -154,10 +182,13 @@
         items: [
           { icon: 'dashboard' }
         ],
+        description: "",
+        name:"",
         current_Id: 1,
         status: "",
         show: false,
-         dialog: false,
+         dialog1: false,
+         dialog2: false,
         child_Show: false,
         right: null
       }
@@ -221,8 +252,8 @@
               }
             });
       },
-      add:function(id) {
-        this.$store.dispatch('add',id);
+      add:function(name, description) {
+        this.$store.dispatch('add',name, description);
       },
       addDesk: function(){
         this.$store.dispatch('addDesk', {name: $this.nameDesk})

@@ -109,7 +109,10 @@
           </v-list>
         </v-navigation-drawer>
 
-        <v-flex v-if="doneTodo" style="align-start justify-right row">
+        <v-layout  d-{flex} v-if="doneTodo"  align-start  row wrap>
+
+            
+          
           <v-card
             v-for="(obj, id) in childrens"
             :class=obj.color
@@ -168,8 +171,8 @@
               
             </v-card-actions>
           </v-card>
-          
-        </v-flex>
+
+        </v-layout>
       </v-layout>
     </v-content>
   </v-app>

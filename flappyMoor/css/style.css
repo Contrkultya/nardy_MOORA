@@ -1,0 +1,10 @@
+body { 
+    margin: 0;
+    background-image: url("bag.jpg");
+}
+#sas{
+    margin: auto;
+    width: 300px;
+    transform: scale(1.8,1.8);
+    margin-top: 215px;
+}

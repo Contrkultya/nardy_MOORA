@@ -16,9 +16,9 @@
   },
   "devDependencies": {
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
+    "stylus-loader": "^7.1.0",
     "vue-cli-plugin-vuetify": "^0.5.0",
-    "vuetify-loader": "^1.0.5"
+    "vuetify-loader": "^1.9.2"
   },
   "license": "ISC",
   "repository": {
